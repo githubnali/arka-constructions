@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -322,6 +323,27 @@ const heroSlides = [
   "/images/service-commercial.jpg",
 ];
 
+const sectionMotion = {
+  initial: "hidden",
+  whileInView: "visible",
+  viewport: { once: true, amount: 0.12 },
+  variants: {
+    hidden: { opacity: 0, y: 34 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.65, ease: "easeOut" as const },
+    },
+  },
+};
+
+const cardMotion = {
+  initial: { opacity: 0, y: 22 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.15 },
+  transition: { duration: 0.5, ease: "easeOut" as const },
+};
+
 type Modal =
   | { type: "quote"; interest?: string }
   | { type: "service"; index: number }
@@ -520,6 +542,7 @@ export default function ArkaSite({
   view?: "home" | "services" | "projects" | "packages";
 }) {
   const [menu, setMenu] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
   const [tab, setTab] = useState<"completed" | "ongoing">("completed");
   const [modal, setModal] = useState<Modal>(null);
@@ -544,12 +567,13 @@ export default function ArkaSite({
   useEffect(() => {
     if (modal) {
       dialog.current?.showModal();
-      document.body.style.overflow = "hidden";
-    } else document.body.style.overflow = "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    }
   }, [modal]);
+
+  useEffect(() => {
+    document.body.style.overflow = modal || menu ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menu, modal]);
 
   useEffect(() => {
     if (view !== "home") return;
@@ -562,7 +586,10 @@ export default function ArkaSite({
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") setMenu(false);
+      if (event.key === "Escape") {
+        setMenu(false);
+        setServicesOpen(false);
+      }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -587,11 +614,16 @@ export default function ArkaSite({
   }
 
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
-      <header className="header">
+      <motion.header
+        className="header"
+        initial={{ opacity: 0, y: -18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="container header-inner">
           <Brand />
           <nav
@@ -602,14 +634,24 @@ export default function ArkaSite({
             <a href="/" onClick={() => setMenu(false)}>
               Home
             </a>
-            <div className="nav-item">
+            <div className={`nav-item ${servicesOpen ? "is-expanded" : ""}`}>
               <a href="/services" onClick={() => setMenu(false)}>
-                Construction Services <ChevronDown size={14} />
+                Construction Services
               </a>
-              <div className="nav-dropdown">
-                <a href="/services#residential">Residential Construction</a>
-                <a href="/services#commercial">Commercial Construction</a>
-                <a href="/services#industrial">Industrial Construction</a>
+              <button
+                type="button"
+                className="nav-submenu-toggle"
+                aria-expanded={servicesOpen}
+                aria-controls="services-submenu"
+                aria-label="Toggle construction services submenu"
+                onClick={() => setServicesOpen((current) => !current)}
+              >
+                <ChevronDown size={16} />
+              </button>
+              <div className="nav-dropdown" id="services-submenu">
+                <a href="/services#residential" onClick={() => setMenu(false)}>Residential Construction</a>
+                <a href="/services#commercial" onClick={() => setMenu(false)}>Commercial Construction</a>
+                <a href="/services#industrial" onClick={() => setMenu(false)}>Industrial Construction</a>
               </div>
             </div>
             <a href="/projects" onClick={() => setMenu(false)}>
@@ -639,13 +681,30 @@ export default function ArkaSite({
               aria-label={menu ? "Close navigation" : "Open navigation"}
               aria-expanded={menu}
               aria-controls="main-navigation"
-              onClick={() => setMenu(!menu)}
+              onClick={() => {
+                setMenu((current) => !current);
+                if (menu) setServicesOpen(false);
+              }}
             >
               {menu ? <X /> : <Menu />}
             </button>
           </div>
         </div>
-      </header>
+      </motion.header>
+      <AnimatePresence>
+        {menu && (
+          <motion.button
+            type="button"
+            className="nav-backdrop"
+            aria-label="Close navigation"
+            onClick={() => { setMenu(false); setServicesOpen(false); }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          />
+        )}
+      </AnimatePresence>
 
       <main
         id="main"
@@ -660,7 +719,7 @@ export default function ArkaSite({
         )}
 
         {view === "home" && (
-          <section className="hp-hero" aria-labelledby="hero-title">
+          <motion.section {...sectionMotion} className="hp-hero" aria-labelledby="hero-title">
             <div className="hp-hero-media" aria-hidden="true">
               {heroSlides.map((src, index) => (
                 <img
@@ -707,11 +766,11 @@ export default function ArkaSite({
               </div>
               <HeroQuoteForm />
             </div>
-          </section>
+          </motion.section>
         )}
 
         {view === "home" && (
-          <section className="hp-section hp-section-white hp-about" id="about">
+          <motion.section {...sectionMotion} className="hp-section hp-section-white hp-about" id="about">
             <div className="container hp-about-grid">
               <div className="hp-about-copy">
                 <Eyebrow>About ARKA</Eyebrow>
@@ -738,13 +797,15 @@ export default function ArkaSite({
                 </a>
               </div>
               <div className="hp-about-visual">
-                <img
-                  src="/images/about-engineer.jpg"
-                  alt="Engineers reviewing construction drawings on site (representative image)"
-                  loading="lazy"
-                  width="1400"
-                  height="933"
-                />
+                <div className="hp-about-image">
+                  <img
+                    src="/images/about-engineer.jpg"
+                    alt="Engineers reviewing construction drawings on site (representative image)"
+                    loading="lazy"
+                    width="1400"
+                    height="933"
+                  />
+                </div>
                 <div className="hp-about-card">
                   <div className="hp-about-monogram">KK</div>
                   <div>
@@ -755,11 +816,12 @@ export default function ArkaSite({
                 </div>
               </div>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {(view === "home" || view === "projects") && (
-          <section
+          <motion.section
+            {...sectionMotion}
             className="hp-section hp-section-ivory hp-projects"
             id="projects"
           >
@@ -806,7 +868,16 @@ export default function ArkaSite({
                         }
                       }}
                     >
-                      {name === "completed" ? "Completed" : "Ongoing"}
+                      {tab === name && (
+                        <motion.span
+                          className="hp-tab-indicator"
+                          layoutId="project-status-indicator"
+                          transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                        />
+                      )}
+                      <span className="hp-tab-label">
+                        {name === "completed" ? "Completed" : "Ongoing"}
+                      </span>
                     </button>
                   ))}
                 </div>
@@ -820,7 +891,8 @@ export default function ArkaSite({
                   className="hp-project-grid"
                 >
                   {completedProjects.map((project) => (
-                    <article
+                    <motion.article
+                      {...cardMotion}
                       className="hp-project-card"
                       key={`${project.client}-${project.location}`}
                     >
@@ -862,7 +934,7 @@ export default function ArkaSite({
                           </div>
                         </dl>
                       </div>
-                    </article>
+                    </motion.article>
                   ))}
                 </div>
               ) : (
@@ -873,7 +945,8 @@ export default function ArkaSite({
                   className="hp-project-grid"
                 >
                   {ongoingProjects.map((project) => (
-                    <article
+                    <motion.article
+                      {...cardMotion}
                       className="hp-project-card"
                       key={`${project.client}-${project.location}`}
                     >
@@ -920,7 +993,7 @@ export default function ArkaSite({
                           </div>
                         </dl>
                       </div>
-                    </article>
+                    </motion.article>
                   ))}
                 </div>
               )}
@@ -930,11 +1003,12 @@ export default function ArkaSite({
                 shared on request.
               </p>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {(view === "home" || view === "packages") && (
-          <section
+          <motion.section
+            {...sectionMotion}
             className="hp-section hp-section-white hp-packages"
             id="packages"
           >
@@ -953,7 +1027,8 @@ export default function ArkaSite({
               </div>
               <div className="hp-package-grid">
                 {packages.map((pkg, index) => (
-                  <article
+                  <motion.article
+                    {...cardMotion}
                     className={`hp-package ${pkg.featured ? "is-featured" : ""}`}
                     key={pkg.name}
                   >
@@ -987,7 +1062,7 @@ export default function ArkaSite({
                         Get a Quote <ArrowUpRight size={16} />
                       </button>
                     </div>
-                  </article>
+                  </motion.article>
                 ))}
               </div>
               <p className="hp-package-note">
@@ -995,11 +1070,12 @@ export default function ArkaSite({
                 area, scope, materials, site conditions and approvals.
               </p>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {(view === "home" || view === "services") && (
-          <section
+          <motion.section
+            {...sectionMotion}
             className="hp-section hp-section-ivory hp-services"
             id="services"
           >
@@ -1018,7 +1094,8 @@ export default function ArkaSite({
               </div>
               <div className="hp-service-categories">
                 {serviceCategories.map((category) => (
-                  <article
+                  <motion.article
+                    {...cardMotion}
                     className="hp-service-category"
                     key={category.title}
                     id={category.title.split(" ")[0].toLowerCase()}
@@ -1038,15 +1115,15 @@ export default function ArkaSite({
                         Explore Services <ArrowUpRight size={15} />
                       </a>
                     </div>
-                  </article>
+                  </motion.article>
                 ))}
               </div>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {(view === "home" || view === "services") && (
-          <section className="hp-section hp-section-white hp-what" id="what-we-do">
+          <motion.section {...sectionMotion} className="hp-section hp-section-white hp-what" id="what-we-do">
             <div className="container">
               <div className="hp-section-head">
                 <div>
@@ -1061,7 +1138,7 @@ export default function ArkaSite({
               </div>
               <div className="hp-what-grid">
                 {services.map((service, index) => (
-                  <article className="hp-what-card" key={service.title}>
+                  <motion.article {...cardMotion} className="hp-what-card" key={service.title}>
                     <img
                       src={serviceImages[index]}
                       alt={service.title}
@@ -1080,7 +1157,7 @@ export default function ArkaSite({
                         Explore Services <ArrowUpRight size={15} />
                       </button>
                     </div>
-                  </article>
+                  </motion.article>
                 ))}
               </div>
               <div className="hp-view-all">
@@ -1089,11 +1166,11 @@ export default function ArkaSite({
                 </a>
               </div>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {view === "home" && (
-          <section className="hp-why" id="why-arka">
+          <motion.section {...sectionMotion} className="hp-why" id="why-arka">
             <div className="container hp-why-grid">
               <div className="hp-why-copy">
                 <Eyebrow light>Why Choose ARKA</Eyebrow>
@@ -1107,21 +1184,22 @@ export default function ArkaSite({
               </div>
               <div className="hp-why-list">
                 {whyReasons.map((reason) => (
-                  <article className="hp-why-item" key={reason.title}>
+                  <motion.article {...cardMotion} className="hp-why-item" key={reason.title}>
                     <reason.icon size={22} strokeWidth={1.5} />
                     <div>
                       <h3>{reason.title}</h3>
                       <p>{reason.text}</p>
                     </div>
-                  </article>
+                  </motion.article>
                 ))}
               </div>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {view === "home" && (
-          <section
+          <motion.section
+            {...sectionMotion}
             className="hp-section hp-section-ivory hp-approach"
             id="approach"
           >
@@ -1144,18 +1222,34 @@ export default function ArkaSite({
                     <ArrowUpRight size={16} />
                   </button>
                 </div>
-                <ol className="hp-steps">
+                <ol className="hp-steps" aria-label="Our four-step project process">
                   {approachSteps.map(([title, text], index) => (
-                    <li className="hp-step" key={title}>
-                      <span className="hp-step-num">0{index + 1}</span>
-                      <h3>{title}</h3>
-                      <p>{text}</p>
-                    </li>
+                    <motion.li
+                      className="hp-step"
+                      key={title}
+                      initial={{ opacity: 0, y: 24 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.3 }}
+                      transition={{ duration: 0.45, delay: index * 0.08 }}
+                      whileHover={{ y: -7 }}
+                    >
+                      <span className="hp-step-watermark" aria-hidden="true">
+                        0{index + 1}
+                      </span>
+                      <div className="hp-step-top">
+                        <span className="hp-step-num">0{index + 1}</span>
+                        <span className="hp-step-label">Step {index + 1} of 4</span>
+                      </div>
+                      <div className="hp-step-copy">
+                        <h3>{title}</h3>
+                        <p>{text}</p>
+                      </div>
+                    </motion.li>
                   ))}
                 </ol>
               </div>
               <div className="hp-vm">
-                <article className="hp-vm-card">
+                <motion.article {...cardMotion} className="hp-vm-card">
                   <Target size={26} />
                   <div>
                     <h3>Our Vision</h3>
@@ -1164,8 +1258,8 @@ export default function ArkaSite({
                       quality, innovation and excellence in every project.
                     </p>
                   </div>
-                </article>
-                <article className="hp-vm-card">
+                </motion.article>
+                <motion.article {...cardMotion} className="hp-vm-card">
                   <Flag size={26} />
                   <div>
                     <h3>Our Mission</h3>
@@ -1175,14 +1269,14 @@ export default function ArkaSite({
                       and a strong commitment to client satisfaction.
                     </p>
                   </div>
-                </article>
+                </motion.article>
               </div>
             </div>
-          </section>
+          </motion.section>
         )}
 
         {view === "home" && (
-          <section className="hp-faq" id="faqs">
+          <motion.section {...sectionMotion} className="hp-faq" id="faqs">
             <div className="container">
               <div className="hp-faq-head">
                 <span className="hp-faq-eyebrow">Client Questions</span>
@@ -1199,7 +1293,7 @@ export default function ArkaSite({
                 ))}
               </div>
             </div>
-          </section>
+          </motion.section>
         )}
       </main>
 
@@ -1284,7 +1378,12 @@ export default function ArkaSite({
           if (event.target === dialog.current) closeModal();
         }}
       >
-        <div className="modal-inner">
+        <motion.div
+          className="modal-inner"
+          initial={{ opacity: 0, scale: 0.96, y: 18 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+        >
           <button
             className="modal-close"
             onClick={closeModal}
@@ -1496,8 +1595,8 @@ export default function ArkaSite({
               </p>
             </>
           )}
-        </div>
+        </motion.div>
       </dialog>
-    </>
+    </MotionConfig>
   );
 }
