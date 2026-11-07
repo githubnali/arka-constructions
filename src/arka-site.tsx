@@ -545,6 +545,7 @@ export default function ArkaSite({
   const [servicesOpen, setServicesOpen] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
   const [tab, setTab] = useState<"completed" | "ongoing">("completed");
+  const [openFaq, setOpenFaq] = useState(0);
   const [modal, setModal] = useState<Modal>(null);
   const [prepared, setPrepared] = useState(false);
   const [emailLink, setEmailLink] = useState("");
@@ -829,9 +830,11 @@ export default function ArkaSite({
               <div className="hp-section-head">
                 <div>
                   <Eyebrow>Our Construction Projects</Eyebrow>
-                  <h2>
-                    See the <span>transformation.</span>
-                  </h2>
+                  {view === "projects" ? (
+                    <h1>See the <span>transformation.</span></h1>
+                  ) : (
+                    <h2>See the <span>transformation.</span></h2>
+                  )}
                 </div>
                 <p>
                   Drag the slider to compare the design intent with the
@@ -1016,9 +1019,11 @@ export default function ArkaSite({
               <div className="hp-section-head">
                 <div>
                   <Eyebrow>Our Construction Packages</Eyebrow>
-                  <h2>
-                    Our Home <span>Construction Packages</span>
-                  </h2>
+                  {view === "packages" ? (
+                    <h1>Our Home <span>Construction Packages</span></h1>
+                  ) : (
+                    <h2>Our Home <span>Construction Packages</span></h2>
+                  )}
                 </div>
                 <p>
                   Choose a starting point for your home. Every package is refined
@@ -1083,9 +1088,11 @@ export default function ArkaSite({
               <div className="hp-section-head">
                 <div>
                   <Eyebrow>Our Construction Services</Eyebrow>
-                  <h2>
-                    Built for <span>every kind of project.</span>
-                  </h2>
+                  {view === "services" ? (
+                    <h1>Built for <span>every kind of project.</span></h1>
+                  ) : (
+                    <h2>Built for <span>every kind of project.</span></h2>
+                  )}
                 </div>
                 <p>
                   Residential, commercial and industrial construction delivered
@@ -1284,12 +1291,40 @@ export default function ArkaSite({
               </div>
               <div className="hp-faq-list">
                 {faqs.map(([question, answer], index) => (
-                  <details key={question} open={index === 0}>
-                    <summary>
-                      {question} <ChevronDown size={20} />
-                    </summary>
-                    <p>{answer}</p>
-                  </details>
+                  <div
+                    className={`hp-faq-item ${openFaq === index ? "is-open" : ""}`}
+                    key={question}
+                  >
+                    <h3>
+                      <button
+                        type="button"
+                        className="hp-faq-trigger"
+                        aria-expanded={openFaq === index}
+                        aria-controls={`faq-answer-${index}`}
+                        id={`faq-question-${index}`}
+                        onClick={() => setOpenFaq(index)}
+                      >
+                        <span>{question}</span>
+                        <ChevronDown size={20} />
+                      </button>
+                    </h3>
+                    <AnimatePresence initial={false}>
+                      {openFaq === index && (
+                        <motion.div
+                          id={`faq-answer-${index}`}
+                          role="region"
+                          aria-labelledby={`faq-question-${index}`}
+                          className="hp-faq-answer"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ height: { duration: 0.35, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.22 } }}
+                        >
+                          <p>{answer}</p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                 ))}
               </div>
             </div>
