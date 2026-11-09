@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, MotionConfig, motion } from "framer-motion";
+import { submitEnquiry } from "./lib/supabase";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -397,6 +398,27 @@ type Modal =
   | { type: "privacy" }
   | null;
 
+type EnquiryField = "name" | "phone" | "email" | "location" | "plotArea" | "service" | "message";
+type EnquiryErrors = Partial<Record<EnquiryField, string>>;
+
+const phonePattern = /^\+?[0-9]{10,15}$/;
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateEnquiryForm(data: FormData, form: "hero" | "quote_modal") {
+  const errors: EnquiryErrors = {};
+  const value = (name: EnquiryField) => String(data.get(name) || "").trim();
+
+  if (value("name").length < 2) errors.name = "Enter your full name using at least 2 characters.";
+  if (!phonePattern.test(value("phone"))) errors.phone = "Enter a valid 10 to 15 digit phone number without spaces.";
+  if (value("email") && !emailPattern.test(value("email"))) errors.email = "Enter a valid email address, for example name@example.com.";
+  if (value("location").length < 2) errors.location = "Enter the project site location.";
+  if (form === "hero" && !value("plotArea")) errors.plotArea = "Select the approximate plot area.";
+  if (form === "quote_modal" && !value("service")) errors.service = "Select the service you are interested in.";
+  if (value("message").length > 2000) errors.message = "Keep the project details within 2,000 characters.";
+
+  return errors;
+}
+
 function Brand({ light = false }: { light?: boolean }) {
   return (
     <a
@@ -429,7 +451,7 @@ function Eyebrow({
   );
 }
 
-function HeroQuoteForm() {
+function EmailHeroQuoteForm() {
   const [prepared, setPrepared] = useState(false);
   const [emailLink, setEmailLink] = useState("");
 
@@ -543,6 +565,97 @@ function HeroQuoteForm() {
   );
 }
 
+function HeroQuoteForm() {
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<EnquiryErrors>({});
+
+  function clearFieldError(field: EnquiryField) {
+    setFieldErrors((current) => current[field] ? { ...current, [field]: undefined } : current);
+  }
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (submitting) return;
+
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const validationErrors = validateEnquiryForm(data, "hero");
+    if (Object.keys(validationErrors).length) {
+      setFieldErrors(validationErrors);
+      const firstInvalidField = Object.keys(validationErrors)[0];
+      (form.elements.namedItem(firstInvalidField) as HTMLElement | null)?.focus();
+      return;
+    }
+    setSubmitting(true);
+    setError("");
+    setFieldErrors({});
+
+    try {
+      await submitEnquiry({
+        name: String(data.get("name") || "").trim(),
+        phone: String(data.get("phone") || "").trim(),
+        email: String(data.get("email") || "").trim() || undefined,
+        site_location: String(data.get("location") || "").trim(),
+        plot_area: String(data.get("plotArea") || "").trim(),
+        source: "hero",
+      });
+      form.reset();
+      setSubmitted(true);
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  if (submitted) {
+    return (
+      <div className="hp-hero-form hp-form-success" role="status">
+        <CheckCircle2 size={40} />
+        <h3>Thank you. Your enquiry has been received.</h3>
+        <p>Our team will review your project details and call you back.</p>
+        <button type="button" className="hp-text-btn" onClick={() => setSubmitted(false)}>
+          Submit another enquiry
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form className="hp-hero-form" onSubmit={submit} aria-busy={submitting} noValidate>
+      <h2>Let&rsquo;s Discuss Your Project</h2>
+      <p>Share your plot details. Our team will call you back.</p>
+      <div className="form-field-group">
+        <label className={`hp-field ${fieldErrors.name ? "has-error" : ""}`}><User size={16} /><input name="name" required minLength={2} autoComplete="name" maxLength={100} placeholder="Name" aria-label="Name" aria-invalid={Boolean(fieldErrors.name)} aria-describedby={fieldErrors.name ? "hero-name-error" : undefined} onInput={() => clearFieldError("name")} /></label>
+        {fieldErrors.name && <span className="field-error" id="hero-name-error">{fieldErrors.name}</span>}
+      </div>
+      <div className="form-field-group">
+        <label className={`hp-field ${fieldErrors.phone ? "has-error" : ""}`}><Phone size={16} /><input name="phone" type="tel" required autoComplete="tel" inputMode="tel" maxLength={16} placeholder="Phone Number" aria-label="Phone number" aria-invalid={Boolean(fieldErrors.phone)} aria-describedby={fieldErrors.phone ? "hero-phone-error" : undefined} onInput={() => clearFieldError("phone")} /></label>
+        {fieldErrors.phone && <span className="field-error" id="hero-phone-error">{fieldErrors.phone}</span>}
+      </div>
+      <div className="form-field-group">
+        <label className={`hp-field ${fieldErrors.email ? "has-error" : ""}`}><Mail size={16} /><input name="email" type="email" autoComplete="email" maxLength={150} placeholder="Email (optional)" aria-label="Email (optional)" aria-invalid={Boolean(fieldErrors.email)} aria-describedby={fieldErrors.email ? "hero-email-error" : undefined} onInput={() => clearFieldError("email")} /></label>
+        {fieldErrors.email && <span className="field-error" id="hero-email-error">{fieldErrors.email}</span>}
+      </div>
+      <div className="form-field-group">
+        <label className={`hp-field ${fieldErrors.location ? "has-error" : ""}`}><MapPin size={16} /><input name="location" required minLength={2} autoComplete="address-level2" maxLength={150} placeholder="Site Location" aria-label="Site location" aria-invalid={Boolean(fieldErrors.location)} aria-describedby={fieldErrors.location ? "hero-location-error" : undefined} onInput={() => clearFieldError("location")} /></label>
+        {fieldErrors.location && <span className="field-error" id="hero-location-error">{fieldErrors.location}</span>}
+      </div>
+      <div className="form-field-group">
+        <label className={`hp-field ${fieldErrors.plotArea ? "has-error" : ""}`}><Layers3 size={16} /><select name="plotArea" required defaultValue="" aria-label="Plot area" aria-invalid={Boolean(fieldErrors.plotArea)} aria-describedby={fieldErrors.plotArea ? "hero-area-error" : undefined} onChange={() => clearFieldError("plotArea")}><option value="" disabled>Plot Area (sq ft)</option><option>1200 - 2000 sq ft</option><option>2000 - 3000 sq ft</option><option>3000 - 4000 sq ft</option><option>4000+ sq ft</option></select><ChevronDown size={15} /></label>
+        {fieldErrors.plotArea && <span className="field-error" id="hero-area-error">{fieldErrors.plotArea}</span>}
+      </div>
+      {error && <p className="form-error" role="alert">{error}</p>}
+      <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting}>
+        {submitting ? "Submitting…" : "Request a Callback"} {!submitting && <ArrowUpRight size={16} />}
+      </button>
+      <p className="hp-form-note">By submitting, you agree that ARKA may contact you about your project.</p>
+    </form>
+  );
+}
+
 function BeforeAfter({
   before,
   after,
@@ -593,6 +706,9 @@ export default function ArkaSite({
   const [openFaq, setOpenFaq] = useState(0);
   const [modal, setModal] = useState<Modal>(null);
   const [prepared, setPrepared] = useState(false);
+  const [modalSubmitting, setModalSubmitting] = useState(false);
+  const [modalError, setModalError] = useState("");
+  const [modalFieldErrors, setModalFieldErrors] = useState<EnquiryErrors>({});
   const [emailLink, setEmailLink] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -600,6 +716,8 @@ export default function ArkaSite({
   function openModal(next: Modal) {
     returnFocus.current = document.activeElement as HTMLElement;
     setPrepared(false);
+    setModalError("");
+    setModalFieldErrors({});
     setMenu(false);
     setModal(next);
   }
@@ -657,6 +775,41 @@ export default function ArkaSite({
       )}&body=${encodeURIComponent(body)}`,
     );
     setPrepared(true);
+  }
+
+  async function submitModalQuote(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (modalSubmitting) return;
+
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const validationErrors = validateEnquiryForm(data, "quote_modal");
+    if (Object.keys(validationErrors).length) {
+      setModalFieldErrors(validationErrors);
+      const firstInvalidField = Object.keys(validationErrors)[0];
+      (form.elements.namedItem(firstInvalidField) as HTMLElement | null)?.focus();
+      return;
+    }
+    setModalSubmitting(true);
+    setModalError("");
+    setModalFieldErrors({});
+
+    try {
+      await submitEnquiry({
+        name: String(data.get("name") || "").trim(),
+        phone: String(data.get("phone") || "").trim(),
+        site_location: String(data.get("location") || "").trim(),
+        service: String(data.get("service") || "").trim(),
+        message: String(data.get("message") || "").trim() || undefined,
+        source: "quote_modal",
+      });
+      form.reset();
+      setPrepared(true);
+    } catch (submissionError) {
+      setModalError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
+    } finally {
+      setModalSubmitting(false);
+    }
   }
 
   return (
@@ -1531,13 +1684,15 @@ export default function ArkaSite({
                 <span>something lasting.</span>
               </h2>
               <p>
-                Tell us a little about your project. We&rsquo;ll prepare an
-                email for you to review and send to ARKA.
+                Tell us a little about your project. Our team will review your
+                enquiry and contact you.
               </p>
               <form
-                onSubmit={prepareQuote}
+                onSubmit={submitModalQuote}
                 className="quote-form"
                 hidden={prepared}
+                aria-busy={modalSubmitting}
+                noValidate
               >
                 <div className="form-row">
                   <label>
@@ -1545,10 +1700,15 @@ export default function ArkaSite({
                     <input
                       name="name"
                       required
+                      minLength={2}
                       autoComplete="name"
                       maxLength={100}
                       placeholder="Full name"
+                      aria-invalid={Boolean(modalFieldErrors.name)}
+                      aria-describedby={modalFieldErrors.name ? "modal-name-error" : undefined}
+                      onInput={() => setModalFieldErrors((current) => ({ ...current, name: undefined }))}
                     />
+                    {modalFieldErrors.name && <span className="field-error" id="modal-name-error">{modalFieldErrors.name}</span>}
                   </label>
                   <label>
                     Mobile number
@@ -1557,11 +1717,14 @@ export default function ArkaSite({
                       type="tel"
                       required
                       autoComplete="tel"
-                      pattern="[+]?[0-9]{10,15}"
-                      title="Enter 10 to 15 digits, optionally starting with +. Do not include spaces."
-                      maxLength={20}
+                      inputMode="tel"
+                      maxLength={16}
                       placeholder="Your phone number"
+                      aria-invalid={Boolean(modalFieldErrors.phone)}
+                      aria-describedby={modalFieldErrors.phone ? "modal-phone-error" : undefined}
+                      onInput={() => setModalFieldErrors((current) => ({ ...current, phone: undefined }))}
                     />
+                    {modalFieldErrors.phone && <span className="field-error" id="modal-phone-error">{modalFieldErrors.phone}</span>}
                   </label>
                 </div>
                 <label>
@@ -1569,16 +1732,24 @@ export default function ArkaSite({
                   <input
                     name="location"
                     required
+                    minLength={2}
                     autoComplete="address-level2"
                     maxLength={150}
                     placeholder="Area / town / city"
+                    aria-invalid={Boolean(modalFieldErrors.location)}
+                    aria-describedby={modalFieldErrors.location ? "modal-location-error" : undefined}
+                    onInput={() => setModalFieldErrors((current) => ({ ...current, location: undefined }))}
                   />
+                  {modalFieldErrors.location && <span className="field-error" id="modal-location-error">{modalFieldErrors.location}</span>}
                 </label>
                 <label>
                   What can we help with?
                   <select
                     name="service"
                     defaultValue={modal.interest || "Residential construction"}
+                    aria-invalid={Boolean(modalFieldErrors.service)}
+                    aria-describedby={modalFieldErrors.service ? "modal-service-error" : undefined}
+                    onChange={() => setModalFieldErrors((current) => ({ ...current, service: undefined }))}
                   >
                     {[
                       ...new Set(
@@ -1587,9 +1758,9 @@ export default function ArkaSite({
                           "Residential construction",
                           "Commercial or industrial work",
                           ...services.map((service) => service.title),
-                          "Standard package",
-                          "Premium package",
-                          "Ultra Luxury package",
+                          "Essential Package",
+                          "Signature Package",
+                          "Elite Luxury Package",
                           "Request project portfolio",
                           "Not sure — let’s discuss",
                         ].filter(Boolean),
@@ -1598,6 +1769,7 @@ export default function ArkaSite({
                       <option key={option}>{option}</option>
                     ))}
                   </select>
+                  {modalFieldErrors.service && <span className="field-error" id="modal-service-error">{modalFieldErrors.service}</span>}
                 </label>
                 <label>
                   A little about your project <span>(optional)</span>
@@ -1609,30 +1781,19 @@ export default function ArkaSite({
                   />
                 </label>
                 <p className="form-note">
-                  Your details stay in this page until you choose to send them
-                  through your email app. ARKA will use your enquiry to discuss
-                  your project.
+                  By submitting, you agree that ARKA may contact you about your project.
                 </p>
-                <button className="hp-btn hp-btn-gold" type="submit">
-                  Prepare My Enquiry <ArrowRight size={18} />
+                {modalError && <p className="form-error" role="alert">{modalError}</p>}
+                <button className="hp-btn hp-btn-gold" type="submit" disabled={modalSubmitting}>
+                  {modalSubmitting ? "Submitting…" : "Send My Enquiry"} {!modalSubmitting && <ArrowRight size={18} />}
                 </button>
               </form>
               {prepared && (
                 <div className="enquiry-ready" role="status">
                   <CheckCircle2 size={42} />
-                  <h3>Your enquiry is ready to review.</h3>
-                  <p>
-                    Nothing has been sent yet. Open your email app, review the
-                    prepared message and send it to ARKA.
-                  </p>
-                  <a className="hp-btn hp-btn-gold" href={emailLink}>
-                    Open Email App <ArrowUpRight size={18} />
-                  </a>
-                  <p>
-                    <a href="mailto:arkaconstructions96@gmail.com">
-                      arkaconstructions96@gmail.com
-                    </a>
-                  </p>
+                  <h3>Thank you. Your enquiry has been received.</h3>
+                  <p>Our team will review the details and contact you shortly.</p>
+                  <button className="hp-btn hp-btn-gold" type="button" onClick={closeModal}>Done</button>
                 </div>
               )}
             </>
@@ -1685,15 +1846,14 @@ export default function ArkaSite({
               <Eyebrow>Your information</Eyebrow>
               <h2 id="modal-title">Privacy &amp; enquiries</h2>
               <p>
-                The enquiry form prepares a message locally in your browser.
-                This website does not store your form details in a lead database
-                or automatically send them.
+                When you submit an enquiry, the details you provide are stored
+                securely so ARKA Constructions can review your request and
+                contact you about the project.
               </p>
               <p>
-                If you choose to send the message using your email app, it is
-                shared with ARKA Constructions at
-                arkaconstructions96@gmail.com for discussing your enquiry. Your
-                email provider&rsquo;s terms also apply.
+                We use the information only to respond to your enquiry and
+                manage the project discussion. We do not ask for payment or
+                sensitive identity information through these forms.
               </p>
               <p>
                 For questions about information you have shared, contact ARKA
