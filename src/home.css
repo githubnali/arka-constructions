@@ -250,6 +250,15 @@ html{scroll-padding-top:84px}
 .hp-project-note{font-size:11px;line-height:1.7;color:var(--muted);text-align:center;margin:24px 0 0}
 
 /* ---------- Packages ---------- */
+.hp-package-highlights{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:-10px 0 34px;
+}
+.hp-package-highlights>div{
+  display:flex;align-items:center;gap:12px;padding:15px 18px;border:1px solid var(--line);
+  border-radius:12px;background:var(--cream);color:var(--navy);font-size:13px;line-height:1.45;
+}
+.hp-package-highlights svg{color:var(--gold-deep);flex-shrink:0}
+.hp-package-highlights strong{font-weight:700}
 .hp-package-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:6px}
 .hp-package{
   position:relative;display:flex;flex-direction:column;background:#fff;
@@ -310,23 +319,16 @@ html{scroll-padding-top:84px}
 .hp-service-category a:hover{color:var(--navy)}
 
 /* ---------- What we do ---------- */
+.hp-what-intro{max-width:920px;margin:-16px 0 34px;font-size:16px;line-height:1.8;color:var(--muted)}
 .hp-what-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .hp-what-card{
   display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
   border-radius:14px;overflow:hidden;box-shadow:var(--hp-shadow-soft);
 }
-.hp-what-card>img{width:100%;height:170px;object-fit:cover}
-.hp-what-body{padding:18px;display:flex;flex-direction:column;flex:1}
+.hp-what-body{padding:22px 26px 24px;display:flex;flex-direction:column;flex:1}
 .hp-what-icon{color:var(--gold-deep);margin-bottom:10px}
 .hp-what-card h3{font-size:18px;font-weight:600;line-height:1.3;letter-spacing:-.01em;margin:0 0 8px}
 .hp-what-card p{font-size:12px;line-height:1.65;color:var(--muted);margin:0 0 14px}
-.hp-what-card a,.hp-what-link{
-  margin-top:auto;display:inline-flex;align-items:center;gap:6px;
-  font-size:10px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--gold-deep);background:none;border:0;padding:0;font-family:var(--body);
-}
-.hp-what-card a:hover,.hp-what-link:hover{color:var(--navy)}
-.hp-view-all{text-align:center;margin-top:36px}
 
 /* ---------- Why choose ARKA ---------- */
 .hp-why{background:var(--navy);color:#fff;padding:80px 0}
@@ -337,11 +339,43 @@ html{scroll-padding-top:84px}
 }
 .hp-why-copy h2 span{color:var(--gold)}
 .hp-why-copy p{font-size:14px;line-height:1.75;color:#b9c8d4;max-width:360px;margin:0}
-.hp-why-list{display:grid;grid-template-columns:repeat(4,1fr);gap:0 20px}
+.hp-why-list{display:grid;grid-template-columns:repeat(3,1fr);gap:0 20px}
 .hp-why-item{display:flex;gap:10px;padding:20px 0;border-top:1px solid rgba(255,255,255,.16)}
 .hp-why-item>svg{color:var(--gold);flex-shrink:0;margin-top:3px}
 .hp-why-item h3{font-family:var(--body);font-size:13px;font-weight:600;color:#fff;margin:0 0 4px}
 .hp-why-item p{font-size:11.5px;line-height:1.65;color:#a9bdcd;margin:0}
+
+/* ---------- Areas we cover ---------- */
+.hp-areas{
+  position:relative;overflow:hidden;background:#0b1c2b;color:#fff;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.hp-areas:after{
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.3;
+  background-image:radial-gradient(rgba(255,255,255,.12) .6px,transparent .6px);
+  background-size:18px 18px;
+}
+.hp-areas-grid{position:relative;z-index:1;display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center}
+.hp-areas-copy h2{max-width:620px;font-size:clamp(35px,3.8vw,54px);font-weight:600;line-height:1.16;letter-spacing:-.035em;color:#fff;margin:24px 0 22px}
+.hp-areas-copy h2 span{color:var(--gold)}
+.hp-areas-copy>p{max-width:610px;font-size:16px;line-height:1.8;color:#b6c5d1;margin:0}
+.hp-areas-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+.hp-areas .hp-btn-outline{color:#fff;border-color:#30485c;background:rgba(8,27,43,.45)}
+.hp-areas .hp-btn-outline:hover{border-color:var(--gold);background:rgba(229,167,34,.08)}
+.hp-areas-panel{position:relative;padding:32px;border:1px solid #294156;border-radius:22px;background:rgba(21,46,66,.84);box-shadow:0 26px 60px rgba(0,0,0,.2)}
+.hp-area-label{display:block;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#9fb1c2;margin-bottom:18px}
+.hp-main-areas{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.hp-main-area{position:relative;overflow:hidden;min-height:145px;padding:22px 20px;border-radius:16px;background:#09253b}
+.hp-main-area:after{content:'';position:absolute;right:-18px;top:-25px;width:100px;height:100px;border-radius:50%;background:radial-gradient(circle,rgba(229,167,34,.28),transparent 67%)}
+.hp-area-pin{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--gold);color:#173247;margin-bottom:17px}
+.hp-main-area h3{font-family:var(--body);font-size:20px;font-weight:700;color:#fff;margin:0 0 5px}
+.hp-main-area p{font-size:13px;line-height:1.5;color:#9fb2c3;margin:0}
+.hp-area-nearby{padding-top:26px;margin-top:26px;border-top:1px solid rgba(255,255,255,.1)}
+.hp-area-chips{display:flex;flex-wrap:wrap;gap:9px}
+.hp-area-chips span{display:inline-flex;align-items:center;gap:7px;padding:9px 14px;border:1px solid rgba(255,255,255,.045);border-radius:999px;background:#1d3a52;font-size:13px;font-weight:600;color:#e2e9ee}
+.hp-area-chips svg{color:var(--gold);flex-shrink:0}
+.hp-area-note{padding-top:20px;margin:24px 0 0;border-top:1px dashed rgba(255,255,255,.12);font-size:13px;color:#9fb2c3}
+.hp-area-note button{padding:0;border:0;background:none;color:var(--gold);font:inherit;font-weight:700;cursor:pointer}
 
 /* ---------- Approach ---------- */
 .hp-approach-grid{display:grid;grid-template-columns:.78fr 1.22fr;gap:50px;align-items:start}
@@ -396,7 +430,7 @@ html{scroll-padding-top:84px}
 }
 
 /* ---------- FAQ ---------- */
-.hp-faq{background:#f4f2ec;padding:88px 0}
+.hp-faq{background:#e9eef0;padding:88px 0}
 .hp-faq-head{text-align:center;margin-bottom:34px}
 .hp-faq-eyebrow{
   display:block;font-family:'Caveat',cursive;font-size:28px;line-height:1;
@@ -406,20 +440,25 @@ html{scroll-padding-top:84px}
   font-size:clamp(34px,4.2vw,58px);font-weight:700;line-height:1.02;
   letter-spacing:-.025em;text-transform:uppercase;max-width:760px;margin:0 auto;
 }
-.hp-faq-list{max-width:900px;margin:0 auto}
-.hp-faq-item{border-bottom:1px solid #d8d3c7;transition:background .25s ease}
-.hp-faq-item:first-child{border-top:1px solid #d8d3c7}
-.hp-faq-item.is-open{background:rgba(255,255,255,.44)}
+.hp-faq-list{max-width:900px;margin:0 auto;display:grid;gap:10px}
+.hp-faq-item{
+  position:relative;overflow:hidden;border:1px solid #ced8dc;border-radius:12px;
+  background:#f7f9f8;box-shadow:0 8px 24px rgba(11,34,55,.045);
+  transition:border-color .3s ease,box-shadow .3s ease,background .3s ease;
+}
+.hp-faq-item:first-child{border-top:1px solid #ced8dc}
+.hp-faq-item.is-open{background:#f7f9f8;border-color:rgba(176,127,18,.55);box-shadow:0 14px 34px rgba(11,34,55,.09)}
+.hp-faq-item.is-open:before{content:'';position:absolute;inset:0 auto 0 0;width:4px;background:var(--gold)}
 .hp-faq-item h3{margin:0;font-family:var(--body)}
 .hp-faq-trigger{
   display:flex;justify-content:space-between;align-items:center;gap:24px;width:100%;
-  padding:22px 4px;border:0;background:transparent;color:var(--navy);text-align:left;
+  padding:22px;border:0;background:transparent;color:var(--navy);text-align:left;
   font-size:15px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;
 }
 .hp-faq-trigger svg{color:var(--navy);flex-shrink:0;transition:transform .35s var(--cubic-out)}
 .hp-faq-item.is-open .hp-faq-trigger svg{transform:rotate(180deg)}
 .hp-faq-answer{overflow:hidden}
-.hp-faq-answer p{font-size:14px;line-height:1.8;color:var(--muted);padding:0 4px 22px;margin:0;max-width:800px}
+.hp-faq-answer p{font-size:14px;line-height:1.8;color:var(--muted);padding:0 54px 24px 22px;margin:0;max-width:840px}
 
 /* ---------- Footer ---------- */
 .hp-footer{background:var(--navy-deep);color:#e8eef4;border-top:3px solid var(--gold);padding-top:56px}
@@ -437,6 +476,7 @@ html{scroll-padding-top:84px}
 .hp-footer .brand-symbol>span{background:var(--navy-deep)}
 .hp-footer p{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.8;color:#b9c8d4;margin:0}
 .hp-footer p svg{flex-shrink:0;margin-top:3px}
+.hp-footer .hp-footer-gst{margin-top:10px;color:#d4b365}
 .hp-footer-bottom{
   border-top:1px solid #24405a;padding:20px 0;display:flex;justify-content:center;
   align-items:center;gap:10px;font-size:11px;color:#9db1c0;
@@ -502,6 +542,7 @@ html{scroll-padding-top:84px}
   .hp-why-list{grid-template-columns:1fr 1fr}
   .hp-approach-grid{grid-template-columns:1fr;gap:34px}
   .hp-approach-intro p{max-width:560px}
+  .hp-areas-grid{gap:38px}
   .hp-footer-grid{grid-template-columns:1fr 1fr;gap:32px}
 }
 
@@ -522,11 +563,14 @@ html{scroll-padding-top:84px}
   .hp-section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
   .hp-service-categories{grid-template-columns:1fr 1fr}
   .hp-package-grid{grid-template-columns:1fr;max-width:560px;margin:0 auto}
+  .hp-package-highlights{grid-template-columns:1fr;max-width:560px;margin-inline:auto}
   .hp-package-desc{min-height:0}
   .hp-steps{grid-template-columns:1fr 1fr}
   .hp-step:nth-child(2):after{display:none}
   .hp-vm{grid-template-columns:1fr}
   .hp-projects-toolbar{flex-direction:column;align-items:flex-start}
+  .hp-areas-grid{grid-template-columns:1fr;gap:34px}
+  .hp-areas-copy h2{max-width:760px}
   .nav-item{width:100%}
   .nav-dropdown{
     position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;
@@ -549,6 +593,8 @@ html{scroll-padding-top:84px}
   .hp-hero-actions{flex-direction:column;align-items:stretch}
   .hp-hero-actions .hp-btn{width:100%}
   .hp-hero-form{padding:22px}
+  .hp-package-highlights{margin-bottom:26px}
+  .hp-package-highlights>div{padding:14px}
   .hp-section{padding:60px 0}
   .hp-section-head h1,.hp-section-head h2{font-size:34px}
   .hp-about-visual img{height:300px}
@@ -556,12 +602,18 @@ html{scroll-padding-top:84px}
   .hp-project-grid,.hp-what-grid,.hp-service-categories{grid-template-columns:1fr}
   .hp-why{padding:60px 0}
   .hp-why-list{grid-template-columns:1fr}
+  .hp-areas-panel{padding:22px 18px;border-radius:18px}
+  .hp-main-areas{grid-template-columns:1fr}
+  .hp-main-area{min-height:0}
+  .hp-areas-actions{flex-direction:column;align-items:stretch}
+  .hp-areas-actions .hp-btn{width:100%}
   .hp-steps{grid-template-columns:1fr}
   .hp-step:after{display:none!important}
   .hp-vm-card{padding:22px}
   .hp-faq{padding:64px 0}
   .hp-faq h2{font-size:34px}
-  .hp-faq-trigger{font-size:13px;padding:18px 2px}
+  .hp-faq-trigger{font-size:13px;padding:18px 16px}
+  .hp-faq-answer p{padding:0 16px 20px}
   .hp-footer-grid{grid-template-columns:1fr;gap:26px}
   .hp-footer-bottom{flex-direction:column;align-items:center;gap:6px;text-align:center}
   .hp-footer-bottom>span[aria-hidden]{display:none}
@@ -657,7 +709,7 @@ body{font-size:var(--type-body);line-height:1.7}
 .hp-about-card strong{font-size:15px}
 .hp-project-type,.hp-project-meta dt,.hp-compare-tag,
 .hp-package-head>span,.hp-package-ribbon,.hp-service-category a,
-.hp-what-card a,.hp-what-link,.hp-step-num,.hp-form-note,
+.hp-step-num,.hp-form-note,
 .form-note,.modal .eyebrow,.quote-form label{
   font-size:var(--type-label);
 }
@@ -709,7 +761,6 @@ body{font-size:var(--type-body);line-height:1.7}
 /* ---------- Image hover treatment ---------- */
 .hp-about-visual img,
 .hp-service-category>img,
-.hp-what-card>img,
 .hp-project-card .hp-compare img{
   transition:transform .65s cubic-bezier(.22,1,.36,1),filter .65s ease;
   transform-origin:center;
@@ -717,7 +768,6 @@ body{font-size:var(--type-body);line-height:1.7}
 }
 .hp-about-visual:hover img,
 .hp-service-category:hover>img,
-.hp-what-card:hover>img,
 .hp-project-card:hover .hp-compare img{
   transform:scale(1.055);
 }
@@ -725,14 +775,12 @@ body{font-size:var(--type-body);line-height:1.7}
 @media(hover:none){
   .hp-about-visual img,
   .hp-service-category>img,
-  .hp-what-card>img,
   .hp-project-card .hp-compare img{will-change:auto}
 }
 
 @media(prefers-reduced-motion:reduce){
   .hp-about-visual img,
   .hp-service-category>img,
-  .hp-what-card>img,
   .hp-project-card .hp-compare img{
     transition:none!important;transform:none!important;will-change:auto;
   }

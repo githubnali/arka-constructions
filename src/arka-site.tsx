@@ -41,50 +41,70 @@ import {
 
 const services = [
   {
-    title: "Civil & Structural Works",
+    title: "Civil & RCC Works",
     icon: Building2,
-    detail:
-      "Foundations, PCC, RCC, concrete, masonry and plastering. Site development includes excavation, filling, levelling, compaction, roads, pavers and compound walls.",
+    detail: "Foundation, PCC, RCC, concrete, masonry, plastering and repair work.",
   },
   {
-    title: "Flooring & Finishing",
+    title: "Earth & Site Development",
+    icon: HardHat,
+    detail: "Excavation, filling, levelling, compaction and site preparation.",
+  },
+  {
+    title: "Flooring Works",
     icon: Paintbrush,
-    detail:
-      "Tiles, granite, industrial, epoxy and concrete flooring. Interior, exterior and industrial painting, textures and protective coatings. Waterproofing for terraces, toilets, roofs and structures.",
+    detail: "Tiles, granite, industrial flooring, epoxy and concrete flooring.",
   },
   {
-    title: "Fabrication & Structural Works",
+    title: "Fabrication Works",
     icon: Hammer,
-    detail:
-      "MS fabrication, structural steel, industrial sheds, PEB systems, roofing, cladding, mezzanines, staircases, handrails, gates and grills. Aluminium doors and windows, glass doors, partitions, toughened glass and structural glazing.",
+    detail: "MS fabrication, structural steel, PEB systems, industrial sheds, roofing, cladding, mezzanines, staircases, handrails, gates and grills.",
   },
   {
-    title: "Infrastructure & External Works",
+    title: "Glazing & Aluminium Works",
+    icon: Layers3,
+    detail: "Aluminium doors and windows, glass doors, partitions, toughened and structural glazing.",
+  },
+  {
+    title: "Paver Block Works",
     icon: Route,
-    detail:
-      "Power block works, roads, pavements, drainage, compound walls and external site development for residential, commercial and industrial campuses.",
+    detail: "Interlocking pavers, parking areas, walkways, kerb stones and external flooring.",
   },
   {
-    title: "Plumbing & Utilities",
+    title: "Painting Works",
+    icon: Paintbrush,
+    detail: "Interior and exterior painting, industrial, metal, texture and protective coatings.",
+  },
+  {
+    title: "Plumbing & Drainage",
     icon: Droplets,
-    detail:
-      "Water and sewage lines, chambers, STP interlinks and sanitary works. Plumbing and drainage works for new and existing buildings.",
+    detail: "Water lines, sewage lines, chambers, STP interlinks and sanitary work.",
   },
   {
-    title: "Industrial Construction",
-    icon: Factory,
-    detail:
-      "Factory modifications, machine foundations, utility civil works and infrastructure modifications for industrial facilities.",
+    title: "Road & External Works",
+    icon: Route,
+    detail: "Internal roads, driveways, storm water drains and compound walls.",
   },
-];
-
-const serviceImages = [
-  "/images/service-civil.jpg",
-  "/images/service-flooring.jpg",
-  "/images/service-fabrication.jpg",
-  "/images/service-infrastructure.jpg",
-  "/images/service-plumbing.jpg",
-  "/images/service-industrial-works.jpg",
+  {
+    title: "Waterproofing Works",
+    icon: ShieldCheck,
+    detail: "Terrace, toilet, roof and structural waterproofing.",
+  },
+  {
+    title: "Demolition Works",
+    icon: Hammer,
+    detail: "Civil demolition, flooring removal and dismantling.",
+  },
+  {
+    title: "Repair & Maintenance",
+    icon: Wrench,
+    detail: "Civil, structural, flooring and painting repairs, and general facility maintenance.",
+  },
+  {
+    title: "Industrial Works",
+    icon: Factory,
+    detail: "Factory modifications, machine foundations, utility civil works and infrastructure changes.",
+  },
 ];
 
 const serviceCategories = [
@@ -92,19 +112,19 @@ const serviceCategories = [
     title: "Residential Construction",
     icon: Home,
     image: "/images/service-residential.jpg",
-    text: "Homes, villas and apartments built around the way you live.",
+    text: "Houses, villas and apartments built around the way your family lives.",
   },
   {
     title: "Commercial Construction",
     icon: Building2,
     image: "/images/service-commercial.jpg",
-    text: "Offices, retail and commercial spaces built for business.",
+    text: "Offices, shops and showrooms built for daily business use.",
   },
   {
     title: "Industrial Construction",
     icon: Factory,
     image: "/images/service-industrial.jpg",
-    text: "Factories, plant buildings and industrial facilities built to perform.",
+    text: "Factories, plant buildings, sheds and industrial facilities built for heavy use.",
   },
 ];
 
@@ -167,65 +187,65 @@ const ongoingProjects = [
 
 const packages = [
   {
-    name: "Standard Package",
-    price: "₹2,499",
+    name: "Essential Package",
+    price: "₹2,449",
     unit: "per sqft",
-    description: "A practical, quality-first starting point for your home.",
+    description: "A simple, well-built home for families who want good quality at a fair price.",
     featured: false,
     details: [
       {
         title: "Design",
-        text: "Architectural planning and structural drawings prepared around your site and requirements.",
+        text: "Planning and structural drawings made for your plot and family needs.",
       },
       {
         title: "Project Management",
-        text: "Site supervision, material coordination and regular progress updates through construction.",
+        text: "An engineer supervises the site, checks materials and sends you regular updates.",
       },
       {
         title: "Structure",
-        text: "RCC framework, masonry, plastering and structural work executed to the agreed specification.",
+        text: "RCC frame, brickwork and plastering done to the agreed specification.",
       },
     ],
   },
   {
-    name: "Premium Package",
-    price: "₹2,749",
+    name: "Signature Package",
+    price: "₹2,699",
     unit: "per sqft",
-    description: "A balanced package with more choice in design and finishes.",
+    description: "More choices in design and finishes, with extra attention at every stage.",
     featured: true,
     details: [
       {
         title: "Design",
-        text: "Enhanced architectural planning, 3D visualisation and material selection support.",
+        text: "Better planning, 3D elevation and help in choosing materials.",
       },
       {
         title: "Project Management",
-        text: "A dedicated project coordinator, detailed scheduling and stage-wise quality checks.",
+        text: "A dedicated coordinator, a clear schedule and quality checks at each stage.",
       },
       {
         title: "Structure",
-        text: "RCC and structural steel work with upgraded specification options for your home.",
+        text: "RCC and steel work with upgraded material options.",
       },
     ],
   },
   {
-    name: "Ultra Luxury",
-    price: "₹3,499",
+    name: "Elite Luxury Package",
+    price: "₹3,449",
     unit: "per sqft",
-    description: "A bespoke approach for a home with premium details.",
+    description: "For homes where design and finishing matter most.",
     featured: false,
     details: [
       {
         title: "Design",
-        text: "Bespoke architectural design, detailed 3D visualisation and specialist finish consultation.",
+        text: "Custom design, detailed 3D views and advice on special finishes.",
       },
       {
         title: "Project Management",
-        text: "End-to-end project management with dedicated supervision and premium material coordination.",
+        text: "Full-time supervision and careful coordination of premium materials.",
       },
       {
         title: "Structure",
-        text: "Premium structural specification, enhanced finishes and detailed execution planning.",
+        text: "Higher structural specification, better finishes and detailed work planning.",
       },
     ],
   },
@@ -235,76 +255,89 @@ const whyReasons = [
   {
     icon: Users,
     title: "Experienced Team",
-    text: "A team of skilled engineers, architects and project managers.",
+    text: "Engineers, supervisors and skilled workers who have worked on houses, offices and factories.",
   },
   {
     icon: BadgeCheck,
     title: "Quality Assurance",
-    text: "A strong focus on quality throughout project execution.",
+    text: "Quality Checks at Every Stage. We check materials and workmanship at each stage, not just at the end.",
   },
   {
     icon: IndianRupee,
-    title: "Transparent Pricing",
-    text: "Clear and transparent communication around project requirements.",
+    title: "Clear Pricing",
+    text: "A written quotation with no hidden costs. If anything changes, you hear it from us first.",
   },
   {
     icon: Timer,
     title: "Timely Execution",
-    text: "A commitment to planned and timely project delivery.",
+    text: "On-Time Work. Realistic schedules and regular site monitoring so your project does not drift.",
   },
   {
     icon: ShieldCheck,
     title: "Safety First",
-    text: "Safety-conscious working practices across project activities.",
+    text: "Safety on Site. Safety gear, site induction and supervision for every worker.",
   },
   {
     icon: Layers3,
     title: "End-to-End Solutions",
-    text: "A broad range of construction and maintenance capabilities.",
+    text: "One Team, Start to Handover. Design coordination, approvals, construction and handover with the same company.",
   },
   {
     icon: HeartHandshake,
     title: "Client Satisfaction",
-    text: "A focus on understanding client expectations and delivering dependable results.",
+    text: "Happy Clients, Not Just Finished Buildings. We measure our work by repeat clients and referrals.",
   },
   {
     icon: MapPinned,
     title: "Regional Expertise",
-    text: "Based in Chengalpattu, with an understanding of the regional construction environment.",
+    text: "Local Knowledge. We know Chengalpattu and the areas around Chennai: local rules, weather, soil and suppliers.",
+  },
+  {
+    icon: Wrench,
+    title: "1 Year Free Maintenance Labour",
+    text: "After handover, we cover labour cost for maintenance work for one year. Materials are charged extra.",
   },
 ];
 
 const approachSteps = [
-  ["Understand", "Understand project requirements and expectations."],
-  ["Plan", "Define scope, resources and execution approach."],
-  ["Execute", "Carry out work with attention to quality and safety."],
-  ["Deliver", "Focus on dependable completion and client satisfaction."],
+  ["Understand", "We listen to your needs, budget and plot details."],
+  ["Plan", "We fix the scope, cost, materials and timeline in writing."],
+  ["Build", "We start work with regular site visits and quality checks."],
+  ["Handover", "We finish, inspect with you and hand over the keys."],
 ];
 
 const faqs = [
   [
-    "What services do you provide?",
-    "We provide a complete range of construction services for residential, commercial and industrial projects. Our services include building construction, renovation, remodeling, architectural planning, structural works, finishing and maintenance.",
+    "What is the house construction cost per sq ft in Chennai with ARKA Constructions?",
+    "Our home construction packages start from ₹2,449 per sq ft. The Essential package is ₹2,449, the Signature package is ₹2,699 and the Elite Luxury package is ₹3,449 per sq ft. The final quote depends on your plot, floors, materials and local approvals.",
   ],
   [
-    "Is your construction team experienced?",
-    "Yes. Our team includes engineers, supervisors and skilled craftspeople with experience across residential, commercial and industrial projects. Every project is led with a focus on quality, safety and clear communication.",
+    "What is the minimum area you build for?",
+    "We take up homes starting from 1,200 sq ft. If your plan is smaller or larger, call us and we will check what is possible.",
   ],
   [
-    "Do you complete projects on time?",
-    "We plan realistic schedules, coordinate resources and monitor progress to deliver projects on time. Timelines are confirmed in the written scope before work begins.",
+    "Do you offer free maintenance after handover?",
+    "Yes. We cover the labour cost of maintenance work for one year after handover. Material cost is charged separately.",
   ],
   [
-    "Where is ARKA Constructions based?",
-    "We are based in Peramanur, Maraimalai Nagar, Chengalpattu, Tamil Nadu. Share your site location with us so we can confirm availability for your area, including enquiries from Chennai.",
+    "Do you build in Chennai and Chengalpattu?",
+    "Yes. Chennai and Chengalpattu are our main areas. We also build in Maraimalai Nagar, Kanchipuram, Thiruvallur, Thiruvannamalai, Oragadam, Sriperumbudur, Mahindra World City and Singaperumal Koil.",
+  ],
+  [
+    "Do you build only houses, or commercial and industrial buildings too?",
+    "We build houses, villas, offices, shops, factories and plant buildings. We also do civil, RCC, steel fabrication, flooring, waterproofing, plumbing and repair work.",
   ],
   [
     "How do I get a construction quotation?",
-    "Choose Get a Free Quote, add your contact details and a brief description, then send the prepared enquiry through your email app. You can also call 9952525185 or 9994735262.",
+    "Fill in the quote form with your name, phone number, site location and plot area, or call us. Our team will speak to you, understand your plan and share a clear written quotation.",
   ],
   [
-    "Do you handle renovations and industrial modifications?",
-    "Yes. We undertake new works as well as modification and maintenance contracts, including factory modifications, machine foundations, utility civil works, repairs and dismantling.",
+    "Do you handle renovation and industrial modification work?",
+    "Yes. We do house renovation, repair and maintenance, and also factory modifications, machine foundations and utility civil works for industrial units.",
+  ],
+  [
+    "Who runs ARKA Constructions?",
+    "ARKA Constructions is led by Kamarajan Krishnan, an engineer with experience in residential, commercial and industrial projects. The company is based in Maraimalai Nagar, Chengalpattu.",
   ],
 ];
 
@@ -312,9 +345,23 @@ const footerServices = [
   "Civil & RCC Works",
   "Flooring Works",
   "Fabrication Works",
-  "Industrial Works",
+  "Glazing & Aluminium",
+  "Paver Blocks",
   "Waterproofing",
+  "Industrial Works",
   "Repair & Maintenance",
+];
+
+const mainServiceAreas = ["Chennai", "Chengalpattu"];
+const nearbyServiceAreas = [
+  "Maraimalai Nagar",
+  "Kanchipuram",
+  "Thiruvallur",
+  "Thiruvannamalai",
+  "Oragadam",
+  "Sriperumbudur",
+  "Mahindra World City",
+  "Singaperumal Koil",
 ];
 
 const heroSlides = [
@@ -346,7 +393,6 @@ const cardMotion = {
 
 type Modal =
   | { type: "quote"; interest?: string }
-  | { type: "service"; index: number }
   | { type: "package"; index: number }
   | { type: "privacy" }
   | null;
@@ -390,10 +436,10 @@ function HeroQuoteForm() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const body = `Hello ARKA Constructions,\n\nI would like to discuss a project.\n\nName: ${data.get("name")}\nPhone: ${data.get("phone")}\nEmail: ${data.get("email")}\nService required: ${data.get("service")}\nProject location: ${data.get("location")}\n\nPlease contact me to discuss the next steps.\n`;
+    const body = `Hello ARKA Constructions,\n\nI would like to discuss a construction project.\n\nName: ${data.get("name")}\nPhone: ${data.get("phone")}\nEmail: ${data.get("email") || "Not provided"}\nSite location: ${data.get("location")}\nPlot area: ${data.get("plotArea")}\n\nPlease contact me to discuss the next steps.\n`;
     setEmailLink(
       `mailto:arkaconstructions96@gmail.com?subject=${encodeURIComponent(
-        "Website enquiry — " + data.get("service"),
+        "Website construction enquiry — " + data.get("location"),
       )}&body=${encodeURIComponent(body)}`,
     );
     setPrepared(true);
@@ -425,7 +471,7 @@ function HeroQuoteForm() {
   return (
     <form className="hp-hero-form" onSubmit={submit}>
       <h2>Let&rsquo;s Discuss Your Project</h2>
-      <p>Tell us what you are planning. Our team will get in touch.</p>
+      <p>Share your plot details. Our team will call you back.</p>
       <label className="hp-field">
         <User size={16} />
         <input
@@ -447,8 +493,8 @@ function HeroQuoteForm() {
           pattern="[+]?[0-9]{10,15}"
           title="Enter 10 to 15 digits, optionally starting with +. Do not include spaces."
           maxLength={20}
-          placeholder="Mobile Number"
-          aria-label="Mobile number"
+          placeholder="Phone Number"
+          aria-label="Phone number"
         />
       </label>
       <label className="hp-field">
@@ -458,23 +504,9 @@ function HeroQuoteForm() {
           type="email"
           autoComplete="email"
           maxLength={150}
-          placeholder="Email Address"
-          aria-label="Email address"
+          placeholder="Email (optional)"
+          aria-label="Email (optional)"
         />
-      </label>
-      <label className="hp-field">
-        <Wrench size={16} />
-        <select name="service" defaultValue="" aria-label="Service required">
-          <option value="" disabled>
-            Service Required
-          </option>
-          <option>Residential Construction</option>
-          <option>Commercial Construction</option>
-          <option>Industrial Construction</option>
-          <option>Renovation / Remodeling</option>
-          <option>Not sure yet</option>
-        </select>
-        <ChevronDown size={15} />
       </label>
       <label className="hp-field">
         <MapPin size={16} />
@@ -483,9 +515,22 @@ function HeroQuoteForm() {
           required
           autoComplete="address-level2"
           maxLength={150}
-          placeholder="Project Location"
-          aria-label="Project location"
+          placeholder="Site Location"
+          aria-label="Site location"
         />
+      </label>
+      <label className="hp-field">
+        <Layers3 size={16} />
+        <select name="plotArea" required defaultValue="" aria-label="Plot area">
+          <option value="" disabled>
+            Plot Area (sq ft)
+          </option>
+          <option>1200 - 2000 sq ft</option>
+          <option>2000 - 3000 sq ft</option>
+          <option>3000 - 4000 sq ft</option>
+          <option>4000+ sq ft</option>
+        </select>
+        <ChevronDown size={15} />
       </label>
       <button className="hp-btn hp-btn-gold" type="submit">
         Request a Callback <ArrowUpRight size={16} />
@@ -738,12 +783,14 @@ export default function ArkaSite({
               <div className="hp-hero-copy">
                 <Eyebrow light>ARKA Constructions</Eyebrow>
                 <h1 id="hero-title">
-                  Best Construction Company in <span>Chennai</span>
+                  Best Construction Company in <span>Chennai &amp; Chengalpattu</span>
                 </h1>
                 <p>
-                  Reliable residential, commercial and industrial construction
-                  delivered with a commitment to quality, safety and timely
-                  execution.
+                  Planning to build a house, shop or factory? ARKA Constructions
+                  builds homes, commercial buildings and industrial works in
+                  Chennai, Chengalpattu, Maraimalai Nagar, Oragadam and nearby
+                  areas. Packages start from ₹2,449 per sq ft, for homes from
+                  1,200 sq ft.
                 </p>
                 <div className="hp-hero-tags">
                   <span className="hp-hero-tag">
@@ -776,26 +823,25 @@ export default function ArkaSite({
               <div className="hp-about-copy">
                 <Eyebrow>About ARKA</Eyebrow>
                 <h2>
-                  Construction Solutions <span>You Can Rely On</span>
+                  A Building Construction Company in <span>Chennai and Chengalpattu</span>
                 </h2>
                 <p>
-                  ARKA Constructions is a quality-driven construction company
-                  based in Chengalpattu, Tamil Nadu, delivering solutions across
-                  residential, commercial, industrial and infrastructure
-                  segments.
+                  ARKA Constructions is a construction company based in
+                  Maraimalai Nagar, Chengalpattu, serving Chennai and the towns
+                  around it. We build houses, commercial buildings, factories
+                  and the civil works around them. Whether it is a family home
+                  or a plant building, we keep the same rules: honest quotes,
+                  good materials and work finished when we said it would be.
                 </p>
                 <p>
-                  Led by Kamarajan Krishnan, an engineer with years of
-                  experience across residential, commercial and industrial
-                  projects, our team of skilled engineers, architects, project
-                  managers and craftsmen focuses on creating durable, functional
-                  and dependable structures. We combine traditional
-                  craftsmanship with modern construction techniques and project
-                  management practices.
+                  Our founder, Kamarajan Krishnan, is an engineer who has worked
+                  on residential, commercial and industrial projects. He leads a
+                  team of engineers, supervisors and skilled workers who handle
+                  everything from foundation to finishing.
                 </p>
-                <a className="hp-btn hp-btn-outline" href="/#approach">
-                  Discover Our Company <ArrowUpRight size={17} />
-                </a>
+                <p>
+                  We are a registered MSME business with a GST registration.
+                </p>
               </div>
               <div className="hp-about-visual">
                 <div className="hp-about-image">
@@ -831,15 +877,15 @@ export default function ArkaSite({
                 <div>
                   <Eyebrow>Our Construction Projects</Eyebrow>
                   {view === "projects" ? (
-                    <h1>See the <span>transformation.</span></h1>
+                    <h1>See the <span>Transformation</span></h1>
                   ) : (
-                    <h2>See the <span>transformation.</span></h2>
+                    <h2>See the <span>Transformation</span></h2>
                   )}
                 </div>
                 <p>
-                  Drag the slider to compare the design intent with the
-                  completed work. Every project begins with a vision; here is
-                  how it finishes.
+                  Slide the handle to compare the design with the finished
+                  building. Every project starts as a drawing and ends as a
+                  place people use every day.
                 </p>
               </div>
               <div className="hp-projects-toolbar">
@@ -1020,15 +1066,21 @@ export default function ArkaSite({
                 <div>
                   <Eyebrow>Our Construction Packages</Eyebrow>
                   {view === "packages" ? (
-                    <h1>Our Home <span>Construction Packages</span></h1>
+                    <h1>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h1>
                   ) : (
-                    <h2>Our Home <span>Construction Packages</span></h2>
+                    <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h2>
                   )}
                 </div>
                 <p>
-                  Choose a starting point for your home. Every package is refined
-                  around your site, scope and specification.
+                  Pick the package that fits your budget. We build homes from
+                  1,200 sq ft, and every package can be adjusted for your site
+                  and choice of materials.
                 </p>
+              </div>
+              <div className="hp-package-highlights" aria-label="Package highlights">
+                <div><Home size={19} /><span>Starting from <strong>1,200 sq ft</strong></span></div>
+                <div><IndianRupee size={19} /><span><strong>Competitive rates</strong> for clear specifications</span></div>
+                <div><Wrench size={19} /><span><strong>1 year free maintenance labour</strong> after handover</span></div>
               </div>
               <div className="hp-package-grid">
                 {packages.map((pkg, index) => (
@@ -1071,8 +1123,8 @@ export default function ArkaSite({
                 ))}
               </div>
               <p className="hp-package-note">
-                Indicative starting rates per sq ft. Final quotation depends on
-                area, scope, materials, site conditions and approvals.
+                Rates are starting rates per sq ft. Your final quote depends on
+                area, floors, materials, site conditions and approvals.
               </p>
             </div>
           </motion.section>
@@ -1089,14 +1141,14 @@ export default function ArkaSite({
                 <div>
                   <Eyebrow>Our Construction Services</Eyebrow>
                   {view === "services" ? (
-                    <h1>Built for <span>every kind of project.</span></h1>
+                    <h1>Civil Construction Company in Chennai &amp; Chengalpattu for <span>Homes, Offices and Factories</span></h1>
                   ) : (
-                    <h2>Built for <span>every kind of project.</span></h2>
+                    <h2>Civil Construction Company in Chennai &amp; Chengalpattu for <span>Homes, Offices and Factories</span></h2>
                   )}
                 </div>
                 <p>
-                  Residential, commercial and industrial construction delivered
-                  by one accountable team.
+                  One team for your house, your shop or your plant. You deal
+                  with one company from start to handover.
                 </p>
               </div>
               <div className="hp-service-categories">
@@ -1138,39 +1190,28 @@ export default function ArkaSite({
                   <h2>What We Do</h2>
                 </div>
                 <p>
-                  From foundational civil works to specialised industrial
-                  solutions, we offer a comprehensive range of construction
-                  services.
+                  Complete construction work in Chennai &amp; Chengalpattu, from
+                  foundation to finishing.
                 </p>
               </div>
+              <p className="hp-what-intro">
+                When you build with ARKA, you do not need to hire a different
+                contractor for each job. Civil work, steel, flooring, glazing,
+                plumbing and painting are all handled by our own team, whether
+                you are building a home, a commercial building or a factory.
+              </p>
               <div className="hp-what-grid">
-                {services.map((service, index) => (
+                {services.map((service) => (
                   <motion.article {...cardMotion} className="hp-what-card" key={service.title}>
-                    <img
-                      src={serviceImages[index]}
-                      alt={service.title}
-                      loading="lazy"
-                    />
                     <div className="hp-what-body">
                       <span className="hp-what-icon">
                         <service.icon size={24} />
                       </span>
                       <h3>{service.title}</h3>
-                      <p>{service.detail.split(".")[0]}.</p>
-                      <button
-                        className="hp-what-link"
-                        onClick={() => openModal({ type: "service", index })}
-                      >
-                        Explore Services <ArrowUpRight size={15} />
-                      </button>
+                      <p>{service.detail}</p>
                     </div>
                   </motion.article>
                 ))}
-              </div>
-              <div className="hp-view-all">
-                <a className="hp-btn hp-btn-outline" href="/services">
-                  View All Services <ArrowUpRight size={16} />
-                </a>
               </div>
             </div>
           </motion.section>
@@ -1182,11 +1223,11 @@ export default function ArkaSite({
               <div className="hp-why-copy">
                 <Eyebrow light>Why Choose ARKA</Eyebrow>
                 <h2>
-                  A Construction Partner <span>You Can Rely On</span>
+                  Why Families and Businesses in Chennai &amp; Chengalpattu <span>Choose ARKA</span>
                 </h2>
                 <p>
-                  Every project deserves a dependable team, a clear process and
-                  a commitment to quality.
+                  A good builder is one who answers your calls, tells you the
+                  cost up front and finishes on time. This is how we work.
                 </p>
               </div>
               <div className="hp-why-list">
@@ -1205,6 +1246,59 @@ export default function ArkaSite({
         )}
 
         {view === "home" && (
+          <motion.section {...sectionMotion} className="hp-section hp-areas" id="areas-we-cover">
+            <div className="container hp-areas-grid">
+              <div className="hp-areas-copy">
+                <Eyebrow light>Areas We Cover</Eyebrow>
+                <h2>
+                  Construction Services in <span>Chennai, Chengalpattu,</span>{" "}
+                  Kanchipuram, Oragadam &amp; Nearby Areas
+                </h2>
+                <p>
+                  Chennai and Chengalpattu are our main areas. We also take up
+                  work in the towns and industrial belts around them. If your
+                  site is nearby and not listed, call us and we will tell you
+                  honestly if we can take it up.
+                </p>
+                <div className="hp-areas-actions">
+                  <a className="hp-btn hp-btn-gold" href="tel:+919952525185">
+                    Call 99525 25185
+                  </a>
+                  <button className="hp-btn hp-btn-outline" onClick={() => openModal({ type: "quote" })}>
+                    Get a Free Quote
+                  </button>
+                </div>
+              </div>
+              <div className="hp-areas-panel">
+                <div className="hp-area-panel-group">
+                  <strong className="hp-area-label">Main areas</strong>
+                  <div className="hp-main-areas">
+                    {mainServiceAreas.map((area) => (
+                      <article className="hp-main-area" key={area}>
+                        <span className="hp-area-pin"><MapPin size={21} /></span>
+                        <h3>{area}</h3>
+                        <p>{area === "Chennai" ? "Homes, offices and industrial works" : "Our base, in Maraimalai Nagar"}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+                <div className="hp-area-panel-group hp-area-nearby">
+                  <strong className="hp-area-label">Also serving</strong>
+                  <div className="hp-area-chips">
+                    {nearbyServiceAreas.map((area) => (
+                      <span key={area}><MapPin size={13} />{area}</span>
+                    ))}
+                  </div>
+                </div>
+                <p className="hp-area-note">
+                  Site not on the list? <button onClick={() => openModal({ type: "quote" })}>Call us</button> and we will check.
+                </p>
+              </div>
+            </div>
+          </motion.section>
+        )}
+
+        {view === "home" && (
           <motion.section
             {...sectionMotion}
             className="hp-section hp-section-ivory hp-approach"
@@ -1215,17 +1309,16 @@ export default function ArkaSite({
                 <div className="hp-approach-intro">
                   <Eyebrow>Our Approach</Eyebrow>
                   <h2>
-                    From Planning <span>to Completion</span>
+                    From Plan to Handover: <span>How We Build</span>
                   </h2>
                   <p>
-                    A clear, considered process that keeps you informed from the
-                    first conversation to handover.
+                    No guesswork. You know what is happening at every step.
                   </p>
                   <button
                     className="hp-btn hp-btn-dark"
                     onClick={() => openModal({ type: "quote" })}
                   >
-                    Let&rsquo;s Talk About Your Project{" "}
+                    Talk to Our Team{" "}
                     <ArrowUpRight size={16} />
                   </button>
                 </div>
@@ -1261,8 +1354,8 @@ export default function ArkaSite({
                   <div>
                     <h3>Our Vision</h3>
                     <p>
-                      To be a trusted construction partner recognised for
-                      quality, innovation and excellence in every project.
+                      To be the construction partner people in Tamil Nadu trust
+                      for quality and honest work.
                     </p>
                   </div>
                 </motion.article>
@@ -1271,9 +1364,9 @@ export default function ArkaSite({
                   <div>
                     <h3>Our Mission</h3>
                     <p>
-                      To deliver reliable and high-quality construction
-                      solutions through skilled professionals, modern techniques
-                      and a strong commitment to client satisfaction.
+                      To deliver good-quality construction on time and within
+                      budget, through skilled people, modern methods and clear
+                      communication.
                     </p>
                   </div>
                 </motion.article>
@@ -1376,6 +1469,9 @@ export default function ArkaSite({
               <p>
                 <MapPin size={14} /> 23/3b3, Union Salai Street, Peramanur,
                 Maraimalai Nagar, Chengalpattu – 603209, Tamil Nadu, India.
+              </p>
+              <p className="hp-footer-gst">
+                <BadgeCheck size={14} /> GST: 33EJWPK0310L3Z1
               </p>
             </div>
           </div>
@@ -1539,30 +1635,6 @@ export default function ArkaSite({
                   </p>
                 </div>
               )}
-            </>
-          )}
-          {modal?.type === "service" && (
-            <>
-              <Eyebrow>Our capabilities</Eyebrow>
-              <h2 id="modal-title">{services[modal.index].title}</h2>
-              <p>{services[modal.index].detail}</p>
-              <div className="modal-callout">
-                New works, modifications and maintenance requirements can be
-                discussed with our team. Share your location and scope for a
-                tailored quotation.
-              </div>
-              <button
-                className="hp-btn hp-btn-gold"
-                onClick={() => {
-                  setPrepared(false);
-                  setModal({
-                    type: "quote",
-                    interest: services[modal.index].title,
-                  });
-                }}
-              >
-                Enquire About This Service <ArrowUpRight size={18} />
-              </button>
             </>
           )}
           {modal?.type === "package" && (
