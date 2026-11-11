@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://arkaconstruction.in/sitemap.xml
-Host: arkaconstruction.in
