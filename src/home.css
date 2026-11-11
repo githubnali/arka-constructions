@@ -79,8 +79,8 @@ html{scroll-padding-top:84px}
 .hp-hero-actions .hp-btn-outline-light{background:transparent;border-color:rgba(255,255,255,.65);color:#fff}
 .hp-hero-actions .hp-btn-outline-light:hover{background:rgba(255,255,255,.12);border-color:#fff}
 .hp-hero-form .hp-btn:disabled{background:#aa6b66;border-color:#aa6b66;color:#fff}
-.turnstile-retry{display:inline;padding:0;border:0;background:none;color:#76251d;font:inherit;font-weight:700;text-decoration:underline}
-.turnstile-widget{min-height:0}
+.recaptcha-retry{display:inline;padding:0;border:0;background:none;color:#76251d;font:inherit;font-weight:700;text-decoration:underline}
+.recaptcha-widget{min-height:0}
 
 .hp-section{padding:96px 0}
 .hp-section-cream{background:var(--cream)}
@@ -514,6 +514,8 @@ html{scroll-padding-top:84px}
   border-radius:16px;box-shadow:0 30px 90px rgba(3,14,26,.45);
 }
 .modal::backdrop{background:rgba(6,22,38,.72);backdrop-filter:blur(6px)}
+.quote-backdrop{position:fixed;inset:0;z-index:100;background:rgba(6,22,38,.72);backdrop-filter:blur(6px)}
+.modal-quote[open]{position:fixed;inset:0;z-index:101}
 .modal-inner{padding:40px}
 .modal-close{
   right:14px;top:14px;width:38px;height:38px;border-radius:50%;

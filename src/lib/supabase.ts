@@ -11,11 +11,11 @@ export type EnquiryInput = {
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
 const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
-export async function submitEnquiry(input: EnquiryInput, turnstileToken: string, honeypot = "", formStartedAt = 0) {
-  if (!supabaseUrl || !publishableKey || !turnstileSiteKey) throw new Error("Form protection is not configured yet.");
-  if (!turnstileToken) throw new Error("Please complete the security check and try again.");
+export async function submitEnquiry(input: EnquiryInput, recaptchaToken: string, honeypot = "", formStartedAt = 0) {
+  if (!supabaseUrl || !publishableKey || !recaptchaSiteKey) throw new Error("Form protection is not configured yet.");
+  if (!recaptchaToken) throw new Error("Please complete the security check and try again.");
 
   const response = await fetch(`${supabaseUrl}/functions/v1/submit-enquiry`, {
     method: "POST",
@@ -23,7 +23,7 @@ export async function submitEnquiry(input: EnquiryInput, turnstileToken: string,
       apikey: publishableKey,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ ...input, turnstile_token: turnstileToken, website: honeypot, form_started_at: formStartedAt, page_url: window.location.href.slice(0, 500) }),
+    body: JSON.stringify({ ...input, recaptcha_token: recaptchaToken, website: honeypot, form_started_at: formStartedAt, page_url: window.location.href.slice(0, 500) }),
   });
 
   if (!response.ok) {

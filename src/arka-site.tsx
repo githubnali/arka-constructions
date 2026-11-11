@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, LazyMotion, MotionConfig, domAnimation, m } from "framer-motion";
+import { RecaptchaWidget } from "./components/RecaptchaWidget";
 import { submitEnquiry } from "./lib/supabase";
 import {
   ArrowUpRight,
@@ -407,77 +408,6 @@ type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 const phonePattern = /^\+?[0-9]{10,15}$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-declare global {
-  interface Window {
-    turnstile?: {
-      render: (element: HTMLElement, options: Record<string, unknown>) => string;
-      remove: (widgetId: string) => void;
-    };
-  }
-}
-
-function TurnstileWidget({ onToken, resetKey = 0 }: { onToken: (token: string) => void; resetKey?: number }) {
-  const container = useRef<HTMLDivElement>(null);
-  const [retryKey, setRetryKey] = useState(0);
-  const [widgetError, setWidgetError] = useState("");
-  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
-
-  useEffect(() => {
-    if (!siteKey || !container.current) return;
-    let cancelled = false;
-    let widgetId: string | undefined;
-    let script: HTMLScriptElement | null = null;
-    const handleScriptError = () => {
-      if (cancelled) return;
-      onToken("");
-      setWidgetError("The security check could not load. Check your connection and try again.");
-      script?.remove();
-    };
-    const render = () => {
-      if (cancelled || !container.current || !window.turnstile) return;
-      widgetId = window.turnstile.render(container.current, {
-        sitekey: siteKey,
-        appearance: "interaction-only",
-        callback: (token: string) => { setWidgetError(""); onToken(token); },
-        "expired-callback": () => { onToken(""); setWidgetError("The security check expired. Please try again."); },
-        "error-callback": (code: string) => {
-          onToken("");
-          setWidgetError(`The security check could not complete (code: ${code}). Please try again.`);
-        },
-        theme: "light",
-      });
-    };
-    setWidgetError("");
-    if (window.turnstile) render();
-    else {
-      script = document.querySelector<HTMLScriptElement>("script[data-turnstile]");
-      const isNewScript = !script;
-      if (!script) {
-        script = document.createElement("script");
-        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-        script.async = true;
-        script.defer = true;
-        script.dataset.turnstile = "true";
-      }
-      script.addEventListener("load", render, { once: true });
-      script.addEventListener("error", handleScriptError, { once: true });
-      if (isNewScript) document.head.appendChild(script);
-    }
-    return () => {
-      cancelled = true;
-      script?.removeEventListener("load", render);
-      script?.removeEventListener("error", handleScriptError);
-      if (widgetId) window.turnstile?.remove(widgetId);
-    };
-  }, [siteKey, onToken, resetKey, retryKey]);
-
-  if (!siteKey) return <p className="form-error" role="alert">Security check is not configured.</p>;
-  return <div className="turnstile-check">
-    <div className="turnstile-widget" ref={container} aria-label="Security check" />
-    {widgetError && <p className="form-error" role="alert">{widgetError} <button type="button" className="turnstile-retry" onClick={() => setRetryKey((key) => key + 1)}>Retry security check</button></p>}
-  </div>;
-}
-
 function validateEnquiryForm(data: FormData, form: "hero" | "quote_modal") {
   const errors: EnquiryErrors = {};
   const value = (name: EnquiryField) => String(data.get(name) || "").trim();
@@ -648,8 +578,8 @@ function HeroQuoteForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<EnquiryErrors>({});
-  const [turnstileToken, setTurnstileToken] = useState("");
-  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const [recaptchaResetKey, setRecaptchaResetKey] = useState(0);
   const [formStartedAt] = useState(() => Date.now());
 
   function clearFieldError(field: EnquiryField) {
@@ -681,15 +611,15 @@ function HeroQuoteForm() {
         site_location: String(data.get("location") || "").trim(),
         plot_area: String(data.get("plotArea") || "").trim(),
         source: "hero",
-      }, turnstileToken, String(data.get("website") || ""), formStartedAt);
+      }, recaptchaToken, String(data.get("website") || ""), formStartedAt);
       form.reset();
       setSubmitted(true);
-      setTurnstileToken("");
-      setTurnstileResetKey((key) => key + 1);
+      setRecaptchaToken("");
+      setRecaptchaResetKey((key) => key + 1);
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
-      setTurnstileToken("");
-      setTurnstileResetKey((key) => key + 1);
+      setRecaptchaToken("");
+      setRecaptchaResetKey((key) => key + 1);
     } finally {
       setSubmitting(false);
     }
@@ -733,9 +663,9 @@ function HeroQuoteForm() {
         {fieldErrors.plotArea && <span className="field-error" id="hero-area-error">{fieldErrors.plotArea}</span>}
       </div>
       <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-      <TurnstileWidget onToken={setTurnstileToken} resetKey={turnstileResetKey} />
+      <RecaptchaWidget onToken={setRecaptchaToken} resetKey={recaptchaResetKey} />
       {error && <p className="form-error" role="alert">{error}</p>}
-      <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting || !turnstileToken}>
+      <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting || !recaptchaToken}>
         {submitting ? "Submitting…" : "Request a Callback"} {!submitting && <ArrowUpRight size={16} />}
       </button>
       <p className="hp-form-note">By submitting, you agree that ARKA may contact you about your project.</p>
@@ -796,8 +726,8 @@ export default function ArkaSite({
   const [modalSubmitting, setModalSubmitting] = useState(false);
   const [modalError, setModalError] = useState("");
   const [modalFieldErrors, setModalFieldErrors] = useState<EnquiryErrors>({});
-  const [modalTurnstileToken, setModalTurnstileToken] = useState("");
-  const [modalTurnstileResetKey, setModalTurnstileResetKey] = useState(0);
+  const [modalRecaptchaToken, setModalRecaptchaToken] = useState("");
+  const [modalRecaptchaResetKey, setModalRecaptchaResetKey] = useState(0);
   const [modalFormStartedAt] = useState(() => Date.now());
   const [emailLink, setEmailLink] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
@@ -815,13 +745,31 @@ export default function ArkaSite({
   function closeModal() {
     dialog.current?.close();
     setModal(null);
-    returnFocus.current?.focus();
   }
 
   useEffect(() => {
-    if (modal) {
-      dialog.current?.showModal();
+    const element = dialog.current;
+    if (!modal || !element) return;
+    const trigger = returnFocus.current;
+    const background: { element: HTMLElement; inert: boolean }[] = [];
+    if (modal.type === "quote") {
+      // Google's challenge is attached to body. A native modal would make it
+      // inert and place it behind the top layer, regardless of its z-index.
+      for (const sibling of Array.from(element.parentElement?.children || [])) {
+        if (!(sibling instanceof HTMLElement) || sibling === element || sibling.classList.contains("quote-backdrop")) continue;
+        background.push({ element: sibling, inert: sibling.inert });
+        sibling.inert = true;
+      }
+      element.show();
+      element.querySelector<HTMLButtonElement>(".modal-close")?.focus();
+    } else {
+      element.showModal();
     }
+    return () => {
+      element.close();
+      for (const item of background) item.element.inert = item.inert;
+      trigger?.focus();
+    };
   }, [modal]);
 
   useEffect(() => {
@@ -843,11 +791,15 @@ export default function ArkaSite({
       if (event.key === "Escape") {
         setMenu(false);
         setServicesOpen(false);
+        if (modal?.type === "quote" && !event.defaultPrevented) {
+          dialog.current?.close();
+          setModal(null);
+        }
       }
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [modal]);
 
   function prepareQuote(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -892,15 +844,15 @@ export default function ArkaSite({
         service: String(data.get("service") || "").trim(),
         message: String(data.get("message") || "").trim() || undefined,
         source: "quote_modal",
-      }, modalTurnstileToken, String(data.get("website") || ""), modalFormStartedAt);
+      }, modalRecaptchaToken, String(data.get("website") || ""), modalFormStartedAt);
       form.reset();
       setPrepared(true);
-      setModalTurnstileToken("");
-      setModalTurnstileResetKey((key) => key + 1);
+      setModalRecaptchaToken("");
+      setModalRecaptchaResetKey((key) => key + 1);
     } catch (submissionError) {
       setModalError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
-      setModalTurnstileToken("");
-      setModalTurnstileResetKey((key) => key + 1);
+      setModalRecaptchaToken("");
+      setModalRecaptchaResetKey((key) => key + 1);
     } finally {
       setModalSubmitting(false);
     }
@@ -1740,9 +1692,10 @@ export default function ArkaSite({
 
       <a className="whatsapp-float" href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Message ARKA on WhatsApp"><WhatsAppIcon size={28} /></a>
 
+      {modal?.type === "quote" && <div className="quote-backdrop" aria-hidden="true" onClick={closeModal} />}
       <dialog
         ref={dialog}
-        className="modal"
+        className={`modal${modal?.type === "quote" ? " modal-quote" : ""}`}
         aria-labelledby="modal-title"
         onCancel={(event) => {
           event.preventDefault();
@@ -1872,9 +1825,9 @@ export default function ArkaSite({
                   By submitting, you agree that ARKA may contact you about your project.
                 </p>
                 <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-                <TurnstileWidget onToken={setModalTurnstileToken} resetKey={modalTurnstileResetKey} />
+                <RecaptchaWidget onToken={setModalRecaptchaToken} resetKey={modalRecaptchaResetKey} />
                 {modalError && <p className="form-error" role="alert">{modalError}</p>}
-                <button className="hp-btn hp-btn-gold" type="submit" disabled={modalSubmitting || !modalTurnstileToken}>
+                <button className="hp-btn hp-btn-gold" type="submit" disabled={modalSubmitting || !modalRecaptchaToken}>
                   {modalSubmitting ? "Submitting…" : "Send My Enquiry"} {!modalSubmitting && <ArrowRight size={18} />}
                 </button>
               </form>

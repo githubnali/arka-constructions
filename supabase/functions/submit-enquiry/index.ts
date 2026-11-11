@@ -19,29 +19,36 @@ Deno.serve(async (request) => {
 
   const supabaseUrl = Deno.env.get("SUPABASE_URL");
   const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  const turnstileSecret = Deno.env.get("TURNSTILE_SECRET_KEY");
-  if (!supabaseUrl || !serviceRoleKey || !turnstileSecret) return json({ error: "Form protection is not configured." }, 500);
+  const recaptchaSecret = Deno.env.get("RECAPTCHA_SECRET_KEY");
+  if (!supabaseUrl || !serviceRoleKey || !recaptchaSecret) return json({ error: "Form protection is not configured." }, 500);
 
   const payload = await request.json().catch(() => null);
-  if (!payload || payload.website || !payload.turnstile_token) return json({ error: "Unable to verify this submission." }, 400);
+  if (!payload || payload.website || typeof payload.recaptcha_token !== "string" || !payload.recaptcha_token.trim()) return json({ error: "Unable to verify this submission." }, 400);
   if (Date.now() - Number(payload.form_started_at || 0) < 2500) return json({ error: "Please take a moment to complete the form." }, 429);
 
   const clientIp = request.headers.get("cf-connecting-ip") || request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const ipHash = await sha256(`${clientIp}:${turnstileSecret}`);
+  const ipHash = await sha256(`${clientIp}:${recaptchaSecret}`);
   const recent = await fetch(`${supabaseUrl}/rest/v1/enquiries?select=id&submission_ip_hash=eq.${ipHash}&created_at=gte.${encodeURIComponent(new Date(Date.now() - 15 * 60_000).toISOString())}&limit=6`, {
     headers: { apikey: serviceRoleKey, Authorization: `Bearer ${serviceRoleKey}` },
   });
   if (recent.ok && (await recent.json()).length >= 5) return json({ error: "Too many enquiries from this connection. Please try again later." }, 429);
 
-  const turnstile = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ secret: turnstileSecret, response: String(payload.turnstile_token), remoteip: clientIp }),
-  });
-  const verification = await turnstile.json();
-  if (!verification.success) return json({ error: "Security check failed. Please try again." }, 403);
+  let verification: { success?: boolean };
+  try {
+    const recaptcha = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ secret: recaptchaSecret, response: payload.recaptcha_token, ...(clientIp !== "unknown" ? { remoteip: clientIp } : {}) }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!recaptcha.ok) throw new Error("Verification unavailable");
+    verification = await recaptcha.json();
+  } catch {
+    return json({ error: "Security check is unavailable. Please try again." }, 503);
+  }
+  if (verification?.success !== true) return json({ error: "Security check failed. Please complete reCAPTCHA again." }, 403);
 
-  const { turnstile_token: _token, website: _website, form_started_at: _started, ...enquiry } = payload;
+  const { recaptcha_token: _token, website: _website, form_started_at: _started, ...enquiry } = payload;
   const insert = await fetch(`${supabaseUrl}/rest/v1/enquiries`, {
     method: "POST",
     headers: { apikey: serviceRoleKey, Authorization: `Bearer ${serviceRoleKey}`, "Content-Type": "application/json", Prefer: "return=minimal" },
