@@ -11,19 +11,23 @@ export type EnquiryInput = {
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL?.replace(/\/$/, "");
 const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
 
-export async function submitEnquiry(input: EnquiryInput) {
-  if (!supabaseUrl || !publishableKey) throw new Error("Supabase is not configured.");
+export async function submitEnquiry(input: EnquiryInput, turnstileToken: string, honeypot = "", formStartedAt = 0) {
+  if (!supabaseUrl || !publishableKey || !turnstileSiteKey) throw new Error("Form protection is not configured yet.");
+  if (!turnstileToken) throw new Error("Please complete the security check and try again.");
 
-  const response = await fetch(`${supabaseUrl}/rest/v1/enquiries`, {
+  const response = await fetch(`${supabaseUrl}/functions/v1/submit-enquiry`, {
     method: "POST",
     headers: {
       apikey: publishableKey,
       "Content-Type": "application/json",
-      Prefer: "return=minimal",
     },
-    body: JSON.stringify({ ...input, page_url: window.location.href.slice(0, 500) }),
+    body: JSON.stringify({ ...input, turnstile_token: turnstileToken, website: honeypot, form_started_at: formStartedAt, page_url: window.location.href.slice(0, 500) }),
   });
 
-  if (!response.ok) throw new Error("We could not save your enquiry. Please try again.");
+  if (!response.ok) {
+    const payload = await response.json().catch(() => null);
+    throw new Error(payload?.error || "We could not save your enquiry. Please try again.");
+  }
 }

@@ -188,65 +188,65 @@ const ongoingProjects = [
 
 const packages = [
   {
-    name: "Essential Package",
-    price: "₹2,449",
+    name: "Standard Package",
+    price: "₹2,200",
     unit: "per sqft",
-    description: "A simple, well-built home for families who want good quality at a fair price.",
+    description: "A practical construction package with specified materials and finishes.",
     featured: false,
     details: [
       {
-        title: "Design",
-        text: "Planning and structural drawings made for your plot and family needs.",
+        title: "Structure & materials",
+        text: "Penna or Zuari cement; red brick; M-sand and P-sand; Pulkit and Thirumala steel.",
       },
       {
-        title: "Project Management",
-        text: "An engineer supervises the site, checks materials and sends you regular updates.",
+        title: "Finishes & fittings",
+        text: "Asian Tractor / Ace paint; Orbit / Hi-Fi switches; Orbit wire; Ashirvad and Finolex plumbing pipes; Parryware fittings. KAG 2×2 ft floor tiles at ₹45/sq ft and other tiles at ₹35/sq ft.",
       },
       {
-        title: "Structure",
-        text: "RCC frame, brickwork and plastering done to the agreed specification.",
+        title: "Doors, windows & interiors",
+        text: "First-quality teak main door and frame; other frames in second-quality teak; flush bedroom doors; PVC bathroom doors; uPVC windows. Interiors not included.",
       },
     ],
   },
   {
-    name: "Signature Package",
-    price: "₹2,699",
+    name: "Premium Package",
+    price: "₹2,500",
     unit: "per sqft",
-    description: "More choices in design and finishes, with extra attention at every stage.",
+    description: "A material specification with upgraded steel, fittings and floor tiles.",
     featured: true,
     details: [
       {
-        title: "Design",
-        text: "Better planning, 3D elevation and help in choosing materials.",
+        title: "Structure & materials",
+        text: "Chettinad or Ramco cement; wire-cut red brick; M-sand and P-sand, with river sand for the roof only; ARS CRS Fe550 steel.",
       },
       {
-        title: "Project Management",
-        text: "A dedicated coordinator, a clear schedule and quality checks at each stage.",
+        title: "Finishes & fittings",
+        text: "Asian Premium / Apex paint; Anchor Roma switches; Finolex wire; Ashirvad and Finolex plumbing pipes; Parryware fittings. Anuj 2×2 ft floor tiles at ₹60/sq ft and other tiles at ₹40/sq ft.",
       },
       {
-        title: "Structure",
-        text: "RCC and steel work with upgraded material options.",
+        title: "Doors, windows & interiors",
+        text: "First-quality teak main door and frame; other frames in second-quality teak; flush bedroom doors; WPC bathroom doors; second-quality teak windows. Interiors not included.",
       },
     ],
   },
   {
-    name: "Elite Luxury Package",
-    price: "₹3,449",
+    name: "Royal Package",
+    price: "₹2,800",
     unit: "per sqft",
-    description: "For homes where design and finishing matter most.",
+    description: "A higher-end specification with granite flooring and interiors included.",
     featured: false,
     details: [
       {
-        title: "Design",
-        text: "Custom design, detailed 3D views and advice on special finishes.",
+        title: "Structure & materials",
+        text: "Dalmia or UltraTech cement; wire-cut red brick; M-sand and P-sand, with river sand for the roof only; Tata Tiscon steel.",
       },
       {
-        title: "Project Management",
-        text: "Full-time supervision and careful coordination of premium materials.",
+        title: "Finishes & fittings",
+        text: "Asian Shyne / Apex paint; GM switches; Finolex wire; Ashirvad and Finolex plumbing pipes; Parryware fittings. Granite flooring and steps.",
       },
       {
-        title: "Structure",
-        text: "Higher structural specification, better finishes and detailed work planning.",
+        title: "Doors, windows & interiors",
+        text: "First-quality teak main door and frames; other frames in first-quality teak; flush bedroom doors; WPC bathroom doors; first-quality teak windows. Interiors included; confirm scope in your quotation.",
       },
     ],
   },
@@ -310,11 +310,11 @@ const approachSteps = [
 const faqs = [
   [
     "What is the house construction cost per sq ft in Chennai with ARKA Constructions?",
-    "Our home construction packages start from ₹2,449 per sq ft. The Essential package is ₹2,449, the Signature package is ₹2,699 and the Elite Luxury package is ₹3,449 per sq ft. The final quote depends on your plot, floors, materials and local approvals.",
+    "Our Standard, Premium and Royal construction packages are listed at ₹2,200, ₹2,500 and ₹2,800 per sq ft respectively. A separate budget offer starts at ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Please confirm current pricing and scope with our team.",
   ],
   [
     "What is the minimum area you build for?",
-    "We take up homes starting from 1,200 sq ft. If your plan is smaller or larger, call us and we will check what is possible.",
+    "The budget offer specifies a minimum plot size of 1,250 sq ft. Contact us to discuss your site and the requirements for other packages.",
   ],
   [
     "Do you offer free maintenance after handover?",
@@ -342,16 +342,19 @@ const faqs = [
   ],
 ];
 
-const footerServices = [
-  "Civil & RCC Works",
-  "Flooring Works",
-  "Fabrication Works",
-  "Glazing & Aluminium",
-  "Paver Blocks",
-  "Waterproofing",
-  "Industrial Works",
-  "Repair & Maintenance",
+const serviceImages = [
+  "service-civil.jpg", "service-infrastructure.jpg", "service-flooring.jpg",
+  "service-fabrication.jpg", "service-glazing-v2.jpg", "service-pavers-v2.jpg",
+  "service-painting-v2.jpg", "service-plumbing.jpg", "service-roadworks-v2.jpg",
+  "service-waterproofing-v2.jpg", "service-demolition-v2.jpg", "service-repairs-v2.jpg",
+  "service-industrial-works.jpg",
 ];
+
+const whatsappUrl = "https://wa.me/919952525185";
+
+function WhatsAppIcon({ size = 20 }: { size?: number }) {
+  return <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2a9.94 9.94 0 0 0-8.62 14.9L2 22l5.25-1.38A9.96 9.96 0 1 0 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 1 1 6.97 3.85Zm4.5-6.13c-.25-.12-1.45-.71-1.67-.79-.23-.09-.39-.13-.55.12-.16.24-.63.79-.78.95-.14.16-.28.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.64-1.2-1.44-1.35-1.68-.14-.24-.01-.38.11-.5.11-.11.24-.29.36-.43.13-.14.17-.24.25-.41.08-.16.04-.3-.02-.42-.06-.12-.55-1.33-.75-1.82-.2-.47-.4-.4-.55-.41h-.47c-.16 0-.42.06-.64.3-.22.25-.84.82-.84 2s.86 2.31.98 2.47c.13.16 1.7 2.59 4.11 3.63.57.25 1.01.4 1.36.51.57.18 1.1.15 1.51.09.46-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28Z"/></svg>;
+}
 
 const mainServiceAreas = ["Chennai", "Chengalpattu"];
 const nearbyServiceAreas = [
@@ -403,6 +406,77 @@ type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 
 const phonePattern = /^\+?[0-9]{10,15}$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (element: HTMLElement, options: Record<string, unknown>) => string;
+      remove: (widgetId: string) => void;
+    };
+  }
+}
+
+function TurnstileWidget({ onToken, resetKey = 0 }: { onToken: (token: string) => void; resetKey?: number }) {
+  const container = useRef<HTMLDivElement>(null);
+  const [retryKey, setRetryKey] = useState(0);
+  const [widgetError, setWidgetError] = useState("");
+  const siteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    if (!siteKey || !container.current) return;
+    let cancelled = false;
+    let widgetId: string | undefined;
+    let script: HTMLScriptElement | null = null;
+    const handleScriptError = () => {
+      if (cancelled) return;
+      onToken("");
+      setWidgetError("The security check could not load. Check your connection and try again.");
+      script?.remove();
+    };
+    const render = () => {
+      if (cancelled || !container.current || !window.turnstile) return;
+      widgetId = window.turnstile.render(container.current, {
+        sitekey: siteKey,
+        appearance: "interaction-only",
+        callback: (token: string) => { setWidgetError(""); onToken(token); },
+        "expired-callback": () => { onToken(""); setWidgetError("The security check expired. Please try again."); },
+        "error-callback": (code: string) => {
+          onToken("");
+          setWidgetError(`The security check could not complete (code: ${code}). Please try again.`);
+        },
+        theme: "light",
+      });
+    };
+    setWidgetError("");
+    if (window.turnstile) render();
+    else {
+      script = document.querySelector<HTMLScriptElement>("script[data-turnstile]");
+      const isNewScript = !script;
+      if (!script) {
+        script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true;
+        script.defer = true;
+        script.dataset.turnstile = "true";
+      }
+      script.addEventListener("load", render, { once: true });
+      script.addEventListener("error", handleScriptError, { once: true });
+      if (isNewScript) document.head.appendChild(script);
+    }
+    return () => {
+      cancelled = true;
+      script?.removeEventListener("load", render);
+      script?.removeEventListener("error", handleScriptError);
+      if (widgetId) window.turnstile?.remove(widgetId);
+    };
+  }, [siteKey, onToken, resetKey, retryKey]);
+
+  if (!siteKey) return <p className="form-error" role="alert">Security check is not configured.</p>;
+  return <div className="turnstile-check">
+    <div className="turnstile-widget" ref={container} aria-label="Security check" />
+    {widgetError && <p className="form-error" role="alert">{widgetError} <button type="button" className="turnstile-retry" onClick={() => setRetryKey((key) => key + 1)}>Retry security check</button></p>}
+  </div>;
+}
 
 function validateEnquiryForm(data: FormData, form: "hero" | "quote_modal") {
   const errors: EnquiryErrors = {};
@@ -501,9 +575,10 @@ function EmailHeroQuoteForm() {
           required
           autoComplete="name"
           maxLength={100}
-          placeholder="Name"
+          placeholder="Name *"
           aria-label="Name"
         />
+        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <label className="hp-field">
         <Phone size={16} />
@@ -515,9 +590,10 @@ function EmailHeroQuoteForm() {
           pattern="[+]?[0-9]{10,15}"
           title="Enter 10 to 15 digits, optionally starting with +. Do not include spaces."
           maxLength={20}
-          placeholder="Phone Number"
+          placeholder="Phone Number *"
           aria-label="Phone number"
         />
+        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <label className="hp-field">
         <Mail size={16} />
@@ -537,15 +613,16 @@ function EmailHeroQuoteForm() {
           required
           autoComplete="address-level2"
           maxLength={150}
-          placeholder="Site Location"
+          placeholder="Site Location *"
           aria-label="Site location"
         />
+        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <label className="hp-field">
         <Layers3 size={16} />
         <select name="plotArea" required defaultValue="" aria-label="Plot area">
-          <option value="" disabled>
-            Plot Area (sq ft)
+            <option value="" disabled>
+            Plot Area (sq ft) *
           </option>
           <option>1200 - 2000 sq ft</option>
           <option>2000 - 3000 sq ft</option>
@@ -553,6 +630,7 @@ function EmailHeroQuoteForm() {
           <option>4000+ sq ft</option>
         </select>
         <ChevronDown size={15} />
+        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <button className="hp-btn hp-btn-gold" type="submit">
         Request a Callback <ArrowUpRight size={16} />
@@ -570,6 +648,9 @@ function HeroQuoteForm() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<EnquiryErrors>({});
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileResetKey, setTurnstileResetKey] = useState(0);
+  const [formStartedAt] = useState(() => Date.now());
 
   function clearFieldError(field: EnquiryField) {
     setFieldErrors((current) => current[field] ? { ...current, [field]: undefined } : current);
@@ -600,11 +681,15 @@ function HeroQuoteForm() {
         site_location: String(data.get("location") || "").trim(),
         plot_area: String(data.get("plotArea") || "").trim(),
         source: "hero",
-      });
+      }, turnstileToken, String(data.get("website") || ""), formStartedAt);
       form.reset();
       setSubmitted(true);
+      setTurnstileToken("");
+      setTurnstileResetKey((key) => key + 1);
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
+      setTurnstileToken("");
+      setTurnstileResetKey((key) => key + 1);
     } finally {
       setSubmitting(false);
     }
@@ -647,8 +732,10 @@ function HeroQuoteForm() {
         <label className={`hp-field ${fieldErrors.plotArea ? "has-error" : ""}`}><Layers3 size={16} /><select name="plotArea" required defaultValue="" aria-label="Plot area" aria-invalid={Boolean(fieldErrors.plotArea)} aria-describedby={fieldErrors.plotArea ? "hero-area-error" : undefined} onChange={() => clearFieldError("plotArea")}><option value="" disabled>Plot Area (sq ft)</option><option>1200 - 2000 sq ft</option><option>2000 - 3000 sq ft</option><option>3000 - 4000 sq ft</option><option>4000+ sq ft</option></select><ChevronDown size={15} /></label>
         {fieldErrors.plotArea && <span className="field-error" id="hero-area-error">{fieldErrors.plotArea}</span>}
       </div>
+      <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <TurnstileWidget onToken={setTurnstileToken} resetKey={turnstileResetKey} />
       {error && <p className="form-error" role="alert">{error}</p>}
-      <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting}>
+      <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting || !turnstileToken}>
         {submitting ? "Submitting…" : "Request a Callback"} {!submitting && <ArrowUpRight size={16} />}
       </button>
       <p className="hp-form-note">By submitting, you agree that ARKA may contact you about your project.</p>
@@ -709,6 +796,9 @@ export default function ArkaSite({
   const [modalSubmitting, setModalSubmitting] = useState(false);
   const [modalError, setModalError] = useState("");
   const [modalFieldErrors, setModalFieldErrors] = useState<EnquiryErrors>({});
+  const [modalTurnstileToken, setModalTurnstileToken] = useState("");
+  const [modalTurnstileResetKey, setModalTurnstileResetKey] = useState(0);
+  const [modalFormStartedAt] = useState(() => Date.now());
   const [emailLink, setEmailLink] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -802,11 +892,15 @@ export default function ArkaSite({
         service: String(data.get("service") || "").trim(),
         message: String(data.get("message") || "").trim() || undefined,
         source: "quote_modal",
-      });
+      }, modalTurnstileToken, String(data.get("website") || ""), modalFormStartedAt);
       form.reset();
       setPrepared(true);
+      setModalTurnstileToken("");
+      setModalTurnstileResetKey((key) => key + 1);
     } catch (submissionError) {
       setModalError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
+      setModalTurnstileToken("");
+      setModalTurnstileResetKey((key) => key + 1);
     } finally {
       setModalSubmitting(false);
     }
@@ -863,13 +957,15 @@ export default function ArkaSite({
           </nav>
           <div className="header-actions">
             <a
-              className="phone-link"
-              href="tel:+919952525185"
-              aria-label="Call ARKA on 9952525185"
+              className="phone-link header-whatsapp"
+              href={whatsappUrl}
+              target="_blank" rel="noopener noreferrer"
+              aria-label="Message ARKA on WhatsApp"
             >
-              <Phone size={16} />
+              <WhatsAppIcon size={19} />
               <span>+91 99525 25185</span>
             </a>
+            <a className="phone-link header-mobile-phone" href="tel:+919952525185" aria-label="Call ARKA on 99525 25185"><Phone size={18} /></a>
             <button
               className="button button-gold header-quote"
               onClick={() => openModal({ type: "quote" })}
@@ -943,8 +1039,8 @@ export default function ArkaSite({
                   Planning to build a house, shop or factory? ARKA Constructions
                   builds homes, commercial buildings and industrial works in
                   Chennai, Chengalpattu, Maraimalai Nagar, Oragadam and nearby
-                  areas. Packages start from ₹2,449 per sq ft, for homes from
-                  1,200 sq ft.
+                  areas. Explore our construction packages and request a
+                  project-specific quotation.
                 </p>
                 <div className="hp-hero-tags">
                   <span className="hp-hero-tag">
@@ -1220,21 +1316,20 @@ export default function ArkaSite({
                 <div>
                   <Eyebrow>Our Construction Packages</Eyebrow>
                   {view === "packages" ? (
-                    <h1>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h1>
+                    <h1>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,200/sq ft</span></h1>
                   ) : (
-                    <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h2>
+                    <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,200/sq ft</span></h2>
                   )}
                 </div>
                 <p>
-                  Pick the package that fits your budget. We build homes from
-                  1,200 sq ft, and every package can be adjusted for your site
-                  and choice of materials.
+                  Compare the material specifications for our Standard, Premium
+                  and Royal packages, and ask our team for a project-specific quotation.
                 </p>
               </div>
               <div className="hp-package-highlights" aria-label="Package highlights">
-                <div><Home size={19} /><span>Starting from <strong>1,200 sq ft</strong></span></div>
-                <div><IndianRupee size={19} /><span><strong>Competitive rates</strong> for clear specifications</span></div>
-                <div><Wrench size={19} /><span><strong>1 year free maintenance labour</strong> after handover</span></div>
+                <div><Home size={19} /><span><strong>Three packages</strong> to compare</span></div>
+                <div><IndianRupee size={19} /><span><strong>Material specifications</strong> for each package</span></div>
+                <div><Wrench size={19} /><span><strong>Extra work</strong> quoted separately</span></div>
               </div>
               <div className="hp-package-grid">
                 {packages.map((pkg, index) => (
@@ -1243,9 +1338,6 @@ export default function ArkaSite({
                     className={`hp-package ${pkg.featured ? "is-featured" : ""}`}
                     key={pkg.name}
                   >
-                    {pkg.featured && (
-                      <span className="hp-package-ribbon">Most Popular</span>
-                    )}
                     <div className="hp-package-head">
                       <span>{pkg.name}</span>
                       <div className="hp-package-price">
@@ -1277,9 +1369,14 @@ export default function ArkaSite({
                 ))}
               </div>
               <p className="hp-package-note">
-                Rates are starting rates per sq ft. Your final quote depends on
-                area, floors, materials, site conditions and approvals.
+                Rates are per sq ft as listed in the package document. Confirm current rates,
+                area basis, taxes, material availability and inclusions with our team.
               </p>
+              <div className="hp-package-terms">
+                <div><h3>Additional work</h3><p>Compound wall: ₹2,300 per running ft · Cooling tiles: ₹140 per sq ft · Sump: ₹28 per litre · Septic tank: ₹18 per litre · Head room: ₹2,100 per sq ft.</p></div>
+                <div><h3>Client scope</h3><p>Building plan approval, borewell and motor fittings, electricity connection and main board (labour and materials), and water for construction.</p></div>
+                <div><h3>Separate budget offer</h3><p>The document also lists a budget package from ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Ask our team to confirm its current availability and detailed scope.</p></div>
+              </div>
             </div>
           </m.section>
         )}
@@ -1338,29 +1435,18 @@ export default function ArkaSite({
         {(view === "home" || view === "services") && (
           <m.section {...sectionMotion} className="hp-section hp-section-white hp-what" id="what-we-do">
             <div className="container">
-              <div className="hp-section-head">
-                <div>
-                  <Eyebrow>Our Services</Eyebrow>
-                  <h2>What We Do</h2>
+              <div className="hp-what-heading">
+                <div><Eyebrow>Our Services</Eyebrow><h2>What We Do</h2></div>
+                <div className="hp-what-heading-copy">
+                  <p className="hp-what-lead">From foundation to finishing, one team for every stage.</p>
+                  <p>ARKA brings together civil work, fabrication, flooring, glazing, plumbing and painting for homes, businesses and industrial projects across Chennai and Chengalpattu.</p>
                 </div>
-                <p>
-                  Complete construction work in Chennai &amp; Chengalpattu, from
-                  foundation to finishing.
-                </p>
               </div>
-              <p className="hp-what-intro">
-                When you build with ARKA, you do not need to hire a different
-                contractor for each job. Civil work, steel, flooring, glazing,
-                plumbing and painting are all handled by our own team, whether
-                you are building a home, a commercial building or a factory.
-              </p>
               <div className="hp-what-grid">
-                {services.map((service) => (
+                {services.map((service, index) => (
                   <m.article {...cardMotion} className="hp-what-card" key={service.title}>
+                    <img className="hp-what-image" src={`/images/${serviceImages[index]}`} alt="" loading="lazy" />
                     <div className="hp-what-body">
-                      <span className="hp-what-icon">
-                        <service.icon size={24} />
-                      </span>
                       <h3>{service.title}</h3>
                       <p>{service.detail}</p>
                     </div>
@@ -1585,27 +1671,28 @@ export default function ArkaSite({
             <div className="hp-footer-brand">
               <Brand light />
               <p>
-                Building Tomorrow&rsquo;s
+                Quality Is Our Commitment,
                 <br />
-                Foundations Today
+                Trust Is Our Identity
               </p>
               <span>Residential · Commercial · Industrial</span>
+              <p className="hp-footer-description">From first plans to final handover, we build spaces for families, businesses and industry across Chennai and Chengalpattu.</p>
             </div>
             <div>
               <h3>Quick Links</h3>
               <a href="/">Home</a>
               <a href="/#about">About Us</a>
-              <a href="/services">Services</a>
-              <a href="/projects">Projects</a>
+              <a href="/packages">Construction Packages</a>
+              <a href="/projects">Construction Projects</a>
               <button onClick={() => openModal({ type: "quote" })}>
                 Contact Us
               </button>
             </div>
             <div>
-              <h3>Our Services</h3>
-              {footerServices.map((service) => (
-                <a key={service} href="/services">
-                  {service}
+              <h3>Construction Services</h3>
+              {serviceCategories.map((service) => (
+                <a key={service.title} href={`/services#${service.title.split(" ")[0].toLowerCase()}`}>
+                  {service.title}
                 </a>
               ))}
             </div>
@@ -1643,13 +1730,15 @@ export default function ArkaSite({
       </footer>
 
       <div className="mobile-contact">
-        <a href="tel:+919952525185">
-          <Phone size={17} /> Call ARKA
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+          <WhatsAppIcon size={19} /> WhatsApp
         </a>
         <button onClick={() => openModal({ type: "quote" })}>
           Get a Free Quote <ArrowUpRight size={17} />
         </button>
       </div>
+
+      <a className="whatsapp-float" href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Message ARKA on WhatsApp"><WhatsAppIcon size={28} /></a>
 
       <dialog
         ref={dialog}
@@ -1697,7 +1786,7 @@ export default function ArkaSite({
               >
                 <div className="form-row">
                   <label>
-                    Your name
+                    <span className="label-text">Your name <span className="required-mark" aria-hidden="true">*</span></span>
                     <input
                       name="name"
                       required
@@ -1712,7 +1801,7 @@ export default function ArkaSite({
                     {modalFieldErrors.name && <span className="field-error" id="modal-name-error">{modalFieldErrors.name}</span>}
                   </label>
                   <label>
-                    Mobile number
+                    <span className="label-text">Mobile number <span className="required-mark" aria-hidden="true">*</span></span>
                     <input
                       name="phone"
                       type="tel"
@@ -1729,7 +1818,7 @@ export default function ArkaSite({
                   </label>
                 </div>
                 <label>
-                  Site location
+                  <span className="label-text">Site location <span className="required-mark" aria-hidden="true">*</span></span>
                   <input
                     name="location"
                     required
@@ -1744,7 +1833,7 @@ export default function ArkaSite({
                   {modalFieldErrors.location && <span className="field-error" id="modal-location-error">{modalFieldErrors.location}</span>}
                 </label>
                 <label>
-                  What can we help with?
+                  <span className="label-text">What can we help with? <span className="required-mark" aria-hidden="true">*</span></span>
                   <select
                     name="service"
                     defaultValue={modal.interest || "Residential construction"}
@@ -1759,9 +1848,7 @@ export default function ArkaSite({
                           "Residential construction",
                           "Commercial or industrial work",
                           ...services.map((service) => service.title),
-                          "Essential Package",
-                          "Signature Package",
-                          "Elite Luxury Package",
+                          ...packages.map((pkg) => pkg.name),
                           "Request project portfolio",
                           "Not sure — let’s discuss",
                         ].filter(Boolean),
@@ -1784,8 +1871,10 @@ export default function ArkaSite({
                 <p className="form-note">
                   By submitting, you agree that ARKA may contact you about your project.
                 </p>
+                <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                <TurnstileWidget onToken={setModalTurnstileToken} resetKey={modalTurnstileResetKey} />
                 {modalError && <p className="form-error" role="alert">{modalError}</p>}
-                <button className="hp-btn hp-btn-gold" type="submit" disabled={modalSubmitting}>
+                <button className="hp-btn hp-btn-gold" type="submit" disabled={modalSubmitting || !modalTurnstileToken}>
                   {modalSubmitting ? "Submitting…" : "Send My Enquiry"} {!modalSubmitting && <ArrowRight size={18} />}
                 </button>
               </form>
