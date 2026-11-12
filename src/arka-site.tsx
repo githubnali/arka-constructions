@@ -408,7 +408,7 @@ type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 const phonePattern = /^\+?[0-9]{10,15}$/;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-function validateEnquiryForm(data: FormData, form: "hero" | "quote_modal") {
+function validateEnquiryForm(data: FormData) {
   const errors: EnquiryErrors = {};
   const value = (name: EnquiryField) => String(data.get(name) || "").trim();
 
@@ -416,8 +416,6 @@ function validateEnquiryForm(data: FormData, form: "hero" | "quote_modal") {
   if (!phonePattern.test(value("phone"))) errors.phone = "Enter a valid 10 to 15 digit phone number without spaces.";
   if (value("email") && !emailPattern.test(value("email"))) errors.email = "Enter a valid email address, for example name@example.com.";
   if (value("location").length < 2) errors.location = "Enter the project site location.";
-  if (form === "hero" && !value("plotArea")) errors.plotArea = "Select the approximate plot area.";
-  if (form === "quote_modal" && !value("service")) errors.service = "Select the service you are interested in.";
   if (value("message").length > 2000) errors.message = "Keep the project details within 2,000 characters.";
 
   return errors;
@@ -508,7 +506,6 @@ function EmailHeroQuoteForm() {
           placeholder="Name *"
           aria-label="Name"
         />
-        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <label className="hp-field">
         <Phone size={16} />
@@ -523,7 +520,6 @@ function EmailHeroQuoteForm() {
           placeholder="Phone Number *"
           aria-label="Phone number"
         />
-        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <label className="hp-field">
         <Mail size={16} />
@@ -546,13 +542,12 @@ function EmailHeroQuoteForm() {
           placeholder="Site Location *"
           aria-label="Site location"
         />
-        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <label className="hp-field">
         <Layers3 size={16} />
-        <select name="plotArea" required defaultValue="" aria-label="Plot area">
-            <option value="" disabled>
-            Plot Area (sq ft) *
+        <select name="plotArea" defaultValue="" aria-label="Plot area (optional)">
+            <option value="">
+            Plot Area (sq ft) (optional)
           </option>
           <option>1200 - 2000 sq ft</option>
           <option>2000 - 3000 sq ft</option>
@@ -560,10 +555,9 @@ function EmailHeroQuoteForm() {
           <option>4000+ sq ft</option>
         </select>
         <ChevronDown size={15} />
-        <span className="hp-required-mark" aria-hidden="true">*</span>
       </label>
       <button className="hp-btn hp-btn-gold" type="submit">
-        Request a Callback <ArrowUpRight size={16} />
+        Request Free Estimate <ArrowUpRight size={16} />
       </button>
       <p className="hp-form-note">
         Your details stay in this page until you choose to send them through
@@ -592,7 +586,7 @@ function HeroQuoteForm() {
 
     const form = event.currentTarget;
     const data = new FormData(form);
-    const validationErrors = validateEnquiryForm(data, "hero");
+    const validationErrors = validateEnquiryForm(data);
     if (Object.keys(validationErrors).length) {
       setFieldErrors(validationErrors);
       const firstInvalidField = Object.keys(validationErrors)[0];
@@ -643,11 +637,11 @@ function HeroQuoteForm() {
       <h2>Let&rsquo;s Discuss Your Project</h2>
       <p>Share your plot details. Our team will call you back.</p>
       <div className="form-field-group">
-        <label className={`hp-field ${fieldErrors.name ? "has-error" : ""}`}><User size={16} /><input name="name" required minLength={2} autoComplete="name" maxLength={100} placeholder="Name" aria-label="Name" aria-invalid={Boolean(fieldErrors.name)} aria-describedby={fieldErrors.name ? "hero-name-error" : undefined} onInput={() => clearFieldError("name")} /></label>
+        <label className={`hp-field ${fieldErrors.name ? "has-error" : ""}`}><User size={16} /><input name="name" required minLength={2} autoComplete="name" maxLength={100} placeholder="Name *" aria-label="Name" aria-invalid={Boolean(fieldErrors.name)} aria-describedby={fieldErrors.name ? "hero-name-error" : undefined} onInput={() => clearFieldError("name")} /></label>
         {fieldErrors.name && <span className="field-error" id="hero-name-error">{fieldErrors.name}</span>}
       </div>
       <div className="form-field-group">
-        <label className={`hp-field ${fieldErrors.phone ? "has-error" : ""}`}><Phone size={16} /><input name="phone" type="tel" required autoComplete="tel" inputMode="tel" maxLength={16} placeholder="Phone Number" aria-label="Phone number" aria-invalid={Boolean(fieldErrors.phone)} aria-describedby={fieldErrors.phone ? "hero-phone-error" : undefined} onInput={() => clearFieldError("phone")} /></label>
+        <label className={`hp-field ${fieldErrors.phone ? "has-error" : ""}`}><Phone size={16} /><input name="phone" type="tel" required autoComplete="tel" inputMode="tel" maxLength={16} placeholder="Phone Number *" aria-label="Phone number" aria-invalid={Boolean(fieldErrors.phone)} aria-describedby={fieldErrors.phone ? "hero-phone-error" : undefined} onInput={() => clearFieldError("phone")} /></label>
         {fieldErrors.phone && <span className="field-error" id="hero-phone-error">{fieldErrors.phone}</span>}
       </div>
       <div className="form-field-group">
@@ -655,11 +649,11 @@ function HeroQuoteForm() {
         {fieldErrors.email && <span className="field-error" id="hero-email-error">{fieldErrors.email}</span>}
       </div>
       <div className="form-field-group">
-        <label className={`hp-field ${fieldErrors.location ? "has-error" : ""}`}><MapPin size={16} /><input name="location" required minLength={2} autoComplete="address-level2" maxLength={150} placeholder="Site Location" aria-label="Site location" aria-invalid={Boolean(fieldErrors.location)} aria-describedby={fieldErrors.location ? "hero-location-error" : undefined} onInput={() => clearFieldError("location")} /></label>
+        <label className={`hp-field ${fieldErrors.location ? "has-error" : ""}`}><MapPin size={16} /><input name="location" required minLength={2} autoComplete="address-level2" maxLength={150} placeholder="Site Location *" aria-label="Site location" aria-invalid={Boolean(fieldErrors.location)} aria-describedby={fieldErrors.location ? "hero-location-error" : undefined} onInput={() => clearFieldError("location")} /></label>
         {fieldErrors.location && <span className="field-error" id="hero-location-error">{fieldErrors.location}</span>}
       </div>
       <div className="form-field-group">
-        <label className={`hp-field ${fieldErrors.plotArea ? "has-error" : ""}`}><Layers3 size={16} /><select name="plotArea" required defaultValue="" aria-label="Plot area" aria-invalid={Boolean(fieldErrors.plotArea)} aria-describedby={fieldErrors.plotArea ? "hero-area-error" : undefined} onChange={() => clearFieldError("plotArea")}><option value="" disabled>Plot Area (sq ft)</option><option>1200 - 2000 sq ft</option><option>2000 - 3000 sq ft</option><option>3000 - 4000 sq ft</option><option>4000+ sq ft</option></select><ChevronDown size={15} /></label>
+        <label className={`hp-field ${fieldErrors.plotArea ? "has-error" : ""}`}><Layers3 size={16} /><select name="plotArea" defaultValue="" aria-label="Plot area (optional)" aria-invalid={Boolean(fieldErrors.plotArea)} aria-describedby={fieldErrors.plotArea ? "hero-area-error" : undefined} onChange={() => clearFieldError("plotArea")}><option value="">Plot Area (sq ft) (optional)</option><option>1200 - 2000 sq ft</option><option>2000 - 3000 sq ft</option><option>3000 - 4000 sq ft</option><option>4000+ sq ft</option></select><ChevronDown size={15} /></label>
         {fieldErrors.plotArea && <span className="field-error" id="hero-area-error">{fieldErrors.plotArea}</span>}
       </div>
       <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
@@ -825,7 +819,7 @@ export default function ArkaSite({
 
     const form = event.currentTarget;
     const data = new FormData(form);
-    const validationErrors = validateEnquiryForm(data, "quote_modal");
+    const validationErrors = validateEnquiryForm(data);
     if (Object.keys(validationErrors).length) {
       setModalFieldErrors(validationErrors);
       const firstInvalidField = Object.keys(validationErrors)[0];
@@ -1786,14 +1780,15 @@ export default function ArkaSite({
                   {modalFieldErrors.location && <span className="field-error" id="modal-location-error">{modalFieldErrors.location}</span>}
                 </label>
                 <label>
-                  <span className="label-text">What can we help with? <span className="required-mark" aria-hidden="true">*</span></span>
+                  <span className="label-text">What can we help with? <span>(optional)</span></span>
                   <select
                     name="service"
-                    defaultValue={modal.interest || "Residential construction"}
+                    defaultValue={modal.interest || ""}
                     aria-invalid={Boolean(modalFieldErrors.service)}
                     aria-describedby={modalFieldErrors.service ? "modal-service-error" : undefined}
                     onChange={() => setModalFieldErrors((current) => ({ ...current, service: undefined }))}
                   >
+                    <option value="">Select a service (optional)</option>
                     {[
                       ...new Set(
                         [

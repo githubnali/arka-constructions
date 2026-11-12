@@ -82,7 +82,7 @@ html{scroll-padding-top:84px}
 .recaptcha-retry{display:inline;padding:0;border:0;background:none;color:#76251d;font:inherit;font-weight:700;text-decoration:underline}
 .recaptcha-widget{min-height:0}
 
-.hp-section{padding:96px 0}
+.hp-section{padding:64px 0}
 .hp-section-cream{background:var(--cream)}
 .hp-section-ivory{background:var(--ivory)}
 .hp-section-white{background:#fff}
@@ -152,7 +152,6 @@ html{scroll-padding-top:84px}
   color:var(--navy);font-size:13px;padding:0;
 }
 .hp-field input::placeholder{color:#3f4b53;opacity:1}
-.hp-required-mark{position:absolute;right:12px;top:4px;color:#b23a2f;font-size:14px;font-weight:700;line-height:1}
 .hp-field select{appearance:none;cursor:pointer}
 .hp-hero-form .hp-btn{width:100%;margin-top:4px;min-height:44px}
 .hp-form-note{font-size:9.5px;line-height:1.55;color:var(--muted);text-align:center;margin:10px 0 0}
@@ -355,7 +354,7 @@ html{scroll-padding-top:84px}
 .hp-what-card p{font-size:12px;line-height:1.65;color:var(--muted);margin:0 0 14px}
 
 /* ---------- Why choose ARKA ---------- */
-.hp-why{background:var(--navy);color:#fff;padding:80px 0}
+.hp-why{background:var(--navy);color:#fff;padding:64px 0}
 .hp-why-grid{display:grid;grid-template-columns:.7fr 1.3fr;gap:40px;align-items:start}
 .hp-why-copy h2{
   font-size:clamp(30px,3.2vw,44px);font-weight:500;line-height:1.12;
@@ -454,7 +453,7 @@ html{scroll-padding-top:84px}
 }
 
 /* ---------- FAQ ---------- */
-.hp-faq{background:#e9eef0;padding:88px 0}
+.hp-faq{background:#e9eef0;padding:64px 0}
 .hp-faq-head{text-align:center;margin-bottom:34px}
 .hp-faq-eyebrow{
   display:block;font-family:'Caveat',cursive;font-size:28px;line-height:1;
@@ -477,7 +476,7 @@ html{scroll-padding-top:84px}
 .hp-faq-trigger{
   display:flex;justify-content:space-between;align-items:center;gap:24px;width:100%;
   padding:22px;border:0;background:transparent;color:var(--navy);text-align:left;
-  font-size:15px;font-weight:600;letter-spacing:.01em;text-transform:uppercase;
+  font-size:15px;font-weight:600;letter-spacing:.01em;text-transform:none;
 }
 .hp-faq-trigger svg{color:var(--navy);flex-shrink:0;transition:transform .35s var(--cubic-out)}
 .hp-faq-item.is-open .hp-faq-trigger svg{transform:rotate(180deg)}
@@ -586,7 +585,7 @@ html{scroll-padding-top:84px}
   .hp-about-grid{grid-template-columns:1fr;gap:34px}
   .hp-about-visual{order:-1;padding:0 20px 20px 0}
   .hp-about-visual img{height:360px}
-  .hp-section{padding:72px 0}
+  .hp-section,.hp-why,.hp-faq{padding:48px 0}
   .hp-section-head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:32px}
   .hp-service-categories{grid-template-columns:1fr 1fr}
   .hp-package-grid{grid-template-columns:1fr;max-width:560px;margin:0 auto}
@@ -622,12 +621,12 @@ html{scroll-padding-top:84px}
   .hp-hero-form{padding:22px}
   .hp-package-highlights{margin-bottom:26px}
   .hp-package-highlights>div{padding:14px}
-  .hp-section{padding:60px 0}
+  .hp-section{padding:40px 0}
   .hp-section-head h1,.hp-section-head h2{font-size:34px}
   .hp-about-visual img{height:300px}
   .hp-about-card{position:relative;left:0;bottom:0;margin:-24px 12px 0;max-width:none}
   .hp-project-grid,.hp-what-grid,.hp-service-categories{grid-template-columns:1fr}
-  .hp-why{padding:60px 0}
+  .hp-why{padding:40px 0}
   .hp-why-list{grid-template-columns:1fr}
   .hp-areas-panel{padding:22px 18px;border-radius:18px}
   .hp-main-areas{grid-template-columns:1fr}
@@ -637,7 +636,7 @@ html{scroll-padding-top:84px}
   .hp-steps{grid-template-columns:1fr}
   .hp-step:after{display:none!important}
   .hp-vm-card{padding:22px}
-  .hp-faq{padding:64px 0}
+  .hp-faq{padding:40px 0}
   .hp-faq h2{font-size:34px}
   .hp-faq-trigger{font-size:13px;padding:18px 16px}
   .hp-faq-answer p{padding:0 16px 20px}
@@ -711,6 +710,7 @@ html{scroll-padding-top:84px}
 body{font-size:var(--type-body);line-height:1.7}
 .navigation,.phone-link{font-size:16px}
 .header-quote,.hp-btn{font-size:var(--type-control)}
+.header-quote{font-size:16px}
 .nav-dropdown a{font-size:15px}
 
 .hp-section-head p,.hp-about-copy>p,.hp-hero-copy>p,
