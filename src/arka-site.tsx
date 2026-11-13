@@ -190,64 +190,148 @@ const ongoingProjects = [
 const packages = [
   {
     name: "Standard Package",
-    price: "₹2,200",
-    unit: "per sqft",
-    description: "A practical construction package with specified materials and finishes.",
+    price: "₹2,449",
+    unit: "per sq ft",
+    description: "A complete home construction specification with daily supervision and dependable branded finishes.",
     featured: false,
     details: [
       {
-        title: "Structure & materials",
-        text: "Penna or Zuari cement; red brick; M-sand and P-sand; Pulkit and Thirumala steel.",
+        title: "Design",
+        items: ["2D scheme drawings for every floor", "3D elevation design", "3D half-layouts for every floor", "2D electrical, plumbing and working drawings for every floor"],
       },
       {
-        title: "Finishes & fittings",
-        text: "Asian Tractor / Ace paint; Orbit / Hi-Fi switches; Orbit wire; Ashirvad and Finolex plumbing pipes; Parryware fittings. KAG 2×2 ft floor tiles at ₹45/sq ft and other tiles at ₹35/sq ft.",
+        title: "Project Management",
+        items: ["Site supervision and quality monitoring by a site engineer", "Project manager visits twice each week", "Daily progress photos and project-status access", "Architect support through design completion"],
       },
       {
-        title: "Doors, windows & interiors",
-        text: "First-quality teak main door and frame; other frames in second-quality teak; flush bedroom doors; PVC bathroom doors; uPVC windows. Interiors not included.",
+        title: "Structure",
+        items: ["Basement height up to 3 ft", "Arun steel or equivalent; Ramco or Dalmia cement", "Wire-cut brick walls: 9 in exterior and 4.5 in interior", "M-sand for masonry and P-sand for plastering", "M20 concrete with RMC for the roof", "10 ft ceiling height with reinforcement to standard design", "3 ft-high, 6 in-thick parapet for the floor with headroom", "Basement anti-termite treatment"],
+      },
+      {
+        title: "Bathroom & Plumbing",
+        items: ["Full-height 2×2 ft vitrified wall tiles up to ₹50/sq ft; one colour across two bathrooms", "Parryware bath and CP fittings up to ₹20,000 per bathroom", "Wall-mounted EWC and basin, pillar tap, health faucet, shower and 2-in-1 wall mixer", "Ashirvad CPVC internal and PVC external plumbing", "2,000 L, 3-layer UV-protected overhead tank"],
+      },
+      {
+        title: "Flooring",
+        items: ["4×2 ft vitrified tiles up to ₹65/sq ft for living, dining, bedrooms and kitchen; KAG, Sunheart or equivalent", "2×2 ft anti-skid tiles up to ₹50/sq ft for balcony and utility", "Full-body staircase tiles up to ₹110/sq ft", "1×1 ft heavy-duty parking tiles up to ₹50/sq ft", "Terrace screed concrete with waterproofing"],
+      },
+      {
+        title: "Kitchen & Dining",
+        items: ["2×2 ft vitrified kitchen wall tiles up to ₹55/sq ft", "Sink faucet up to ₹3,000 and stainless-steel sink with drain up to ₹5,000", "Wall-mounted dining wash basin", "Kitchen granite counter up to ₹140/sq ft"],
+      },
+      {
+        title: "Doors, Windows & Railing",
+        items: ["Ready-made Malaysian teak main door and frame up to ₹30,000; 32 mm door, 5×3 in frame, 7×3.5 ft, one unit", "Flush room doors with mahogany frames", "WPC bathroom doors and frames", "White uPVC sliding windows up to 5×5 ft; one per room with 5 mm clear glass", "SS 304 staircase railing and SS 304 balcony railing with 8 mm toughened glass and posts"],
+      },
+      {
+        title: "Painting",
+        items: ["Two coats Nippon wall putty internally", "Nippon primer plus two coats Breeze emulsion on walls and ceilings", "Nippon primer plus two coats Sumo Xtra externally", "Two coats Nippon exterior putty on the front elevation"],
+      },
+      {
+        title: "Electrical",
+        items: ["Orbit FR wires and Legrand switches", "Three 8-module switch boxes per bedroom; heater and exhaust points in bathrooms", "Up to four 8-module boxes in the living room", "Dedicated points for dining, pooja, kitchen, utility, entrance and balconies", "One AC point in every bedroom and one in the living room"],
+      },
+      {
+        title: "Not Included",
+        items: ["Compound wall and gate", "Sump and septic tank", "Lift, lift pit and shaft", "Electricity connection", "Building-plan approval", "Special elevation materials"],
       },
     ],
   },
   {
     name: "Premium Package",
-    price: "₹2,500",
-    unit: "per sqft",
-    description: "A material specification with upgraded steel, fittings and floor tiles.",
+    price: "₹2,699",
+    unit: "per sq ft",
+    description: "An upgraded specification with detailed structural design, premium surfaces and closer project support.",
     featured: true,
     details: [
       {
-        title: "Structure & materials",
-        text: "Chettinad or Ramco cement; wire-cut red brick; M-sand and P-sand, with river sand for the roof only; ARS CRS Fe550 steel.",
+        title: "Design",
+        items: ["2D scheme, electrical, plumbing and working drawings for every floor", "3D elevation and half-layouts for every floor", "Soil-test report and structural drawings", "2D furniture layouts for every floor", "2D elevation detail drawings"],
       },
       {
-        title: "Finishes & fittings",
-        text: "Asian Premium / Apex paint; Anchor Roma switches; Finolex wire; Ashirvad and Finolex plumbing pipes; Parryware fittings. Anuj 2×2 ft floor tiles at ₹60/sq ft and other tiles at ₹40/sq ft.",
+        title: "Project Management",
+        items: ["Site supervision and quality monitoring by a site engineer", "Daily project-manager visits", "Daily progress photos and project-status access", "Dedicated architect throughout the project, with stage visits and material-selection support"],
       },
       {
-        title: "Doors, windows & interiors",
-        text: "First-quality teak main door and frame; other frames in second-quality teak; flush bedroom doors; WPC bathroom doors; second-quality teak windows. Interiors not included.",
+        title: "Structure",
+        items: ["Basement height up to 3.5 ft", "Pulkit TMT steel or equivalent; Ramco, Dalmia or UltraTech cement", "Wire-cut brick walls: 9 in exterior and 4.5 in interior", "M-sand for masonry and P-sand for plastering", "M20 concrete with RMC for the roof", "10 ft floor-to-floor height and reinforcement to structural detailing", "3.5 ft-high, 6 in-thick parapet", "RCC lift pit and lift shaft included when required", "Basement anti-termite treatment"],
+      },
+      {
+        title: "Bathroom & Plumbing",
+        items: ["Full-height 4×2 ft digital vitrified wall tiles up to ₹85/sq ft", "Jaquar bath and CP fittings up to ₹30,000 per bathroom", "Wall-mounted EWC and basin, pillar tap, health faucet, shower and concealed wall mixer", "Ashirvad or Finolex CPVC internal and PVC external plumbing", "3,000 L Sintex UV-protected overhead tank with sensor", "Solar-heater plumbing lines when required"],
+      },
+      {
+        title: "Flooring",
+        items: ["4×2 ft tiles up to ₹90/sq ft for living, dining, bedrooms and kitchen; Somany, Kajaria, KAG or Sunheart", "2×2 ft balcony and utility tiles up to ₹60/sq ft", "Granite staircase up to ₹160/sq ft", "2×2 ft heavy stone for parking up to ₹80/sq ft", "1×1 ft Anuj white cooling terrace tiles with waterproofing"],
+      },
+      {
+        title: "Kitchen & Dining",
+        items: ["4×2 ft vitrified kitchen wall tiles up to ₹65/sq ft", "Designer sink faucet up to ₹4,500 and quartz sink with drain up to ₹7,000", "Dining wash basin with granite counter", "Kitchen granite counter up to ₹160/sq ft"],
+      },
+      {
+        title: "Doors, Windows & Railing",
+        items: ["Ghana teak main door and frame up to ₹52,500; 35 mm door, 5×3 in frame, 8×4 ft, one unit", "Laminate-finished flush room doors with Ghana wood frames", "WPC bathroom doors and frames", "White uPVC sliding windows with no size or quantity restriction and 5 mm clear glass", "SS 304 staircase railing and 10 mm full toughened-glass balcony railing"],
+      },
+      {
+        title: "Painting",
+        items: ["Two coats Birla wall putty internally", "Asian primer plus two coats Premium Emulsion on walls and ceilings", "Asian primer plus two coats Apex externally", "Two coats Birla WallSeal waterproof exterior putty on the front elevation"],
+      },
+      {
+        title: "Electrical",
+        items: ["Finolex or Havells FR wires and GM switches", "Four 8-module switch boxes per bedroom; heater and exhaust points in bathrooms", "Up to five 8-module boxes in the living room", "Dedicated points for dining, pooja, kitchen, utility, entrance and balconies", "One AC point in every bedroom and one in the living room", "Exterior-grade single-service panel board with RCCB"],
+      },
+      {
+        title: "Not Included",
+        items: ["Compound wall and gate", "Sump and septic tank", "Lift", "Electricity connection", "Building-plan approval", "Special elevation materials"],
       },
     ],
   },
   {
     name: "Royal Package",
-    price: "₹2,800",
-    unit: "per sqft",
-    description: "A higher-end specification with granite flooring and interiors included.",
+    price: "₹3,499",
+    unit: "per sq ft",
+    description: "A luxury specification with interior design, elevated structural performance and premium finishes throughout.",
     featured: false,
     details: [
       {
-        title: "Structure & materials",
-        text: "Dalmia or UltraTech cement; wire-cut red brick; M-sand and P-sand, with river sand for the roof only; Tata Tiscon steel.",
+        title: "Design",
+        items: ["2D scheme, electrical, plumbing and working drawings for every floor", "3D elevation and half-layouts for every floor", "Soil-test report and structural drawings", "Furniture layouts and elevation detail drawings", "Site assessment and site plan", "3D interior views for every floor, 2D detailing for every room and an interior walkthrough", "Approval drawing and landscape architectural design"],
       },
       {
-        title: "Finishes & fittings",
-        text: "Asian Shyne / Apex paint; GM switches; Finolex wire; Ashirvad and Finolex plumbing pipes; Parryware fittings. Granite flooring and steps.",
+        title: "Project Management",
+        items: ["Site supervision and quality monitoring by a site engineer", "Daily project-manager visits", "Daily progress photos and project-status access", "Dedicated architect with frequent site visits and material, brand, interior and home-decor selection support"],
       },
       {
-        title: "Doors, windows & interiors",
-        text: "First-quality teak main door and frames; other frames in first-quality teak; flush bedroom doors; WPC bathroom doors; first-quality teak windows. Interiors included; confirm scope in your quotation.",
+        title: "Structure",
+        items: ["Basement height up to 5 ft", "Tata steel; Ramco, Dalmia or UltraTech cement", "Wire-cut brick walls: 9 in exterior and 4.5 in interior", "M-sand for masonry and P-sand for plastering", "M25 concrete with RMC for the roof", "11 ft floor-to-floor height", "Enhanced reinforcement to structural-engineer detailing", "3.5 ft-high, 6 in-thick parapet or toughened-glass railing where required", "RCC lift pit, base slab and lift shaft included when required", "Basement anti-termite treatment"],
+      },
+      {
+        title: "Bathroom & Plumbing",
+        items: ["Full-height 4×2 ft vitrified wall tiles up to ₹120/sq ft", "Kohler bath and CP fittings up to ₹60,000 per bathroom", "Concealed EWC, countertop basin, marble counter, pillar tap, health faucet, shower and concealed wall mixer", "Ashirvad, Finolex or Jindal CPVC/PVC plumbing with flexible HDPE pipe", "Waterproofed RCC overhead tank up to 6,000 L", "Solar-heater plumbing lines when required"],
+      },
+      {
+        title: "Flooring",
+        items: ["6×6 ft quartz tiles up to ₹200/sq ft for living, dining, bedrooms and kitchen", "2×2 ft balcony and utility tiles up to ₹60/sq ft", "Marble staircase up to ₹350/sq ft", "Granite parking floor up to ₹120/sq ft", "2×2 ft exterior-grade vitrified terrace tiles with waterproofing"],
+      },
+      {
+        title: "Kitchen & Dining",
+        items: ["4×2 ft designer vitrified kitchen wall tiles up to ₹125/sq ft", "Floor-mounted pull-out sink faucet up to ₹8,000 and multifunction sink up to ₹15,000", "Premium designer dining basin with marble counter and designer tap", "Quartz kitchen counter up to ₹350/sq ft"],
+      },
+      {
+        title: "Doors, Windows & Railing",
+        items: ["Designer timber door up to 8×5 ft or pure stainless-steel security door up to 8×4.5 ft with digital lock; up to ₹67,500, one unit", "Laminate-finished flush room doors with Ghana wood frames, 8×3.5 ft", "Waterproof laminate-finished bathroom flush doors, 8×3 ft", "Coloured openable uPVC windows with unrestricted size and quantity and toughened glass", "Toughened-glass staircase railing with SS, timber or aluminium handrail", "10 mm full toughened-glass balcony railing with aluminium handrail"],
+      },
+      {
+        title: "Painting",
+        items: ["Two coats Birla wall putty internally", "Asian primer plus two coats Royale Shyne on walls and ceilings", "Asian primer plus two coats Apex Ultima Protek externally", "Two coats Birla WallSeal waterproof putty on two elevation sides"],
+      },
+      {
+        title: "Electrical",
+        items: ["Finolex or Havells FR wires and glass-plate touch switches", "Power points for lift, generator, curtain motors, pool, RO plant, pressure pump, intercom, CCTV, exterior lighting, gate automation, lightning arrester, hybrid solar heater, water feature and HVAC as required", "Exterior-grade panel board for up to two service connections with RCCB"],
+      },
+      {
+        title: "Not Included",
+        items: ["Compound wall and gate", "Sump and septic tank", "Lift", "Electricity connection", "Building-plan approval", "Special elevation materials"],
       },
     ],
   },
@@ -311,11 +395,11 @@ const approachSteps = [
 const faqs = [
   [
     "What is the house construction cost per sq ft in Chennai with ARKA Constructions?",
-    "Our Standard, Premium and Royal construction packages are listed at ₹2,200, ₹2,500 and ₹2,800 per sq ft respectively. A separate budget offer starts at ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Please confirm current pricing and scope with our team.",
+    "Our Standard, Premium and Royal construction packages are listed at ₹2,449, ₹2,699 and ₹3,499 per sq ft respectively. A separate budget offer starts at ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Please confirm current pricing and scope with our team.",
   ],
   [
     "What is the minimum area you build for?",
-    "The budget offer specifies a minimum plot size of 1,250 sq ft. Contact us to discuss your site and the requirements for other packages.",
+    "The Standard, Premium and Royal packages require a minimum overall built-up area of 1,200 sq ft. The separate budget offer specifies a minimum plot size of 1,250 sq ft.",
   ],
   [
     "Do you offer free maintenance after handover?",
@@ -1262,9 +1346,9 @@ export default function ArkaSite({
                 <div>
                   <Eyebrow>Our Construction Packages</Eyebrow>
                   {view === "packages" ? (
-                    <h1>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,200/sq ft</span></h1>
+                    <h1>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h1>
                   ) : (
-                    <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,200/sq ft</span></h2>
+                    <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h2>
                   )}
                 </div>
                 <p>
@@ -1297,7 +1381,9 @@ export default function ArkaSite({
                           <summary>
                             {detail.title} <Plus size={16} />
                           </summary>
-                          <p>{detail.text}</p>
+                          <ul className="hp-package-detail-list">
+                            {detail.items.map((item) => <li key={item}>{item}</li>)}
+                          </ul>
                         </details>
                       ))}
                       <button
@@ -1318,6 +1404,7 @@ export default function ArkaSite({
                 Rates are per sq ft as listed in the package document. Confirm current rates,
                 area basis, taxes, material availability and inclusions with our team.
               </p>
+              <p className="hp-package-minimum"><strong>Note*:</strong> Minimum overall built-up area should be 1,200 sq ft.</p>
               <div className="hp-package-terms">
                 <div><h3>Additional work</h3><p>Compound wall: ₹2,300 per running ft · Cooling tiles: ₹140 per sq ft · Sump: ₹28 per litre · Septic tank: ₹18 per litre · Head room: ₹2,100 per sq ft.</p></div>
                 <div><h3>Client scope</h3><p>Building plan approval, borewell and motor fittings, electricity connection and main board (labour and materials), and water for construction.</p></div>
@@ -1860,7 +1947,8 @@ export default function ArkaSite({
                   <li key={detail.title}>
                     <Check size={17} />
                     <span>
-                      <strong>{detail.title}:</strong> {detail.text}
+                      <strong>{detail.title}</strong>
+                      <span className="modal-package-items">{detail.items.join(" · ")}</span>
                     </span>
                   </li>
                 ))}

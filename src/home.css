@@ -316,9 +316,12 @@ html{scroll-padding-top:84px}
 .hp-package summary::-webkit-details-marker{display:none}
 .hp-package summary svg{color:var(--gold-deep);transition:transform .2s;flex-shrink:0}
 .hp-package details[open] summary svg{transform:rotate(45deg)}
-.hp-package details p{font-size:12px;line-height:1.7;color:var(--muted);padding:0 0 14px;margin:0}
+.hp-package-detail-list{display:grid;gap:8px;margin:0;padding:0 0 16px 18px;color:var(--muted);font-size:12px;line-height:1.65}
+.hp-package-detail-list li::marker{color:var(--gold-deep)}
 .hp-package .hp-btn{width:100%;margin-top:18px}
 .hp-package-note{font-size:11px;line-height:1.7;color:var(--muted);text-align:center;margin:26px 0 0}
+.hp-package-minimum{margin:8px 0 0;text-align:center;font-size:14px;line-height:1.6;color:var(--navy)}
+.modal-package-items{display:block;margin-top:4px;color:var(--muted);line-height:1.65}
 
 /* ---------- Service categories ---------- */
 .hp-service-categories{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -720,7 +723,7 @@ body{font-size:var(--type-body);line-height:1.7}
   font-size:var(--type-body);line-height:1.75;
 }
 
-.hp-projects-toolbar>p,.hp-package-desc,.hp-package details p,
+.hp-projects-toolbar>p,.hp-package-desc,.hp-package-detail-list,
 .hp-step p,.hp-form-success p{
   font-size:var(--type-body-sm);line-height:1.7;
 }
@@ -772,7 +775,7 @@ body{font-size:var(--type-body);line-height:1.7}
   .hp-approach-intro p,.hp-vm-card p,.hp-faq-answer p{
     font-size:15px;line-height:1.72;
   }
-  .hp-projects-toolbar>p,.hp-package-desc,.hp-package details p,
+  .hp-projects-toolbar>p,.hp-package-desc,.hp-package-detail-list,
   .hp-step p,.hp-why-item p{font-size:14px}
   .hp-faq-trigger{font-size:15px;line-height:1.45}
   .hp-footer{padding-top:50px}
@@ -781,7 +784,7 @@ body{font-size:var(--type-body);line-height:1.7}
   .hp-footer h3{font-size:15px;margin-bottom:16px}
   .hp-footer a,.hp-footer button,.hp-footer p{font-size:14px;line-height:1.65}
   .hp-footer-bottom,.hp-footer-bottom button{font-size:12px}
-  .mobile-contact>a,.mobile-contact>button{font-size:14px;font-weight:600}
+  .mobile-contact>a,.mobile-contact>button{font-size:16px;font-weight:600}
   .mobile-contact>button{background:#123653;color:#fff}
   .hp-field input,.hp-field select,.quote-form input,
   .quote-form select,.quote-form textarea{font-size:16px}
