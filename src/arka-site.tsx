@@ -1540,8 +1540,8 @@ export default function ArkaSite({
               <div className="hp-about-visual">
                 <div className="hp-about-image">
                   <img
-                    src="/images/about-engineer.jpg"
-                    alt="Engineers reviewing construction drawings on site (representative image)"
+                    src="/images/about-engineer-india.png"
+                    alt="Indian engineers reviewing construction drawings on site"
                     loading="lazy"
                     width="1400"
                     height="933"
