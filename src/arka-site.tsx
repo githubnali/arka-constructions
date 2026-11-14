@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, LazyMotion, MotionConfig, domAnimation, m } from "framer-motion";
-import { RecaptchaWidget } from "./components/RecaptchaWidget";
+import { RecaptchaWidget, type RecaptchaWidgetHandle } from "./components/RecaptchaWidget";
 import { submitEnquiry } from "./lib/supabase";
 import {
   ArrowUpRight,
@@ -427,10 +427,211 @@ const faqs = [
   ],
 ];
 
+const houseTurnkeySteps = [
+  {
+    title: "Plan & Design",
+    text: "We study your plot, your family's needs and your budget, then prepare the plan and structural drawings. If Vastu matters to your family, tell us at the start so we can keep it in mind.",
+    icon: ClipboardCheck,
+  },
+  {
+    title: "Approvals",
+    text: "We help coordinate the drawings and papers your local authority needs, such as CMDA or DTCP, depending on where your plot is.",
+    icon: BadgeCheck,
+  },
+  {
+    title: "Construction Build",
+    text: "Foundation, RCC, brickwork, plastering, flooring, plumbing and painting are handled by our team, with engineering checks at every stage.",
+    icon: Building2,
+  },
+  {
+    title: "Handover & Care",
+    text: "We walk through the house with you, complete the final fixes and hand over the keys. Maintenance labour is covered for one year; materials are charged separately.",
+    icon: HeartHandshake,
+  },
+];
+
+const houseTypes = [
+  ["Independent Houses", "Single-floor and multi-floor houses on your own plot, planned around your family size.", Home],
+  ["Duplex Homes", "Two-floor homes with the staircase, rooms and open spaces planned so the house feels comfortable, not crowded.", ChevronsLeftRight],
+  ["Villas", "Larger homes with more design detail, better finishes and more outdoor space.", Building2],
+  ["Renovation & Remodelling", "Adding a floor, changing the layout, fixing leaks or giving an old house a fresh look.", Wrench],
+] as const;
+
+const houseWhyReasons = [
+  ["Engineer-Led Work", "The founder is an engineer, and your house is supervised by engineers, not just by a mason.", HardHat],
+  ["Clear Written Quote", "You get the cost in writing before we start. If you request a change, we explain the cost before doing the work.", ClipboardCheck],
+  ["Regular Updates", "We share progress from the site so you always know what is complete and what comes next.", MessagesSquare],
+  ["Quality Checks at Each Stage", "We inspect materials and workmanship as construction progresses, not only at the end.", ShieldCheck],
+  ["One Team for Everything", "Civil, steel, flooring, glazing, plumbing and painting are handled by the same company.", Users],
+  ["1 Year Free Maintenance Labour", "After handover, we cover maintenance labour for one year. Materials are charged separately.", Wrench],
+  ["Local Knowledge", "We know the soil, weather, local rules and suppliers across Chennai and Chengalpattu.", MapPinned],
+] as const;
+
+const houseFaqs = [
+  ["What is the house construction cost per sq ft in Chennai?", "With ARKA Constructions, home packages start from ₹2,449 per sq ft. The Standard package is ₹2,449, the Premium package is ₹2,699 and the Royal package is ₹3,499 per sq ft. The final quote depends on your area, floors, materials and site."],
+  ["What is the minimum size of house you build?", "We build homes starting from 1,200 sq ft. If your plan is smaller or larger, call us and we will check what is possible."],
+  ["What does turnkey house construction mean?", "It means one company handles the whole job: plan, approvals, construction, finishing and handover. You do not need to hire separate contractors for each work. You get the finished house and the keys."],
+  ["Do you help with plan approval?", "Yes. We help coordinate the drawings and papers your local authority needs, such as CMDA or DTCP, depending on your plot. Approval charges are paid to the authority separately."],
+  ["How long will it take to build my house?", "It depends on the size of the house, the number of floors and the site. We give you a schedule in the written quotation before work starts and update you as construction moves ahead."],
+  ["Can the price go up after I sign?", "You get a written quotation before we start. The cost changes only if you request changes, such as a different floor tile or an extra room, and we tell you the extra cost before doing the work."],
+  ["Do you build in Chengalpattu and nearby towns?", "Yes. Chengalpattu and Chennai are our main areas. We also build in Maraimalai Nagar, Kanchipuram, Thiruvallur, Thiruvannamalai, Oragadam, Sriperumbudur, Mahindra World City and Singaperumal Koil."],
+  ["Can I see your work before I decide?", "Yes. Project photos, drawings and client references are available on request. You are welcome to talk to our team and visit a site."],
+  ["Do you give free maintenance after handover?", "Yes. We cover the labour cost of maintenance work for one year after handover. Material cost is charged separately."],
+  ["Do you also renovate old houses?", "Yes. We take up house renovation, repair and maintenance, including adding a floor, changing the layout, waterproofing and repainting."],
+  ["Is ARKA the best construction company in Chennai for an individual house?", "We cannot answer that for you, and we would not trust anyone who says it about themselves. What we can promise is an engineer-led team, a clear written quote and regular updates. Talk to us, see our work and compare with others before you decide."],
+] as const;
+
+const sectorPages = {
+  commercial: {
+    crumb: "Commercial Construction",
+    heroImage: "/images/service-commercial.jpg",
+    heroEyebrow: "Commercial Construction in Chennai",
+    titleLead: "Commercial Construction Company in",
+    titleAccent: "Chennai & Chengalpattu",
+    heroText: "Your shop or office should be ready when you planned to open. ARKA Constructions builds commercial buildings with one team, a written schedule and clear costs, so you can spend your time on your business and not on chasing contractors.",
+    tags: [[Building2, "Offices"], [Home, "Shops & Retail"], [Layers3, "Showrooms"]] as const,
+    formHeading: "Tell Us About Your Building",
+    formIntro: "Share your site and building details. Our engineer will call you back.",
+    introEyebrow: "Commercial Construction",
+    introLead: "A Commercial Construction Company That Respects",
+    introAccent: "Your Opening Date",
+    introParagraphs: [
+      "Every month of delay in a commercial building is a month of rent, EMI and lost sales. So we plan the work from the date you want to open and work backwards from there.",
+      "We are a commercial construction company based in Chengalpattu, and we work across Chennai and nearby towns. Our team of engineers, supervisors and skilled workers handles the structure, the finishing and the outside work, so you speak to one company from the first meeting to handover.",
+    ],
+    proofTitle: "Built around your business",
+    proofText: "Opening date, customer access, parking, utilities and daily movement are considered from the start.",
+    turnkeyTitle: "Turnkey Commercial Construction in Chennai:",
+    turnkeyAccent: "Plan, Build, Hand Over",
+    turnkeyIntro: "One point of contact for the whole building. No juggling between civil, steel, glass and flooring contractors.",
+    steps: [
+      ["Understand Your Business", "We ask how the space will be used: customer entry, parking, counters, storage, power and water needs. The building is planned around these answers.", MessagesSquare],
+      ["Plan and Cost", "You get a written scope, a cost and a schedule. We explain each item in simple words, so you know what you are paying for.", ClipboardCheck],
+      ["Build", "Foundation, RCC, brickwork, steel work, flooring, glass and aluminium, plumbing and painting are handled by our team and checked at each stage.", Building2],
+      ["Handover and Upkeep", "We inspect the building with you, hand it over and stay available for repair and maintenance work later.", HeartHandshake],
+    ] as const,
+    typesTitle: "Commercial Buildings We Build in",
+    typesAccent: "Chennai and Chengalpattu",
+    typesIntro: "Purpose-built spaces for daily business use, customer movement, staff comfort and long-term upkeep.",
+    types: [
+      ["Offices", "Office buildings and floors planned for desks, meeting rooms, parking and easy movement.", Building2],
+      ["Shops and Retail Spaces", "Ground-floor shops and retail buildings with strong frontage, glass shopfronts and good customer access.", Home],
+      ["Showrooms", "Open, well-lit spaces with large glass areas and strong floors for displays.", Layers3],
+      ["Other Commercial Buildings", "Other buildings made for business use. Tell us what you need and we will tell you honestly if we can build it.", Building2],
+      ["Renovation and Extensions", "Adding a floor, changing a layout, new flooring, glazing or repainting an existing commercial building.", Wrench],
+    ] as const,
+    scopeTitle: "Everything Your Commercial Building Needs,",
+    scopeAccent: "from One Team",
+    scopeGroups: [
+      { title: "Structure", items: [["Civil and RCC Works", "Foundation, PCC, RCC, concrete, masonry and plastering."], ["Steel and Fabrication", "MS structural work, roofing, cladding, mezzanines, staircases, handrails, gates and grills."]] },
+      { title: "Finishing", items: [["Flooring", "Tiles, granite and concrete flooring."], ["Glass and Aluminium", "Aluminium doors and windows, glass doors, partitions and glazing for shopfronts."], ["Painting and Waterproofing", "Interior and exterior painting, plus waterproofing for terraces, toilets and roofs."]] },
+      { title: "Outside Work and Utilities", items: [["Paver Blocks and External Flooring", "Parking areas, walkways, kerb stones and interlocking pavers."], ["Roads, Drains and Compound Wall", "Internal roads, driveways, storm water drains and boundary walls."], ["Plumbing and Drainage", "Water lines, sewage lines, chambers and sanitary work."]] },
+    ],
+    whyTitle: "Why Businesses Choose ARKA for",
+    whyAccent: "Commercial Construction",
+    whyIntro: "A coordinated team, practical scheduling and clear costs for buildings that need to start earning.",
+    why: [
+      ["Engineer-Led Team", "Your building is run by engineers and supervisors experienced in commercial and industrial work.", HardHat],
+      ["One Company, Many Trades", "Civil, steel, glass, flooring, plumbing and painting are coordinated by the same team.", Users],
+      ["Clear Pricing", "A written quotation with no hidden costs, plus a budget update if anything changes.", IndianRupee],
+      ["Realistic Schedule", "We plan and monitor the work step by step so the opening date does not keep moving.", Timer],
+      ["Safe Sites", "Safety gear, site induction and supervision for everyone working on your building.", ShieldCheck],
+      ["Local Knowledge", "We know Chengalpattu and the areas around Chennai: local rules, suppliers and site conditions.", MapPinned],
+    ] as const,
+    areasTitle: "Commercial Construction in",
+    areasAccent: "Chennai, Chengalpattu and Nearby Areas",
+    areasText: "Chennai and Chengalpattu are our main areas. We also take up commercial work in the towns around them. If your site is not on the list, call us.",
+    faqTitle: "Frequently Asked Questions About Commercial Construction",
+    faqs: [
+      ["What kind of commercial buildings do you build?", "We build offices, shops, retail spaces, showrooms and other buildings used for business. We also take up renovation and extension of existing commercial buildings."],
+      ["How much does commercial construction cost?", "The cost depends on the building size, structure, finishes and site. Commercial work is quoted for each project, so share your plan or requirement and we will provide a written quotation."],
+      ["Do you build from scratch or only renovate?", "Both. We build new commercial buildings and take up modification, repair and maintenance work on existing ones."],
+      ["Can you also do glass shopfronts and aluminium work?", "Yes. Aluminium doors and windows, glass doors, partitions and glazing are part of our work, along with flooring, painting and waterproofing."],
+      ["Do you build parking areas and compound walls?", "Yes. We do paver block parking, walkways, internal roads, storm water drains and compound walls as part of the same project."],
+      ["How long will my commercial building take?", "It depends on the size, structure and site. We share a written schedule with the quotation and update you as work progresses."],
+      ["Which areas do you work in?", "Chennai and Chengalpattu are our main areas. We also work in Maraimalai Nagar, Kanchipuram, Thiruvallur, Thiruvannamalai, Oragadam, Sriperumbudur, Mahindra World City and Singaperumal Koil."],
+      ["How do I get a quotation?", "Call us or fill in the form with your name, phone number, site location and type of building. Our team will understand your requirement and share a clear written quotation."],
+    ] as const,
+  },
+  industrial: {
+    crumb: "Industrial Construction",
+    heroImage: "/images/service-industrial.jpg",
+    heroEyebrow: "Industrial Construction in Chennai",
+    titleLead: "Industrial Construction Company in",
+    titleAccent: "Chennai & Chengalpattu",
+    heroText: "A factory needs strong foundations, strong floors and a site that stays safe while the work goes on. ARKA Constructions builds factory buildings, sheds and industrial civil works for companies in Chennai, Chengalpattu, Oragadam and Sriperumbudur.",
+    tags: [[Factory, "Factory Buildings"], [Hammer, "Sheds & PEB"], [HardHat, "Industrial Civil Works"]] as const,
+    formHeading: "Tell Us About Your Industrial Project",
+    formIntro: "Share your site and project details. Our engineer will call you back.",
+    introEyebrow: "Industrial Construction",
+    introLead: "An Industrial Construction Company That Knows",
+    introAccent: "Factory Work",
+    introParagraphs: [
+      "Building a factory is not like building a house. The floor must carry machines. The roof must be right for the shed. Drains, utilities and roads must work from day one. A small mistake in the foundation can stop a production line later.",
+      "ARKA Constructions is based in Chengalpattu. Our founder, Kamarajan Krishnan, is an engineer with experience across residential, commercial and industrial projects. Project details, site photographs and references are available on request.",
+    ],
+    proofTitle: "Factory-ready thinking",
+    proofText: "Loads, machine locations, product flow, roads, drainage and utilities are coordinated before construction starts.",
+    turnkeyTitle: "Turnkey Industrial Construction in Chennai:",
+    turnkeyAccent: "Civil, Steel and Utilities Together",
+    turnkeyIntro: "Civil work, steel structure, flooring and utilities are planned together by one team, reducing delays and clashes on site.",
+    steps: [
+      ["Study the Site and Need", "We look at your site, machines, product flow and timeline before we plan anything.", Target],
+      ["Plan Scope and Cost", "You get a written scope, cost and schedule, with each item explained in plain words.", ClipboardCheck],
+      ["Build", "Foundations, RCC, steel structure, roofing, cladding, flooring, drains and utilities are built with stage-wise checks.", Factory],
+      ["Handover and Support", "We inspect everything with you and hand over. We also handle later repair, maintenance and modification work.", Wrench],
+    ] as const,
+    typesTitle: "Industrial Construction Work We Do in",
+    typesAccent: "Chennai and Chengalpattu",
+    typesIntro: "Civil, structural, flooring and infrastructure work designed around industrial loads and operations.",
+    types: [
+      ["Factory and Plant Buildings", "New factory buildings, plant buildings and industrial facilities built to carry heavy loads.", Factory],
+      ["PEB and Steel Structures", "MS structural work, PEB systems, industrial sheds, roofing, cladding and mezzanines.", Hammer],
+      ["Machine Foundations and Utility Civil Work", "Machine foundations, utility civil works and infrastructure changes for industrial facilities.", Target],
+      ["Factory Modification and Expansion", "New bays, extensions, floor changes and layout changes in an existing factory.", Wrench],
+      ["Industrial Flooring", "Epoxy, concrete and heavy-duty floors for production and storage areas.", Layers3],
+      ["Roads, Drains and Compound Walls", "Internal roads, storm water drains, paver areas and boundary walls for the campus.", Route],
+      ["Waterproofing, Painting and Repair", "Roof and structural waterproofing, industrial painting, protective coatings and maintenance.", ShieldCheck],
+    ] as const,
+    scopeTitle: "Industrial Work Planned for",
+    scopeAccent: "Production, Loads and Long-Term Use",
+    scopeGroups: [
+      { title: "Civil Foundations", items: [["Heavy-Duty Civil Work", "Machine foundations, PCC, RCC, masonry and structural concrete."], ["Industrial Flooring", "Concrete and epoxy floors planned for production and storage areas."]] },
+      { title: "Steel and Building Envelope", items: [["PEB and Structural Steel", "Industrial sheds, steel frames, mezzanines and fabrication."], ["Roofing and Cladding", "Coordinated roofing, wall cladding and weather protection."]] },
+      { title: "Campus Infrastructure", items: [["Utilities and Drainage", "Utility civil work, water lines, drains and chambers."], ["Roads and External Works", "Internal roads, pavers, storm water drains and compound walls."], ["Repairs and Modifications", "Factory extensions, layout changes, waterproofing and maintenance."]] },
+    ],
+    whyTitle: "Why Companies Choose ARKA for",
+    whyAccent: "Industrial Construction",
+    whyIntro: "One accountable team for civil, steel and infrastructure work close to Chennai's industrial belt.",
+    why: [
+      ["Civil and Steel Under One Team", "Foundations, RCC, steel structures, roofing and flooring are handled by the same company.", Users],
+      ["Industrial Experience", "Our engineer-led team has experience across industrial buildings and civil work.", Factory],
+      ["Safety on Site", "Safety gear, induction and continuous supervision are part of how we work.", ShieldCheck],
+      ["Clear Scope and Pricing", "A written quotation, clear scope and cost update if anything changes.", ClipboardCheck],
+      ["Modification and Maintenance", "We take up changes and repairs in existing factories, not only new buildings.", Wrench],
+      ["Close to the Industrial Belt", "Based in Maraimalai Nagar, near Oragadam, Mahindra World City and Singaperumal Koil.", MapPinned],
+    ] as const,
+    areasTitle: "Industrial Construction in",
+    areasAccent: "Chennai, Chengalpattu, Oragadam and Sriperumbudur",
+    areasText: "Chennai and Chengalpattu are our main areas. We also work throughout the industrial areas around them. If your site is not on the list, call us.",
+    faqTitle: "Frequently Asked Questions About Industrial Construction",
+    faqs: [
+      ["What industrial construction work do you do?", "We build factory and plant buildings, PEB and steel structures, industrial sheds, roofing and cladding, mezzanines, machine foundations, industrial flooring, roads, drains and compound walls. We also take up factory modification and maintenance work."],
+      ["Do you build PEB sheds and steel structures?", "Yes. MS fabrication, structural steel, PEB systems, industrial sheds, roofing and cladding are part of our work."],
+      ["Can you build machine foundations?", "Yes. We do machine foundations and utility civil works for industrial facilities."],
+      ["Can you modify or extend an existing factory?", "Yes. We take up factory modification, extension and infrastructure changes. Share the details and we will explain how we would approach it."],
+      ["How much does industrial construction cost?", "Industrial work is quoted for each project because the size, structure, floor load and utilities differ. Share your requirement and we will provide a written quotation."],
+      ["Which areas do you work in?", "Chennai and Chengalpattu are our main areas. We also work in Maraimalai Nagar, Oragadam, Sriperumbudur, Mahindra World City, Singaperumal Koil, Kanchipuram, Thiruvallur and Thiruvannamalai."],
+      ["Do you follow safety rules on industrial sites?", "Yes. Safety gear, site induction and supervision are part of our site practice for every worker."],
+      ["How do I get a quotation?", "Call us or fill in the form with your name, phone number, site location and type of work. Our team will understand your requirement and share a clear written quotation."],
+    ] as const,
+  },
+} as const;
+
 const serviceImages = [
-  "service-civil.jpg", "service-infrastructure.jpg", "service-flooring.jpg",
+  "service-civil-india.jpg", "service-infrastructure-india.jpg", "service-flooring-india.jpg",
   "service-fabrication.jpg", "service-glazing-v2.jpg", "service-pavers-v2.jpg",
-  "service-painting-v2.jpg", "service-plumbing.jpg", "service-roadworks-v2.jpg",
+  "service-painting-v2.jpg", "service-plumbing-india.jpg", "service-roadworks-v2.jpg",
   "service-waterproofing-v2.jpg", "service-demolition-v2.jpg", "service-repairs-v2.jpg",
   "service-industrial-works.jpg",
 ];
@@ -651,14 +852,20 @@ function EmailHeroQuoteForm() {
   );
 }
 
-function HeroQuoteForm() {
+function HeroQuoteForm({
+  heading = "Let’s Discuss Your Project",
+  intro = "Share your plot details. Our team will call you back.",
+}: {
+  heading?: string;
+  intro?: string;
+} = {}) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [fieldErrors, setFieldErrors] = useState<EnquiryErrors>({});
-  const [recaptchaToken, setRecaptchaToken] = useState("");
   const [recaptchaResetKey, setRecaptchaResetKey] = useState(0);
   const [formStartedAt] = useState(() => Date.now());
+  const recaptcha = useRef<RecaptchaWidgetHandle>(null);
 
   function clearFieldError(field: EnquiryField) {
     setFieldErrors((current) => current[field] ? { ...current, [field]: undefined } : current);
@@ -682,6 +889,8 @@ function HeroQuoteForm() {
     setFieldErrors({});
 
     try {
+      const recaptchaToken = await recaptcha.current?.execute();
+      if (!recaptchaToken) throw new Error("The security check could not start. Please try again.");
       await submitEnquiry({
         name: String(data.get("name") || "").trim(),
         phone: String(data.get("phone") || "").trim(),
@@ -692,11 +901,9 @@ function HeroQuoteForm() {
       }, recaptchaToken, String(data.get("website") || ""), formStartedAt);
       form.reset();
       setSubmitted(true);
-      setRecaptchaToken("");
       setRecaptchaResetKey((key) => key + 1);
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
-      setRecaptchaToken("");
       setRecaptchaResetKey((key) => key + 1);
     } finally {
       setSubmitting(false);
@@ -718,8 +925,8 @@ function HeroQuoteForm() {
 
   return (
     <form className="hp-hero-form" onSubmit={submit} aria-busy={submitting} noValidate>
-      <h2>Let&rsquo;s Discuss Your Project</h2>
-      <p>Share your plot details. Our team will call you back.</p>
+      <h2>{heading}</h2>
+      <p>{intro}</p>
       <div className="form-field-group">
         <label className={`hp-field ${fieldErrors.name ? "has-error" : ""}`}><User size={16} /><input name="name" required minLength={2} autoComplete="name" maxLength={100} placeholder="Name *" aria-label="Name" aria-invalid={Boolean(fieldErrors.name)} aria-describedby={fieldErrors.name ? "hero-name-error" : undefined} onInput={() => clearFieldError("name")} /></label>
         {fieldErrors.name && <span className="field-error" id="hero-name-error">{fieldErrors.name}</span>}
@@ -741,9 +948,9 @@ function HeroQuoteForm() {
         {fieldErrors.plotArea && <span className="field-error" id="hero-area-error">{fieldErrors.plotArea}</span>}
       </div>
       <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-      <RecaptchaWidget onToken={setRecaptchaToken} resetKey={recaptchaResetKey} />
+      <RecaptchaWidget ref={recaptcha} resetKey={recaptchaResetKey} />
       {error && <p className="form-error" role="alert">{error}</p>}
-      <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting || !recaptchaToken}>
+      <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting}>
         {submitting ? "Submitting…" : "Request a Callback"} {!submitting && <ArrowUpRight size={16} />}
       </button>
       <p className="hp-form-note">By submitting, you agree that ARKA may contact you about your project.</p>
@@ -792,8 +999,9 @@ function BeforeAfter({
 export default function ArkaSite({
   view = "home",
 }: {
-  view?: "home" | "services" | "projects" | "packages";
+  view?: "home" | "services" | "projects" | "packages" | "residential" | "commercial" | "industrial";
 }) {
+  const sector = view === "commercial" || view === "industrial" ? sectorPages[view] : null;
   const [menu, setMenu] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [heroSlide, setHeroSlide] = useState(0);
@@ -804,11 +1012,11 @@ export default function ArkaSite({
   const [modalSubmitting, setModalSubmitting] = useState(false);
   const [modalError, setModalError] = useState("");
   const [modalFieldErrors, setModalFieldErrors] = useState<EnquiryErrors>({});
-  const [modalRecaptchaToken, setModalRecaptchaToken] = useState("");
   const [modalRecaptchaResetKey, setModalRecaptchaResetKey] = useState(0);
   const [modalFormStartedAt] = useState(() => Date.now());
   const [emailLink, setEmailLink] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
+  const modalRecaptcha = useRef<RecaptchaWidgetHandle>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
 
   function openModal(next: Modal) {
@@ -915,6 +1123,8 @@ export default function ArkaSite({
     setModalFieldErrors({});
 
     try {
+      const recaptchaToken = await modalRecaptcha.current?.execute();
+      if (!recaptchaToken) throw new Error("The security check could not start. Please try again.");
       await submitEnquiry({
         name: String(data.get("name") || "").trim(),
         phone: String(data.get("phone") || "").trim(),
@@ -922,14 +1132,12 @@ export default function ArkaSite({
         service: String(data.get("service") || "").trim(),
         message: String(data.get("message") || "").trim() || undefined,
         source: "quote_modal",
-      }, modalRecaptchaToken, String(data.get("website") || ""), modalFormStartedAt);
+      }, recaptchaToken, String(data.get("website") || ""), modalFormStartedAt);
       form.reset();
       setPrepared(true);
-      setModalRecaptchaToken("");
       setModalRecaptchaResetKey((key) => key + 1);
     } catch (submissionError) {
       setModalError(submissionError instanceof Error ? submissionError.message : "We could not save your enquiry. Please try again.");
-      setModalRecaptchaToken("");
       setModalRecaptchaResetKey((key) => key + 1);
     } finally {
       setModalSubmitting(false);
@@ -973,9 +1181,9 @@ export default function ArkaSite({
                 <ChevronDown size={16} />
               </button>
               <div className="nav-dropdown" id="services-submenu">
-                <a href="/services#residential" onClick={() => setMenu(false)}>Residential Construction</a>
-                <a href="/services#commercial" onClick={() => setMenu(false)}>Commercial Construction</a>
-                <a href="/services#industrial" onClick={() => setMenu(false)}>Industrial Construction</a>
+                <a href="/house-construction-company-chennai" onClick={() => setMenu(false)}>Residential Construction</a>
+                <a href="/commercial-construction-company-chennai" onClick={() => setMenu(false)}>Commercial Construction</a>
+                <a href="/industrial-construction-company-chennai" onClick={() => setMenu(false)}>Industrial Construction</a>
               </div>
             </div>
             <a href="/projects" onClick={() => setMenu(false)}>
@@ -1036,7 +1244,7 @@ export default function ArkaSite({
         id="main"
         className={view === "home" ? "home-page" : "dedicated-page"}
       >
-        {view !== "home" && (
+        {view !== "home" && view !== "residential" && !sector && (
           <div className="container page-breadcrumb">
             <a href="/">Home</a>
             <span>/</span>
@@ -1095,6 +1303,212 @@ export default function ArkaSite({
               <HeroQuoteForm />
             </div>
           </m.section>
+        )}
+
+        {sector && (
+          <>
+            <m.section {...sectionMotion} className={`hp-hero res-hero sector-hero sector-${view}`} aria-labelledby={`${view}-title`}>
+              <div className="hp-hero-media" aria-hidden="true">
+                <img src={sector.heroImage} alt="" className="is-active" fetchPriority="high" width="1400" height="933" />
+              </div>
+              <nav className="container page-breadcrumb res-hero-breadcrumb" aria-label="Breadcrumb">
+                <a href="/">Home</a><span>/</span><a href="/services">Construction Services</a><span>/</span><span aria-current="page">{sector.crumb}</span>
+              </nav>
+              <div className="container hp-hero-inner">
+                <div className="hp-hero-copy">
+                  <Eyebrow light>{sector.heroEyebrow}</Eyebrow>
+                  <h1 id={`${view}-title`}>{sector.titleLead} <span>{sector.titleAccent}</span></h1>
+                  <p>{sector.heroText}</p>
+                  <div className="hp-hero-tags res-hero-tags" aria-label={`${sector.crumb} highlights`}>
+                    {sector.tags.map(([Icon, label]) => <span className="hp-hero-tag" key={label}><Icon size={15} /> {label}</span>)}
+                  </div>
+                  <div className="hp-hero-actions">
+                    <button className="hp-btn hp-btn-gold" onClick={() => openModal({ type: "quote", interest: sector.crumb })}>Get a Free Quote <ArrowUpRight size={17} /></button>
+                    <a href="tel:+919952525185" className="hp-btn hp-btn-outline-light"><Phone size={16} /> Call 99525 25185</a>
+                  </div>
+                </div>
+                <HeroQuoteForm heading={sector.formHeading} intro={sector.formIntro} />
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section hp-section-white res-intro sector-intro">
+              <div className="container res-intro-grid">
+                <div className="res-intro-copy">
+                  <Eyebrow>{sector.introEyebrow}</Eyebrow>
+                  <h2>{sector.introLead} <span>{sector.introAccent}</span></h2>
+                  {sector.introParagraphs.map((paragraph, index) => <p className={index === 0 ? "res-lead" : undefined} key={paragraph}>{paragraph}</p>)}
+                  <div className="res-intro-proof"><ShieldCheck size={24} /><span><strong>{sector.proofTitle}.</strong> {sector.proofText}</span></div>
+                </div>
+                <div className="res-intro-visual">
+                  <img src={sector.heroImage} alt={`${sector.crumb} project by ARKA Constructions`} loading="lazy" width="1400" height="933" />
+                  <div className="res-intro-stat"><strong>One team</strong><span>Plan to handover</span></div>
+                </div>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section hp-section-ivory res-turnkey sector-turnkey">
+              <div className="container">
+                <div className="hp-section-head res-section-head">
+                  <div><Eyebrow>Turnkey Solution</Eyebrow><h2>{sector.turnkeyTitle} <span>{sector.turnkeyAccent}</span></h2></div>
+                  <p>{sector.turnkeyIntro}</p>
+                </div>
+                <ol className="res-turnkey-grid" aria-label={`${sector.crumb} stages`}>
+                  {sector.steps.map(([title, text, Icon], index) => (
+                    <m.li {...cardMotion} key={title}><span className="res-step-number">0{index + 1}</span><span className="res-step-icon"><Icon size={24} /></span><h3>{title}</h3><p>{text}</p></m.li>
+                  ))}
+                </ol>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section hp-section-white sector-types">
+              <div className="container">
+                <div className="hp-section-head res-section-head">
+                  <div><Eyebrow>What We Build</Eyebrow><h2>{sector.typesTitle} <span>{sector.typesAccent}</span></h2></div>
+                  <p>{sector.typesIntro}</p>
+                </div>
+                <div className="sector-types-grid">
+                  {sector.types.map(([title, text, Icon], index) => (
+                    <m.article {...cardMotion} key={title}><div className="sector-type-top"><span>0{index + 1}</span><Icon size={26} /></div><h3>{title}</h3><p>{text}</p></m.article>
+                  ))}
+                </div>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section sector-scope">
+              <div className="container">
+                <div className="hp-section-head sector-scope-head">
+                  <div><Eyebrow light>Complete Scope</Eyebrow><h2>{sector.scopeTitle} <span>{sector.scopeAccent}</span></h2></div>
+                  <p>One coordinated team across the structure, finishes, utilities and external works.</p>
+                </div>
+                <div className="sector-scope-grid">
+                  {sector.scopeGroups.map((group, index) => (
+                    <m.article {...cardMotion} key={group.title}><span className="sector-scope-number">0{index + 1}</span><h3>{group.title}</h3>{group.items.map(([title, text]) => <div className="sector-scope-item" key={title}><CheckCircle2 size={18} /><div><h4>{title}</h4><p>{text}</p></div></div>)}</m.article>
+                  ))}
+                </div>
+              </div>
+            </m.section>
+
+            {view === "industrial" && (
+              <m.section {...sectionMotion} className="hp-section hp-section-ivory sector-project">
+                <div className="container">
+                  <div className="hp-section-head"><div><Eyebrow>Our Industrial Project</Eyebrow><h2>Industrial Construction Project <span>in Progress</span></h2></div><p>Current industrial work, with detailed photographs, scope and references available when you speak with our team.</p></div>
+                  <article className="sector-project-card">
+                    <img src="/images/project-ongoing-1.jpg" alt="Industrial construction project in progress in Maraimalai Nagar" loading="lazy" />
+                    <div><span>Industrial · In progress</span><h3>Pioneer NF Forgings India Pvt Ltd</h3><p><MapPin size={16} /> Maraimalai Nagar, Chengalpattu</p><dl><div><dt>Build up</dt><dd>8,000 sq ft</dd></div><div><dt>Plot</dt><dd>1.2 acres</dd></div></dl><button className="hp-btn hp-btn-dark" onClick={() => openModal({ type: "quote", interest: "Industrial construction" })}>Discuss an Industrial Project <ArrowUpRight size={16} /></button></div>
+                  </article>
+                </div>
+              </m.section>
+            )}
+
+            <m.section {...sectionMotion} className="hp-why sector-why">
+              <div className="container hp-why-grid">
+                <div className="hp-why-copy"><Eyebrow light>Why ARKA</Eyebrow><h2>{sector.whyTitle} <span>{sector.whyAccent}</span></h2><p>{sector.whyIntro}</p><button className="hp-btn hp-btn-gold" onClick={() => openModal({ type: "quote", interest: sector.crumb })}>Talk to Our Team <ArrowUpRight size={16} /></button></div>
+                <div className="hp-why-list res-why-list">{sector.why.map(([title, text, Icon]) => <m.article {...cardMotion} className="hp-why-item" key={title}><Icon size={22} strokeWidth={1.5} /><div><h3>{title}</h3><p>{text}</p></div></m.article>)}</div>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section hp-areas sector-areas">
+              <div className="container hp-areas-grid">
+                <div className="hp-areas-copy"><Eyebrow light>Areas We Cover</Eyebrow><h2>{sector.areasTitle} <span>{sector.areasAccent}</span></h2><p>{sector.areasText}</p><div className="hp-areas-actions"><a className="hp-btn hp-btn-gold" href="tel:+919952525185">Call 99525 25185</a><button className="hp-btn hp-btn-outline" onClick={() => openModal({ type: "quote", interest: sector.crumb })}>Get a Free Quote</button></div></div>
+                <div className="hp-areas-panel"><div className="hp-area-panel-group"><strong className="hp-area-label">Main areas</strong><div className="hp-main-areas">{mainServiceAreas.map((area) => <article className="hp-main-area" key={area}><span className="hp-area-pin"><MapPin size={21} /></span><h3>{area}</h3><p>{area === "Chennai" ? `${sector.crumb} projects` : "Our base, in Maraimalai Nagar"}</p></article>)}</div></div><div className="hp-area-panel-group hp-area-nearby"><strong className="hp-area-label">Also serving</strong><div className="hp-area-chips">{nearbyServiceAreas.map((area) => <span key={area}><MapPin size={13} />{area}</span>)}</div></div><p className="hp-area-note">Site not on the list? <button onClick={() => openModal({ type: "quote", interest: sector.crumb })}>Call us</button> and we will check.</p></div>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-faq res-faq sector-faq">
+              <div className="container"><div className="hp-faq-head"><span className="hp-faq-eyebrow">{sector.crumb} Questions</span><h2>{sector.faqTitle}</h2></div><div className="hp-faq-list">{sector.faqs.map(([question, answer], index) => <div className={`hp-faq-item ${openFaq === index ? "is-open" : ""}`} key={question}><h3><button type="button" className="hp-faq-trigger" aria-expanded={openFaq === index} aria-controls={`${view}-faq-answer-${index}`} id={`${view}-faq-question-${index}`} onClick={() => setOpenFaq(openFaq === index ? -1 : index)}><span>{question}</span><ChevronDown size={20} /></button></h3><AnimatePresence initial={false}>{openFaq === index && <m.div id={`${view}-faq-answer-${index}`} role="region" aria-labelledby={`${view}-faq-question-${index}`} className="hp-faq-answer" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ height: { duration: 0.35, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.22 } }}><p>{answer}</p></m.div>}</AnimatePresence></div>)}</div></div>
+            </m.section>
+          </>
+        )}
+
+        {view === "residential" && (
+          <>
+            <m.section {...sectionMotion} className="hp-hero res-hero" aria-labelledby="residential-title">
+              <div className="hp-hero-media" aria-hidden="true">
+                <img src="/images/hero-house.jpg" alt="" className="is-active" fetchPriority="high" width="1400" height="933" />
+              </div>
+              <nav className="container page-breadcrumb res-hero-breadcrumb" aria-label="Breadcrumb">
+                <a href="/">Home</a>
+                <span>/</span>
+                <a href="/services">Construction Services</a>
+                <span>/</span>
+                <span aria-current="page">House Construction</span>
+              </nav>
+              <div className="container hp-hero-inner">
+                <div className="hp-hero-copy">
+                  <Eyebrow light>House Construction in Chennai</Eyebrow>
+                  <h1 id="residential-title">House Construction Company in <span>Chennai &amp; Chengalpattu</span></h1>
+                  <p>Planning to build your own house? ARKA Constructions looks after the whole job: plan, approvals, construction, finishing and handover. You deal with one team, and you know the cost before work starts. We build homes from 1,200 sq ft, with packages starting at ₹2,449 per sq ft.</p>
+                  <div className="hp-hero-tags res-hero-tags" aria-label="House construction highlights">
+                    <span className="hp-hero-tag"><Home size={15} /> From 1,200 sq ft</span>
+                    <span className="hp-hero-tag"><IndianRupee size={15} /> From ₹2,449 per sq ft</span>
+                    <span className="hp-hero-tag"><Wrench size={15} /> 1 year free maintenance labour</span>
+                  </div>
+                  <div className="hp-hero-actions">
+                    <a href="#house-projects" className="hp-btn hp-btn-gold">View Our Projects <ArrowUpRight size={17} /></a>
+                    <a href="#packages" className="hp-btn hp-btn-outline-light">View Our Packages <ArrowUpRight size={17} /></a>
+                  </div>
+                </div>
+                <HeroQuoteForm heading="Tell Us About Your Plot" intro="Share a few details and our engineer will call you back." />
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section hp-section-white res-intro">
+              <div className="container res-intro-grid">
+                <div className="res-intro-copy">
+                  <Eyebrow>Residential Construction</Eyebrow>
+                  <h2>Looking for the Best Construction Company in Chennai for an <span>Individual House?</span></h2>
+                  <p className="res-lead">Everyone says they are the best. We would rather you check for yourself. Ask for the quotation in writing. Visit one of our sites. Meet the engineer who will look after your house. If you like what you see, we would be glad to build your home.</p>
+                  <p>An individual house is not a small job. For most families in Chennai and Chengalpattu, it is the biggest amount they will ever spend. That is why we keep things simple: one team, one written quote and regular updates from the site, so nothing comes as a surprise.</p>
+                  <p>We are based in Maraimalai Nagar, Chengalpattu. Our founder, Kamarajan Krishnan, is an engineer with experience across homes, commercial buildings and factories, and he leads the team that will work on your house.</p>
+                  <div className="res-intro-proof">
+                    <ShieldCheck size={24} />
+                    <span><strong>Visit our work before you decide.</strong> Project photos, drawings, references and site visits are available on request.</span>
+                  </div>
+                </div>
+                <div className="res-intro-visual">
+                  <img src="/images/service-residential.jpg" alt="Modern independent house construction in Chennai" loading="lazy" width="1400" height="933" />
+                  <div className="res-intro-stat"><strong>One team</strong><span>Plan to handover</span></div>
+                </div>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section hp-section-ivory res-turnkey" id="turnkey">
+              <div className="container">
+                <div className="hp-section-head res-section-head">
+                  <div><Eyebrow>Turnkey Solution</Eyebrow><h2>Turnkey House Construction in Chennai: <span>One Team from Plan to Handover</span></h2></div>
+                  <p>“Turnkey” simply means you do not have to run around finding separate contractors. We coordinate the work and hand over the finished home and its keys.</p>
+                </div>
+                <ol className="res-turnkey-grid" aria-label="Turnkey house construction stages">
+                  {houseTurnkeySteps.map((step, index) => (
+                    <m.li {...cardMotion} key={step.title}>
+                      <span className="res-step-number">0{index + 1}</span>
+                      <span className="res-step-icon"><step.icon size={24} /></span>
+                      <h3>{step.title}</h3>
+                      <p>{step.text}</p>
+                    </m.li>
+                  ))}
+                </ol>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className="hp-section hp-section-white res-types">
+              <div className="container">
+                <div className="hp-section-head res-section-head">
+                  <div><Eyebrow>Homes We Build</Eyebrow><h2>Independent Houses, Duplex Homes and <span>Villas We Build in Chennai</span></h2></div>
+                  <p>Every plot and family is different. We plan the structure, spaces and finishes around the way you intend to live.</p>
+                </div>
+                <div className="res-types-grid">
+                  {houseTypes.map(([title, text, Icon], index) => (
+                    <m.article {...cardMotion} key={title}>
+                      <div className="res-type-top"><span>0{index + 1}</span><Icon size={27} /></div>
+                      <h3>{title}</h3>
+                      <p>{text}</p>
+                    </m.article>
+                  ))}
+                </div>
+              </div>
+            </m.section>
+          </>
         )}
 
         {view === "home" && (
@@ -1335,7 +1749,7 @@ export default function ArkaSite({
           </m.section>
         )}
 
-        {(view === "home" || view === "packages") && (
+        {(view === "home" || view === "packages" || view === "residential") && (
           <m.section
             {...sectionMotion}
             className="hp-section hp-section-white hp-packages"
@@ -1347,14 +1761,13 @@ export default function ArkaSite({
                   <Eyebrow>Our Construction Packages</Eyebrow>
                   {view === "packages" ? (
                     <h1>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h1>
+                  ) : view === "residential" ? (
+                    <h2>House Construction Packages in Chennai: <span>Starting from ₹2,449 per sq ft</span></h2>
                   ) : (
                     <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h2>
                   )}
                 </div>
-                <p>
-                  Compare the material specifications for our Standard, Premium
-                  and Royal packages, and ask our team for a project-specific quotation.
-                </p>
+                <p>{view === "residential" ? "Pick the package that suits your budget. All three are for homes from 1,200 sq ft, and each one can be adjusted for your site and the materials you prefer." : "Compare the material specifications for our Standard, Premium and Royal packages, and ask our team for a project-specific quotation."}</p>
               </div>
               <div className="hp-package-highlights" aria-label="Package highlights">
                 <div><Home size={19} /><span><strong>Three packages</strong> to compare</span></div>
@@ -1414,6 +1827,55 @@ export default function ArkaSite({
           </m.section>
         )}
 
+        {view === "residential" && (
+          <m.section {...sectionMotion} className="hp-section res-house-projects" id="house-projects">
+            <div className="container">
+              <div className="hp-section-head res-section-head">
+                <div><Eyebrow>Our House Construction Projects</Eyebrow><h2>House Construction Projects in <span>Chennai &amp; Chengalpattu</span></h2></div>
+                <p>See how a residential design develops into a finished family home. More project photographs, drawings and client references are available when you meet our team.</p>
+              </div>
+              <div className="res-project-showcase">
+                <BeforeAfter before="/images/project-design-1.jpg" after="/images/project-completed-1.jpg" label="Private residence in Maraimalai Nagar" />
+                <div className="res-project-copy">
+                  <span className="res-project-kicker">Completed residence</span>
+                  <h3>Private Residence, Maraimalai Nagar</h3>
+                  <p>A 3,200 sq ft family home on a 2,400 sq ft plot, developed from design through construction and finishing.</p>
+                  <dl>
+                    <div><dt>Build up</dt><dd>3,200 sq ft</dd></div>
+                    <div><dt>Plot</dt><dd>2,400 sq ft</dd></div>
+                    <div><dt>Type</dt><dd>Residential</dd></div>
+                  </dl>
+                  <div className="res-project-actions">
+                    <a className="hp-btn hp-btn-dark" href="/projects">View All Projects <ArrowUpRight size={16} /></a>
+                    <button className="hp-btn hp-btn-outline" onClick={() => openModal({ type: "quote", interest: "Residential house construction" })}>Discuss Your House</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </m.section>
+        )}
+
+        {view === "residential" && (
+          <m.section {...sectionMotion} className="hp-why res-why" id="why-arka-house">
+            <div className="container hp-why-grid">
+              <div className="hp-why-copy">
+                <Eyebrow light>Why ARKA</Eyebrow>
+                <h2>Why Build Your House <span>with ARKA</span></h2>
+                <p>A house is too important for vague promises. Our process is built around engineering supervision, written costs and visible progress.</p>
+                <button className="hp-btn hp-btn-gold" onClick={() => openModal({ type: "quote", interest: "Residential house construction" })}>Talk to an Engineer <ArrowUpRight size={16} /></button>
+              </div>
+              <div className="hp-why-list res-why-list">
+                {houseWhyReasons.map(([title, text, Icon]) => (
+                  <m.article {...cardMotion} className="hp-why-item" key={title}>
+                    <Icon size={22} strokeWidth={1.5} />
+                    <div><h3>{title}</h3><p>{text}</p></div>
+                  </m.article>
+                ))}
+              </div>
+            </div>
+          </m.section>
+        )}
+
         {(view === "home" || view === "services") && (
           <m.section
             {...sectionMotion}
@@ -1454,7 +1916,7 @@ export default function ArkaSite({
                       </span>
                       <h3>{category.title}</h3>
                       <p>{category.text}</p>
-                      <a href="/services">
+                      <a href={category.title === "Residential Construction" ? "/house-construction-company-chennai" : category.title === "Commercial Construction" ? "/commercial-construction-company-chennai" : "/industrial-construction-company-chennai"}>
                         Explore Services <ArrowUpRight size={15} />
                       </a>
                     </div>
@@ -1518,21 +1980,17 @@ export default function ArkaSite({
           </m.section>
         )}
 
-        {view === "home" && (
+        {(view === "home" || view === "residential") && (
           <m.section {...sectionMotion} className="hp-section hp-areas" id="areas-we-cover">
             <div className="container hp-areas-grid">
               <div className="hp-areas-copy">
                 <Eyebrow light>Areas We Cover</Eyebrow>
-                <h2>
-                  Construction Services in <span>Chennai, Chengalpattu,</span>{" "}
-                  Kanchipuram, Oragadam &amp; Nearby Areas
-                </h2>
-                <p>
-                  Chennai and Chengalpattu are our main areas. We also take up
-                  work in the towns and industrial belts around them. If your
-                  site is nearby and not listed, call us and we will tell you
-                  honestly if we can take it up.
-                </p>
+                {view === "residential" ? (
+                  <h2>House Construction in <span>Chennai, Chengalpattu</span> and Nearby Areas</h2>
+                ) : (
+                  <h2>Construction Services in <span>Chennai, Chengalpattu,</span>{" "}Kanchipuram, Oragadam &amp; Nearby Areas</h2>
+                )}
+                <p>{view === "residential" ? "Chennai and Chengalpattu are our main areas. We also build in the towns around them. If your plot is nearby and not on the list, call us and we will tell you honestly if we can take it up." : "Chennai and Chengalpattu are our main areas. We also take up work in the towns and industrial belts around them. If your site is nearby and not listed, call us and we will tell you honestly if we can take it up."}</p>
                 <div className="hp-areas-actions">
                   <a className="hp-btn hp-btn-gold" href="tel:+919952525185">
                     Call 99525 25185
@@ -1696,6 +2154,51 @@ export default function ArkaSite({
             </div>
           </m.section>
         )}
+
+        {view === "residential" && (
+          <m.section {...sectionMotion} className="hp-faq res-faq" id="house-faqs">
+            <div className="container">
+              <div className="hp-faq-head">
+                <span className="hp-faq-eyebrow">House Construction Questions</span>
+                <h2>Frequently Asked Questions About House Construction in Chennai</h2>
+              </div>
+              <div className="hp-faq-list">
+                {houseFaqs.map(([question, answer], index) => (
+                  <div className={`hp-faq-item ${openFaq === index ? "is-open" : ""}`} key={question}>
+                    <h3>
+                      <button
+                        type="button"
+                        className="hp-faq-trigger"
+                        aria-expanded={openFaq === index}
+                        aria-controls={`house-faq-answer-${index}`}
+                        id={`house-faq-question-${index}`}
+                        onClick={() => setOpenFaq(openFaq === index ? -1 : index)}
+                      >
+                        <span>{question}</span><ChevronDown size={20} />
+                      </button>
+                    </h3>
+                    <AnimatePresence initial={false}>
+                      {openFaq === index && (
+                        <m.div
+                          id={`house-faq-answer-${index}`}
+                          role="region"
+                          aria-labelledby={`house-faq-question-${index}`}
+                          className="hp-faq-answer"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ height: { duration: 0.35, ease: [0.22, 1, 0.36, 1] }, opacity: { duration: 0.22 } }}
+                        >
+                          <p>{answer}</p>
+                        </m.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </m.section>
+        )}
       </main>
 
       <footer className="hp-footer">
@@ -1724,7 +2227,7 @@ export default function ArkaSite({
             <div>
               <h3>Construction Services</h3>
               {serviceCategories.map((service) => (
-                <a key={service.title} href={`/services#${service.title.split(" ")[0].toLowerCase()}`}>
+                <a key={service.title} href={service.title === "Residential Construction" ? "/house-construction-company-chennai" : service.title === "Commercial Construction" ? "/commercial-construction-company-chennai" : "/industrial-construction-company-chennai"}>
                   {service.title}
                 </a>
               ))}
@@ -1907,9 +2410,9 @@ export default function ArkaSite({
                   By submitting, you agree that ARKA may contact you about your project.
                 </p>
                 <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
-                <RecaptchaWidget onToken={setModalRecaptchaToken} resetKey={modalRecaptchaResetKey} />
+                <RecaptchaWidget ref={modalRecaptcha} resetKey={modalRecaptchaResetKey} />
                 {modalError && <p className="form-error" role="alert">{modalError}</p>}
-                <button className="hp-btn hp-btn-gold" type="submit" disabled={modalSubmitting || !modalRecaptchaToken}>
+                <button className="hp-btn hp-btn-gold" type="submit" disabled={modalSubmitting}>
                   {modalSubmitting ? "Submitting…" : "Send My Enquiry"} {!modalSubmitting && <ArrowRight size={18} />}
                 </button>
               </form>

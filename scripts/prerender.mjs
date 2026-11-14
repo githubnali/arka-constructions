@@ -7,6 +7,9 @@ const pages = [
   ["services/index.html", "services"],
   ["projects/index.html", "projects"],
   ["packages/index.html", "packages"],
+  ["house-construction-company-chennai/index.html", "residential"],
+  ["commercial-construction-company-chennai/index.html", "commercial"],
+  ["industrial-construction-company-chennai/index.html", "industrial"],
 ];
 
 for (const [file, view] of pages) {

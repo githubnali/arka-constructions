@@ -9,7 +9,7 @@ const devPrerender: Plugin = {
     if (!context.server) return html;
     const { render } = await context.server.ssrLoadModule("/src/entry-server.tsx");
     const path = context.path.replace(/\/index\.html$/, "").replace(/\/$/, "");
-    const view = path === "/services" ? "services" : path === "/projects" ? "projects" : path === "/packages" ? "packages" : "home";
+    const view = path === "/services" ? "services" : path === "/projects" ? "projects" : path === "/packages" ? "packages" : path === "/house-construction-company-chennai" ? "residential" : path === "/commercial-construction-company-chennai" ? "commercial" : path === "/industrial-construction-company-chennai" ? "industrial" : "home";
     return html.replace('<div id="root"></div>', `<div id="root">${render(view)}</div>`);
   },
 };
@@ -23,6 +23,9 @@ export default defineConfig({
         services: resolve(import.meta.dirname, "services/index.html"),
         projects: resolve(import.meta.dirname, "projects/index.html"),
         packages: resolve(import.meta.dirname, "packages/index.html"),
+        residential: resolve(import.meta.dirname, "house-construction-company-chennai/index.html"),
+        commercial: resolve(import.meta.dirname, "commercial-construction-company-chennai/index.html"),
+        industrial: resolve(import.meta.dirname, "industrial-construction-company-chennai/index.html"),
       },
     },
   },

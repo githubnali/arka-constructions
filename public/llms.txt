@@ -5,6 +5,9 @@
 ## Primary pages
 
 - [Home](https://arkaconstruction.in/): Company overview, approach, services, projects, packages and contact details.
+- [House Construction](https://arkaconstruction.in/house-construction-company-chennai/): Turnkey individual houses, duplex homes, villas and renovation in Chennai and Chengalpattu.
+- [Commercial Construction](https://arkaconstruction.in/commercial-construction-company-chennai/): Turnkey offices, shops, retail spaces, showrooms, renovations and external works in Chennai and Chengalpattu.
+- [Industrial Construction](https://arkaconstruction.in/industrial-construction-company-chennai/): Factories, PEB sheds, steel structures, machine foundations, industrial flooring and factory modifications around Chennai's industrial belt.
 - [Services](https://arkaconstruction.in/services/): Civil and RCC, earthworks, flooring, fabrication, glazing, pavers, painting, plumbing, roads, waterproofing, demolition, maintenance and industrial works.
 - [Projects](https://arkaconstruction.in/projects/): Completed and ongoing construction work.
 - [Packages](https://arkaconstruction.in/packages/): Home construction packages from ₹2,449 per sq ft, with project-specific quotes.
