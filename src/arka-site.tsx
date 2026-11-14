@@ -953,7 +953,7 @@ function HeroQuoteForm({
       <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting}>
         {submitting ? "Submitting…" : "Request a Callback"} {!submitting && <ArrowUpRight size={16} />}
       </button>
-      <p className="hp-form-note">By submitting, you agree that ARKA may contact you about your project.</p>
+      <p className="hp-form-note">By submitting, you agree that ARKA may contact you about your project. This site is protected by reCAPTCHA.</p>
     </form>
   );
 }
@@ -2407,7 +2407,7 @@ export default function ArkaSite({
                   />
                 </label>
                 <p className="form-note">
-                  By submitting, you agree that ARKA may contact you about your project.
+                  By submitting, you agree that ARKA may contact you about your project. This site is protected by reCAPTCHA.
                 </p>
                 <input className="hp-trap" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
                 <RecaptchaWidget ref={modalRecaptcha} resetKey={modalRecaptchaResetKey} />
