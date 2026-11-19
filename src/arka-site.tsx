@@ -1109,7 +1109,7 @@ export default function ArkaSite({
               Home
             </a>
             <div className={`nav-item ${servicesOpen ? "is-expanded" : ""}`}>
-              <a href="/services" onClick={() => setMenu(false)}>
+              <a href="/services/" onClick={() => setMenu(false)}>
                 Construction Services
               </a>
               <button
@@ -1123,15 +1123,15 @@ export default function ArkaSite({
                 <ChevronDown size={16} />
               </button>
               <div className="nav-dropdown" id="services-submenu">
-                <a href="/house-construction-company-chennai" onClick={() => setMenu(false)}>Residential Construction</a>
-                <a href="/commercial-construction-company-chennai" onClick={() => setMenu(false)}>Commercial Construction</a>
-                <a href="/industrial-construction-company-chennai" onClick={() => setMenu(false)}>Industrial Construction</a>
+                <a href="/house-construction-company-chennai/" onClick={() => setMenu(false)}>Residential Construction</a>
+                <a href="/commercial-construction-company-chennai/" onClick={() => setMenu(false)}>Commercial Construction</a>
+                <a href="/industrial-construction-company-chennai/" onClick={() => setMenu(false)}>Industrial Construction</a>
               </div>
             </div>
-            <a href="/projects" onClick={() => setMenu(false)}>
+            <a href="/projects/" onClick={() => setMenu(false)}>
               Projects
             </a>
-            <a href="/packages" onClick={() => setMenu(false)}>
+            <a href="/packages/" onClick={() => setMenu(false)}>
               Packages
             </a>
           </nav>
@@ -1232,10 +1232,10 @@ export default function ArkaSite({
                   </span>
                 </div>
                 <div className="hp-hero-actions">
-                  <a href="/projects" className="hp-btn hp-btn-gold">
+                  <a href="/projects/" className="hp-btn hp-btn-gold">
                     View Our Projects <ArrowUpRight size={17} />
                   </a>
-                  <a href="/packages" className="hp-btn hp-btn-outline-light">
+                  <a href="/packages/" className="hp-btn hp-btn-outline-light">
                     View Our Packages <ArrowUpRight size={17} />
                   </a>
                 </div>
@@ -1252,7 +1252,7 @@ export default function ArkaSite({
                 <ResponsiveImage src={sector.heroImage} alt="" className="is-active" loading="eager" fetchPriority="high" sizes="100vw" />
               </div>
               <nav className="container page-breadcrumb res-hero-breadcrumb" aria-label="Breadcrumb">
-                <a href="/">Home</a><span>/</span><a href="/services">Construction Services</a><span>/</span><span aria-current="page">{sector.crumb}</span>
+                <a href="/">Home</a><span>/</span><a href="/services/">Construction Services</a><span>/</span><span aria-current="page">{sector.crumb}</span>
               </nav>
               <div className="container hp-hero-inner">
                 <div className="hp-hero-copy">
@@ -1400,7 +1400,7 @@ export default function ArkaSite({
               <nav className="container page-breadcrumb res-hero-breadcrumb" aria-label="Breadcrumb">
                 <a href="/">Home</a>
                 <span>/</span>
-                <a href="/services">Construction Services</a>
+                <a href="/services/">Construction Services</a>
                 <span>/</span>
                 <span aria-current="page">House Construction</span>
               </nav>
@@ -1843,7 +1843,7 @@ export default function ArkaSite({
                     <div><dt>Type</dt><dd>Residential</dd></div>
                   </dl>
                   <div className="res-project-actions">
-                    <a className="hp-btn hp-btn-dark" href="/projects">View All Projects <ArrowUpRight size={16} /></a>
+                    <a className="hp-btn hp-btn-dark" href="/projects/">View All Projects <ArrowUpRight size={16} /></a>
                     <button className="hp-btn hp-btn-outline" onClick={() => openModal({ type: "quote", interest: "Residential house construction" })}>Discuss Your House</button>
                   </div>
                 </div>
@@ -1914,7 +1914,7 @@ export default function ArkaSite({
                       </span>
                       <h3>{category.title}</h3>
                       <p>{category.text}</p>
-                      <a href={category.title === "Residential Construction" ? "/house-construction-company-chennai" : category.title === "Commercial Construction" ? "/commercial-construction-company-chennai" : "/industrial-construction-company-chennai"}>
+                      <a href={category.title === "Residential Construction" ? "/house-construction-company-chennai/" : category.title === "Commercial Construction" ? "/commercial-construction-company-chennai/" : "/industrial-construction-company-chennai/"}>
                         Explore Services <ArrowUpRight size={15} />
                       </a>
                     </div>
@@ -2216,8 +2216,8 @@ export default function ArkaSite({
               <h3>Quick Links</h3>
               <a href="/">Home</a>
               <a href="/#about">About Us</a>
-              <a href="/packages">Construction Packages</a>
-              <a href="/projects">Construction Projects</a>
+              <a href="/packages/">Construction Packages</a>
+              <a href="/projects/">Construction Projects</a>
               <button onClick={() => openModal({ type: "quote" })}>
                 Contact Us
               </button>
@@ -2225,7 +2225,7 @@ export default function ArkaSite({
             <div>
               <h3>Construction Services</h3>
               {serviceCategories.map((service) => (
-                <a key={service.title} href={service.title === "Residential Construction" ? "/house-construction-company-chennai" : service.title === "Commercial Construction" ? "/commercial-construction-company-chennai" : "/industrial-construction-company-chennai"}>
+                <a key={service.title} href={service.title === "Residential Construction" ? "/house-construction-company-chennai/" : service.title === "Commercial Construction" ? "/commercial-construction-company-chennai/" : "/industrial-construction-company-chennai/"}>
                   {service.title}
                 </a>
               ))}
