@@ -19,7 +19,6 @@ import {
   HardHat,
   ShieldCheck,
   ClipboardCheck,
-  Clock3,
   MessagesSquare,
   MapPin,
   Mail,
@@ -100,7 +99,7 @@ const services = [
   {
     title: "Repair & Maintenance",
     icon: Wrench,
-    detail: "Civil, structural, flooring and painting repairs, and general facility maintenance.",
+    detail: "Civil, structural, epoxy flooring and painting repairs, plus general facility maintenance.",
   },
   {
     title: "Industrial Works",
@@ -186,8 +185,7 @@ const ongoingProjects = [
     image: "/images/project-ongoing-3.jpg",
   },
 ];
-
-const packages = [
+const catalogPackages = [
   {
     name: "Standard Package",
     price: "₹2,449",
@@ -337,6 +335,58 @@ const packages = [
   },
 ];
 
+const residentialPackages = [
+  {
+    name: "Complete Home Construction Package",
+    price: "₹2,499",
+    unit: "per sq ft",
+    description: "A complete residential construction specification covering design, engineering supervision, structure, finishes, plumbing and electrical work.",
+    featured: true,
+    details: [
+      {
+        title: "Design",
+        items: ["2D scheme drawings for every floor", "3D elevation design", "Architectural working drawings for every floor"],
+      },
+      {
+        title: "Project Management",
+        items: ["Site supervision and quality monitoring by a dedicated site engineer", "Daily progress photos and project-status access", "Architect support through design completion"],
+      },
+      {
+        title: "Structure",
+        items: ["Basement height up to 3 ft above Natural Ground Level", "ARS CRS steel with Dalmia and UltraTech cement", "Wire-cut brick walls: 9 in exterior and 4.5 in interior", "M-sand for masonry and P-sand for plastering", "M20 concrete roof with Dr. Fixit waterproofing chemical", "10 ft ceiling height with reinforcement to standard design", "3 ft-high, 6 in-thick parapet wall", "Basement anti-termite treatment"],
+      },
+      {
+        title: "Bathroom & Plumbing",
+        items: ["Full-height 1×2 ft vitrified wall tiles up to ₹45/sq ft; one colour across two bathrooms", "Parryware bath and CP fittings up to ₹20,000 per bathroom", "Wall-mounted EWC and basin, pillar tap, health faucet, shower and 2-in-1 wall mixer", "Ashirvad CPVC internal and Ashirvad or Finolex PVC external plumbing", "1,000 L, 3-layer UV-protected overhead tank"],
+      },
+      {
+        title: "Flooring",
+        items: ["4×2 ft vitrified tiles up to ₹60/sq ft for living, dining, bedrooms and kitchen; KAG, Anuj or Kajaria", "2×2 ft anti-skid tiles up to ₹45/sq ft for balcony and utility", "Full-body staircase tiles up to ₹110/sq ft", "1×1 ft heavy-duty parking tiles up to ₹50/sq ft"],
+      },
+      {
+        title: "Kitchen & Dining",
+        items: ["1×2 ft vitrified kitchen wall tiles up to ₹45/sq ft", "Sink faucet up to ₹3,000 and stainless-steel sink with drain up to ₹5,000", "Wall-mounted dining wash basin", "Kitchen granite counter up to ₹140/sq ft"],
+      },
+      {
+        title: "Doors, Windows & Railing",
+        items: ["Ready-made Malaysian teak main door and frame up to ₹30,000; one unit", "Flush room doors with mahogany frames", "WPC bathroom doors and frames", "White uPVC sliding windows up to 5×5 ft; one per room with 5 mm clear glass", "SS 304 staircase and balcony railings"],
+      },
+      {
+        title: "Painting & White Washing",
+        items: ["Main door varnish and enamel paint finish for windows and bedroom doors", "One coat white washing and two coats wall putty", "One coat primer and two coats premium interior emulsion for inner walls", "Enamel paint for doors and grills", "One coat white wash and two coats Apex exterior emulsion for outer walls"],
+      },
+      {
+        title: "Electrical",
+        items: ["Orbit FRLS wires and Anchor Roma switches", "Three 8-module switch boxes per bedroom; heater and exhaust points in bathrooms", "Up to four 8-module boxes in the living room", "Dedicated points for dining, pooja, kitchen, utility, entrance and balconies", "One AC point in every bedroom and one in the living room"],
+      },
+      {
+        title: "Optional Interior Package",
+        items: ["Available at an additional ₹650/sq ft", "Designer false ceiling with customized TV and pooja units", "Custom-finished plywood wardrobes for every bedroom", "Complete modular kitchen using premium acrylic sheets"],
+      },
+    ],
+  },
+] as const;
+
 const whyReasons = [
   {
     icon: Users,
@@ -395,11 +445,11 @@ const approachSteps = [
 const faqs = [
   [
     "What is the house construction cost per sq ft in Chennai with ARKA Constructions?",
-    "Our Standard, Premium and Royal construction packages are listed at ₹2,449, ₹2,699 and ₹3,499 per sq ft respectively. A separate budget offer starts at ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Please confirm current pricing and scope with our team.",
+    "Our complete residential construction package starts at ₹2,499 per sq ft. Commercial and industrial projects are quoted individually after reviewing the drawings, specifications, site conditions, finishes, loads and utilities.",
   ],
   [
     "What is the minimum area you build for?",
-    "The Standard, Premium and Royal packages require a minimum overall built-up area of 1,200 sq ft. The separate budget offer specifies a minimum plot size of 1,250 sq ft.",
+    "Share your plot size and proposed built-up area with our team. We will review the plan and confirm whether the package and project scope are suitable for your site.",
   ],
   [
     "Do you offer free maintenance after handover?",
@@ -451,10 +501,10 @@ const houseTurnkeySteps = [
 ];
 
 const houseTypes = [
-  ["Independent Houses", "Single-floor and multi-floor houses on your own plot, planned around your family size.", Home],
-  ["Duplex Homes", "Two-floor homes with the staircase, rooms and open spaces planned so the house feels comfortable, not crowded.", ChevronsLeftRight],
-  ["Villas", "Larger homes with more design detail, better finishes and more outdoor space.", Building2],
-  ["Renovation & Remodelling", "Adding a floor, changing the layout, fixing leaks or giving an old house a fresh look.", Wrench],
+  ["Independent Houses", "Single-floor and multi-floor houses on your own plot, planned around your family size.", Home, "/images/service-pages/res-independent.jpg"],
+  ["Duplex Homes", "Two-floor homes with the staircase, rooms and open spaces planned so the house feels comfortable, not crowded.", ChevronsLeftRight, "/images/service-pages/res-duplex.jpg"],
+  ["Villas", "Larger homes with more design detail, better finishes and more outdoor space.", Building2, "/images/service-pages/res-villa.jpg"],
+  ["Renovation & Remodelling", "Adding a floor, changing the layout, fixing leaks or giving an old house a fresh look.", Wrench, "/images/service-pages/res-renovation.jpg"],
 ] as const;
 
 const houseWhyReasons = [
@@ -468,7 +518,7 @@ const houseWhyReasons = [
 ] as const;
 
 const houseFaqs = [
-  ["What is the house construction cost per sq ft in Chennai?", "With ARKA Constructions, home packages start from ₹2,449 per sq ft. The Standard package is ₹2,449, the Premium package is ₹2,699 and the Royal package is ₹3,499 per sq ft. The final quote depends on your area, floors, materials and site."],
+  ["What is the house construction cost per sq ft in Chennai?", "With ARKA Constructions, the complete home construction package starts from ₹2,499 per sq ft. The final consolidated quotation is prepared after the architectural plan, structural details, elevation and BOQ are finalized."],
   ["What is the minimum size of house you build?", "We build homes starting from 1,200 sq ft. If your plan is smaller or larger, call us and we will check what is possible."],
   ["What does turnkey house construction mean?", "It means one company handles the whole job: plan, approvals, construction, finishing and handover. You do not need to hire separate contractors for each work. You get the finished house and the keys."],
   ["Do you help with plan approval?", "Yes. We help coordinate the drawings and papers your local authority needs, such as CMDA or DTCP, depending on your plot. Approval charges are paid to the authority separately."],
@@ -514,18 +564,18 @@ const sectorPages = {
     typesAccent: "Chennai and Chengalpattu",
     typesIntro: "Purpose-built spaces for daily business use, customer movement, staff comfort and long-term upkeep.",
     types: [
-      ["Offices", "Office buildings and floors planned for desks, meeting rooms, parking and easy movement.", Building2],
-      ["Shops and Retail Spaces", "Ground-floor shops and retail buildings with strong frontage, glass shopfronts and good customer access.", Home],
-      ["Showrooms", "Open, well-lit spaces with large glass areas and strong floors for displays.", Layers3],
-      ["Other Commercial Buildings", "Other buildings made for business use. Tell us what you need and we will tell you honestly if we can build it.", Building2],
-      ["Renovation and Extensions", "Adding a floor, changing a layout, new flooring, glazing or repainting an existing commercial building.", Wrench],
+      ["Offices", "Office buildings and floors planned for desks, meeting rooms, parking and easy movement.", Building2, "/images/service-pages/commercial-office.jpg"],
+      ["Shops and Retail Spaces", "Ground-floor shops and retail buildings with strong frontage, glass shopfronts and good customer access.", Home, "/images/service-pages/commercial-retail.jpg"],
+      ["Showrooms", "Open, well-lit spaces with large glass areas and strong floors for displays.", Layers3, "/images/service-pages/commercial-showroom.jpg"],
+      ["Other Commercial Buildings", "Other buildings made for business use. Tell us what you need and we will tell you honestly if we can build it.", Building2, "/images/service-pages/commercial-building.jpg"],
+      ["Renovation and Extensions", "Adding a floor, changing a layout, new flooring, glazing or repainting an existing commercial building.", Wrench, "/images/service-pages/commercial-renovation.jpg"],
     ] as const,
     scopeTitle: "Everything Your Commercial Building Needs,",
     scopeAccent: "from One Team",
     scopeGroups: [
-      { title: "Structure", items: [["Civil and RCC Works", "Foundation, PCC, RCC, concrete, masonry and plastering."], ["Steel and Fabrication", "MS structural work, roofing, cladding, mezzanines, staircases, handrails, gates and grills."]] },
-      { title: "Finishing", items: [["Flooring", "Tiles, granite and concrete flooring."], ["Glass and Aluminium", "Aluminium doors and windows, glass doors, partitions and glazing for shopfronts."], ["Painting and Waterproofing", "Interior and exterior painting, plus waterproofing for terraces, toilets and roofs."]] },
-      { title: "Outside Work and Utilities", items: [["Paver Blocks and External Flooring", "Parking areas, walkways, kerb stones and interlocking pavers."], ["Roads, Drains and Compound Wall", "Internal roads, driveways, storm water drains and boundary walls."], ["Plumbing and Drainage", "Water lines, sewage lines, chambers and sanitary work."]] },
+      { title: "Structure", image: "/images/service-pages/commercial-scope-structure.jpg", items: [["Civil and RCC Works", "Foundation, PCC, RCC, concrete, masonry and plastering."], ["Steel and Fabrication", "MS structural work, roofing, cladding, mezzanines, staircases, handrails, gates and grills."]] },
+      { title: "Finishing", image: "/images/service-pages/commercial-scope-finishing.jpg", items: [["Flooring", "Tiles, granite and concrete flooring."], ["Glass and Aluminium", "Aluminium doors and windows, glass doors, partitions and glazing for shopfronts."], ["Painting and Waterproofing", "Interior and exterior painting, plus waterproofing for terraces, toilets and roofs."]] },
+      { title: "Outside Work and Utilities", image: "/images/service-pages/commercial-scope-utilities.jpg", items: [["Paver Blocks and External Flooring", "Parking areas, walkways, kerb stones and interlocking pavers."], ["Roads, Drains and Compound Wall", "Internal roads, driveways, storm water drains and boundary walls."], ["Plumbing and Drainage", "Water lines, sewage lines, chambers and sanitary work."]] },
     ],
     whyTitle: "Why Businesses Choose ARKA for",
     whyAccent: "Commercial Construction",
@@ -585,20 +635,20 @@ const sectorPages = {
     typesAccent: "Chennai and Chengalpattu",
     typesIntro: "Civil, structural, flooring and infrastructure work designed around industrial loads and operations.",
     types: [
-      ["Factory and Plant Buildings", "New factory buildings, plant buildings and industrial facilities built to carry heavy loads.", Factory],
-      ["PEB and Steel Structures", "MS structural work, PEB systems, industrial sheds, roofing, cladding and mezzanines.", Hammer],
-      ["Machine Foundations and Utility Civil Work", "Machine foundations, utility civil works and infrastructure changes for industrial facilities.", Target],
-      ["Factory Modification and Expansion", "New bays, extensions, floor changes and layout changes in an existing factory.", Wrench],
-      ["Industrial Flooring", "Epoxy, concrete and heavy-duty floors for production and storage areas.", Layers3],
-      ["Roads, Drains and Compound Walls", "Internal roads, storm water drains, paver areas and boundary walls for the campus.", Route],
-      ["Waterproofing, Painting and Repair", "Roof and structural waterproofing, industrial painting, protective coatings and maintenance.", ShieldCheck],
+      ["Factory and Plant Buildings", "New factory buildings, plant buildings and industrial facilities built to carry heavy loads.", Factory, "/images/service-pages/industrial-factory.jpg"],
+      ["PEB and Steel Structures", "MS structural work, PEB systems, industrial sheds, roofing, cladding and mezzanines.", Hammer, "/images/service-pages/industrial-steel.jpg"],
+      ["Machine Foundations and Utility Civil Work", "Machine foundations, utility civil works and infrastructure changes for industrial facilities.", Target, "/images/service-pages/industrial-foundation.jpg"],
+      ["Factory Modification and Expansion", "New bays, extensions, floor changes and layout changes in an existing factory.", Wrench, "/images/service-pages/industrial-expansion.jpg"],
+      ["Industrial Flooring", "Epoxy, concrete and heavy-duty floors for production and storage areas.", Layers3, "/images/service-pages/industrial-flooring.jpg"],
+      ["Roads, Drains and Compound Walls", "Internal roads, storm water drains, paver areas and boundary walls for the campus.", Route, "/images/service-pages/industrial-roads.jpg"],
+      ["Waterproofing, Painting and Repair", "Roof and structural waterproofing, industrial painting, protective coatings and maintenance.", ShieldCheck, "/images/service-pages/industrial-repair.jpg"],
     ] as const,
     scopeTitle: "Industrial Work Planned for",
     scopeAccent: "Production, Loads and Long-Term Use",
     scopeGroups: [
-      { title: "Civil Foundations", items: [["Heavy-Duty Civil Work", "Machine foundations, PCC, RCC, masonry and structural concrete."], ["Industrial Flooring", "Concrete and epoxy floors planned for production and storage areas."]] },
-      { title: "Steel and Building Envelope", items: [["PEB and Structural Steel", "Industrial sheds, steel frames, mezzanines and fabrication."], ["Roofing and Cladding", "Coordinated roofing, wall cladding and weather protection."]] },
-      { title: "Campus Infrastructure", items: [["Utilities and Drainage", "Utility civil work, water lines, drains and chambers."], ["Roads and External Works", "Internal roads, pavers, storm water drains and compound walls."], ["Repairs and Modifications", "Factory extensions, layout changes, waterproofing and maintenance."]] },
+      { title: "Civil Foundations", image: "/images/service-pages/industrial-scope-foundations.jpg", items: [["Heavy-Duty Civil Work", "Machine foundations, PCC, RCC, masonry and structural concrete."], ["Industrial Flooring", "Concrete and epoxy floors planned for production and storage areas."]] },
+      { title: "Steel and Building Envelope", image: "/images/service-pages/industrial-scope-envelope.jpg", items: [["PEB and Structural Steel", "Industrial sheds, steel frames, mezzanines and fabrication."], ["Roofing and Cladding", "Coordinated roofing, wall cladding and weather protection."]] },
+      { title: "Campus Infrastructure", image: "/images/service-pages/industrial-scope-infrastructure.jpg", items: [["Utilities and Drainage", "Utility civil work, water lines, drains and chambers."], ["Roads and External Works", "Internal roads, pavers, storm water drains and compound walls."], ["Repairs and Modifications", "Factory extensions, layout changes, waterproofing and maintenance."]] },
     ],
     whyTitle: "Why Companies Choose ARKA for",
     whyAccent: "Industrial Construction",
@@ -683,7 +733,7 @@ const cardMotion = {
 
 type Modal =
   | { type: "quote"; interest?: string }
-  | { type: "package"; index: number }
+  | { type: "package"; index: number; source: "catalog" | "residential" }
   | { type: "privacy" }
   | null;
 
@@ -735,120 +785,6 @@ function Eyebrow({
       <span />
       {children}
     </p>
-  );
-}
-
-function EmailHeroQuoteForm() {
-  const [prepared, setPrepared] = useState(false);
-  const [emailLink, setEmailLink] = useState("");
-
-  function submit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const body = `Hello ARKA Constructions,\n\nI would like to discuss a construction project.\n\nName: ${data.get("name")}\nPhone: ${data.get("phone")}\nEmail: ${data.get("email") || "Not provided"}\nSite location: ${data.get("location")}\nPlot area: ${data.get("plotArea")}\n\nPlease contact me to discuss the next steps.\n`;
-    setEmailLink(
-      `mailto:arkaconstructions96@gmail.com?subject=${encodeURIComponent(
-        "Website construction enquiry — " + data.get("location"),
-      )}&body=${encodeURIComponent(body)}`,
-    );
-    setPrepared(true);
-  }
-
-  if (prepared) {
-    return (
-      <div className="hp-hero-form hp-form-success" role="status">
-        <CheckCircle2 size={40} />
-        <h3>Your enquiry is ready.</h3>
-        <p>
-          Nothing has been sent yet. Open your email app to review and send the
-          prepared message to ARKA.
-        </p>
-        <a className="hp-btn hp-btn-gold" href={emailLink}>
-          Open Email App <ArrowUpRight size={16} />
-        </a>
-        <button
-          type="button"
-          className="hp-text-btn"
-          onClick={() => setPrepared(false)}
-        >
-          Edit details
-        </button>
-      </div>
-    );
-  }
-
-  return (
-    <form className="hp-hero-form" onSubmit={submit}>
-      <h2>Let&rsquo;s Discuss Your Project</h2>
-      <p>Share your plot details. Our team will call you back.</p>
-      <label className="hp-field">
-        <User size={16} />
-        <input
-          name="name"
-          required
-          autoComplete="name"
-          maxLength={100}
-          placeholder="Name *"
-          aria-label="Name"
-        />
-      </label>
-      <label className="hp-field">
-        <Phone size={16} />
-        <input
-          name="phone"
-          type="tel"
-          required
-          autoComplete="tel"
-          pattern="[+]?[0-9]{10,15}"
-          title="Enter 10 to 15 digits, optionally starting with +. Do not include spaces."
-          maxLength={20}
-          placeholder="Phone Number *"
-          aria-label="Phone number"
-        />
-      </label>
-      <label className="hp-field">
-        <Mail size={16} />
-        <input
-          name="email"
-          type="email"
-          autoComplete="email"
-          maxLength={150}
-          placeholder="Email (optional)"
-          aria-label="Email (optional)"
-        />
-      </label>
-      <label className="hp-field">
-        <MapPin size={16} />
-        <input
-          name="location"
-          required
-          autoComplete="address-level2"
-          maxLength={150}
-          placeholder="Site Location *"
-          aria-label="Site location"
-        />
-      </label>
-      <label className="hp-field">
-        <Layers3 size={16} />
-        <select name="plotArea" defaultValue="" aria-label="Plot area (optional)">
-            <option value="">
-            Plot Area (sq ft) (optional)
-          </option>
-          <option>1200 - 2000 sq ft</option>
-          <option>2000 - 3000 sq ft</option>
-          <option>3000 - 4000 sq ft</option>
-          <option>4000+ sq ft</option>
-        </select>
-        <ChevronDown size={15} />
-      </label>
-      <button className="hp-btn hp-btn-gold" type="submit">
-        Request Free Estimate <ArrowUpRight size={16} />
-      </button>
-      <p className="hp-form-note">
-        Your details stay in this page until you choose to send them through
-        your email app.
-      </p>
-    </form>
   );
 }
 
@@ -1008,13 +944,15 @@ export default function ArkaSite({
   const [tab, setTab] = useState<"completed" | "ongoing">("completed");
   const [openFaq, setOpenFaq] = useState(0);
   const [modal, setModal] = useState<Modal>(null);
+  const modalPackage = modal?.type === "package"
+    ? (modal.source === "catalog" ? catalogPackages : residentialPackages)[modal.index]
+    : null;
   const [prepared, setPrepared] = useState(false);
   const [modalSubmitting, setModalSubmitting] = useState(false);
   const [modalError, setModalError] = useState("");
   const [modalFieldErrors, setModalFieldErrors] = useState<EnquiryErrors>({});
   const [modalRecaptchaResetKey, setModalRecaptchaResetKey] = useState(0);
   const [modalFormStartedAt] = useState(() => Date.now());
-  const [emailLink, setEmailLink] = useState("");
   const dialog = useRef<HTMLDialogElement>(null);
   const modalRecaptcha = useRef<RecaptchaWidgetHandle>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
@@ -1086,24 +1024,6 @@ export default function ArkaSite({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [modal]);
-
-  function prepareQuote(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const body = `Hello ARKA Constructions,\n\nI would like to discuss a project.\n\nName: ${data.get(
-      "name",
-    )}\nPhone: ${data.get("phone")}\nSite location: ${data.get(
-      "location",
-    )}\nInterested in: ${data.get("service")}\n\nRequirements:\n${
-      data.get("message") || "Please contact me to discuss."
-    }\n`;
-    setEmailLink(
-      `mailto:arkaconstructions96@gmail.com?subject=${encodeURIComponent(
-        "Website enquiry — " + data.get("service"),
-      )}&body=${encodeURIComponent(body)}`,
-    );
-    setPrepared(true);
-  }
 
   async function submitModalQuote(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -1367,9 +1287,37 @@ export default function ArkaSite({
                   <p>{sector.typesIntro}</p>
                 </div>
                 <div className="sector-types-grid">
-                  {sector.types.map(([title, text, Icon], index) => (
-                    <m.article {...cardMotion} key={title}><div className="sector-type-top"><span>0{index + 1}</span><Icon size={26} /></div><h3>{title}</h3><p>{text}</p></m.article>
+                  {sector.types.map(([title, text, Icon, image], index) => (
+                    <m.article {...cardMotion} key={title}>
+                      <img className="type-card-image" src={image} alt="" aria-hidden="true" loading="lazy" />
+                      <div className="sector-type-top"><span>0{index + 1}</span><Icon size={26} /></div><h3>{title}</h3><p>{text}</p>
+                    </m.article>
                   ))}
+                </div>
+              </div>
+            </m.section>
+
+            <m.section {...sectionMotion} className={`hp-section sector-service-pricing sector-service-pricing-${view}`} id="pricing">
+              <div className="container">
+                <div className="sector-service-pricing-panel">
+                  <div className="sector-service-pricing-copy">
+                    <span className="sector-service-pricing-icon">{view === "commercial" ? <Building2 size={27} /> : <Factory size={27} />}</span>
+                    <Eyebrow light>Custom Project Pricing</Eyebrow>
+                    <h2>Contact Us for <span>{view === "commercial" ? "Commercial" : "Industrial"} Construction Pricing</span></h2>
+                    <p>{view === "commercial" ? "Offices, shops, showrooms and mixed-use buildings need different structures, finishes, access, parking and utilities. Share your requirement and we will prepare a clear project-specific quotation." : "Factory buildings, PEB structures, machine foundations and industrial civil works depend on loads, operations, utilities and site conditions. Our engineers review the scope before preparing your quotation."}</p>
+                    <div className="sector-service-pricing-actions">
+                      <button className="hp-btn hp-btn-gold" onClick={() => openModal({ type: "quote", interest: `${sector.crumb} pricing` })}>Request Custom Pricing <ArrowUpRight size={16} /></button>
+                      <a className="hp-btn hp-btn-outline-light" href="tel:+919952525185"><Phone size={16} /> Call 99525 25185</a>
+                    </div>
+                  </div>
+                  <div className="sector-service-pricing-brief">
+                    <span>To prepare your quote</span>
+                    <h3>Tell us these project basics</h3>
+                    <ul>
+                      {(view === "commercial" ? ["Site location and approximate built-up area", "Building use, floors and target opening date", "Required finishes, parking and utility needs"] : ["Site location, building area and operating status", "Structural loads, machines and production needs", "PEB, flooring, roads, drainage and utility scope"]).map((item) => <li key={item}><CheckCircle2 size={18} />{item}</li>)}
+                    </ul>
+                    <p><strong>No generic per-sq-ft promise.</strong> You receive pricing based on the actual work your project needs.</p>
+                  </div>
                 </div>
               </div>
             </m.section>
@@ -1382,7 +1330,10 @@ export default function ArkaSite({
                 </div>
                 <div className="sector-scope-grid">
                   {sector.scopeGroups.map((group, index) => (
-                    <m.article {...cardMotion} key={group.title}><span className="sector-scope-number">0{index + 1}</span><h3>{group.title}</h3>{group.items.map(([title, text]) => <div className="sector-scope-item" key={title}><CheckCircle2 size={18} /><div><h4>{title}</h4><p>{text}</p></div></div>)}</m.article>
+                    <m.article {...cardMotion} key={group.title}>
+                      <img className="scope-card-image" src={group.image} alt="" aria-hidden="true" loading="lazy" />
+                      <span className="sector-scope-number">0{index + 1}</span><h3>{group.title}</h3>{group.items.map(([title, text]) => <div className="sector-scope-item" key={title}><CheckCircle2 size={18} /><div><h4>{title}</h4><p>{text}</p></div></div>)}
+                    </m.article>
                   ))}
                 </div>
               </div>
@@ -1437,10 +1388,10 @@ export default function ArkaSite({
                 <div className="hp-hero-copy">
                   <Eyebrow light>House Construction in Chennai</Eyebrow>
                   <h1 id="residential-title">House Construction Company in <span>Chennai &amp; Chengalpattu</span></h1>
-                  <p>Planning to build your own house? ARKA Constructions looks after the whole job: plan, approvals, construction, finishing and handover. You deal with one team, and you know the cost before work starts. We build homes from 1,200 sq ft, with packages starting at ₹2,449 per sq ft.</p>
+                  <p>Planning to build your own house? ARKA Constructions looks after the whole job: plan, approvals, construction, finishing and handover. You deal with one team, and you know the cost before work starts. Our complete home construction package starts at ₹2,499 per sq ft.</p>
                   <div className="hp-hero-tags res-hero-tags" aria-label="House construction highlights">
                     <span className="hp-hero-tag"><Home size={15} /> From 1,200 sq ft</span>
-                    <span className="hp-hero-tag"><IndianRupee size={15} /> From ₹2,449 per sq ft</span>
+                    <span className="hp-hero-tag"><IndianRupee size={15} /> From ₹2,499 per sq ft</span>
                     <span className="hp-hero-tag"><Wrench size={15} /> 1 year free maintenance labour</span>
                   </div>
                   <div className="hp-hero-actions">
@@ -1498,8 +1449,9 @@ export default function ArkaSite({
                   <p>Every plot and family is different. We plan the structure, spaces and finishes around the way you intend to live.</p>
                 </div>
                 <div className="res-types-grid">
-                  {houseTypes.map(([title, text, Icon], index) => (
+                  {houseTypes.map(([title, text, Icon, image], index) => (
                     <m.article {...cardMotion} key={title}>
+                      <img className="type-card-image" src={image} alt="" aria-hidden="true" loading="lazy" />
                       <div className="res-type-top"><span>0{index + 1}</span><Icon size={27} /></div>
                       <h3>{title}</h3>
                       <p>{text}</p>
@@ -1546,14 +1498,6 @@ export default function ArkaSite({
                     width="1400"
                     height="933"
                   />
-                </div>
-                <div className="hp-about-card">
-                  <div className="hp-about-monogram">KK</div>
-                  <div>
-                    <strong>Kamarajan Krishnan</strong>
-                    <span>Proprietor &amp; Engineer</span>
-                  </div>
-                  <ArrowUpRight size={18} />
                 </div>
               </div>
             </div>
@@ -1760,69 +1704,102 @@ export default function ArkaSite({
                 <div>
                   <Eyebrow>Our Construction Packages</Eyebrow>
                   {view === "packages" ? (
-                    <h1>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h1>
+                    <h1>Construction Packages and Pricing for <span>Homes, Commercial Buildings and Factories</span></h1>
                   ) : view === "residential" ? (
-                    <h2>House Construction Packages in Chennai: <span>Starting from ₹2,449 per sq ft</span></h2>
+                    <h2>Complete House Construction Package: <span>Starting from ₹2,499 per sq ft</span></h2>
                   ) : (
                     <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h2>
                   )}
                 </div>
-                <p>{view === "residential" ? "Pick the package that suits your budget. All three are for homes from 1,200 sq ft, and each one can be adjusted for your site and the materials you prefer." : "Compare the material specifications for our Standard, Premium and Royal packages, and ask our team for a project-specific quotation."}</p>
+                <p>{view === "home" ? "Compare the material specifications for our Standard, Premium and Royal packages, and ask our team for a project-specific quotation." : view === "packages" ? "Compare our Standard, Premium and Royal residential packages. Commercial and industrial work is priced after we understand the building, site, finishes, loads and utilities." : "Review the residential specification below. Your final consolidated quotation is prepared after the plan, structural details, elevation and BOQ are finalized."}</p>
               </div>
               <div className="hp-package-highlights" aria-label="Package highlights">
-                <div><Home size={19} /><span><strong>Three packages</strong> to compare</span></div>
-                <div><IndianRupee size={19} /><span><strong>Material specifications</strong> for each package</span></div>
-                <div><Wrench size={19} /><span><strong>Extra work</strong> quoted separately</span></div>
+                {view === "home" ? (
+                  <>
+                    <div><Home size={19} /><span><strong>Three packages</strong> to compare</span></div>
+                    <div><IndianRupee size={19} /><span><strong>Material specifications</strong> for each package</span></div>
+                    <div><Wrench size={19} /><span><strong>Extra work</strong> quoted separately</span></div>
+                  </>
+                ) : (
+                  <>
+                    <div><Home size={19} /><span><strong>Residential</strong> from {view === "packages" ? "₹2,449" : "₹2,499"} per sq ft</span></div>
+                    <div><Building2 size={19} /><span><strong>Commercial</strong> priced to your project</span></div>
+                    <div><Factory size={19} /><span><strong>Industrial</strong> priced to scope and loads</span></div>
+                  </>
+                )}
               </div>
-              <div className="hp-package-grid">
-                {packages.map((pkg, index) => (
-                  <m.article
-                    {...cardMotion}
-                    className={`hp-package ${pkg.featured ? "is-featured" : ""}`}
-                    key={pkg.name}
-                  >
-                    <div className="hp-package-head">
-                      <span>{pkg.name}</span>
-                      <div className="hp-package-price">
-                        {pkg.price} <small>{pkg.unit}</small>
+              <div className={view === "home" ? undefined : `hp-pricing-layout ${view === "packages" ? "hp-pricing-layout-catalog" : "is-residential-only"}`}>
+                <div className={`hp-package-grid ${view === "residential" ? "hp-package-grid-single" : ""}`}>
+                  {(view === "residential" ? residentialPackages : catalogPackages).map((pkg, index) => (
+                    <m.article
+                      {...cardMotion}
+                      className={`hp-package ${pkg.featured ? "is-featured" : ""}`}
+                      key={pkg.name}
+                    >
+                      <div className="hp-package-head">
+                        <span>{view === "residential" ? "Residential Construction" : pkg.name}</span>
+                        <div className="hp-package-price">
+                          {pkg.price} <small>{pkg.unit}</small>
+                        </div>
                       </div>
-                    </div>
-                    <div className="hp-package-body">
-                      <p className="hp-package-desc">{pkg.description}</p>
-                      {pkg.details.map((detail) => (
-                        <details key={detail.title}>
-                          <summary>
-                            {detail.title} <Plus size={16} />
-                          </summary>
-                          <ul className="hp-package-detail-list">
-                            {detail.items.map((item) => <li key={item}>{item}</li>)}
-                          </ul>
-                        </details>
-                      ))}
-                      <button
-                        className={`hp-btn ${
-                          pkg.featured ? "hp-btn-gold" : "hp-btn-outline"
-                        }`}
-                        onClick={() =>
-                          openModal({ type: "package", index })
-                        }
-                      >
-                        Get a Quote <ArrowUpRight size={16} />
-                      </button>
-                    </div>
-                  </m.article>
-                ))}
+                      <div className="hp-package-body">
+                        {view === "residential" && <h3>{pkg.name}</h3>}
+                        <p className="hp-package-desc">{pkg.description}</p>
+                        {pkg.details.map((detail) => (
+                          <details key={detail.title}>
+                            <summary>
+                              {detail.title} <Plus size={16} />
+                            </summary>
+                            <ul className="hp-package-detail-list">
+                              {detail.items.map((item) => <li key={item}>{item}</li>)}
+                            </ul>
+                          </details>
+                        ))}
+                        <button className={`hp-btn ${view !== "residential" && !pkg.featured ? "hp-btn-outline" : "hp-btn-gold"}`} onClick={() => openModal({ type: "package", index, source: view === "residential" ? "residential" : "catalog" })}>
+                          {view === "residential" ? "Get a Residential Quote" : "Get a Quote"} <ArrowUpRight size={16} />
+                        </button>
+                      </div>
+                    </m.article>
+                  ))}
+                </div>
+                {view === "packages" && (
+                  <aside className="hp-custom-pricing" aria-label="Project-specific construction pricing">
+                    <m.article {...cardMotion} className="hp-custom-price-card hp-custom-price-commercial">
+                      <span className="hp-custom-price-icon"><Building2 size={24} /></span>
+                      <span className="hp-custom-price-kicker">Commercial Construction</span>
+                      <h2>Contact us for pricing</h2>
+                      <p>Offices, shops, showrooms and mixed-use buildings are quoted around your opening date, finishes, access, parking and utility needs.</p>
+                      <ul><li>Written project scope</li><li>Material and finish allowances</li><li>Schedule and milestone plan</li></ul>
+                      <button className="hp-btn hp-btn-gold" onClick={() => openModal({ type: "quote", interest: "Commercial construction pricing" })}>Request Commercial Pricing <ArrowUpRight size={16} /></button>
+                    </m.article>
+                    <m.article {...cardMotion} className="hp-custom-price-card hp-custom-price-industrial">
+                      <span className="hp-custom-price-icon"><Factory size={24} /></span>
+                      <span className="hp-custom-price-kicker">Industrial Construction</span>
+                      <h2>Contact us for pricing</h2>
+                      <p>Factories, PEB structures, machine foundations and industrial civil works are priced after reviewing loads, operations, utilities and site conditions.</p>
+                      <ul><li>Civil and structural scope</li><li>Loads, flooring and utility needs</li><li>Phasing for operating sites</li></ul>
+                      <button className="hp-btn hp-btn-outline-light" onClick={() => openModal({ type: "quote", interest: "Industrial construction pricing" })}>Request Industrial Pricing <ArrowUpRight size={16} /></button>
+                    </m.article>
+                  </aside>
+                )}
               </div>
               <p className="hp-package-note">
-                Rates are per sq ft as listed in the package document. Confirm current rates,
-                area basis, taxes, material availability and inclusions with our team.
+                {view !== "residential" ? "Rates are per sq ft as listed in the package document. Confirm current rates, area basis, taxes, material availability and inclusions with our team." : "The residential rate and inclusions follow the supplied package specification. The final consolidated quotation is issued after the plan, structural details, elevation and BOQ are finalized."}
               </p>
-              <p className="hp-package-minimum"><strong>Note*:</strong> Minimum overall built-up area should be 1,200 sq ft.</p>
-              <div className="hp-package-terms">
-                <div><h3>Additional work</h3><p>Compound wall: ₹2,300 per running ft · Cooling tiles: ₹140 per sq ft · Sump: ₹28 per litre · Septic tank: ₹18 per litre · Head room: ₹2,100 per sq ft.</p></div>
-                <div><h3>Client scope</h3><p>Building plan approval, borewell and motor fittings, electricity connection and main board (labour and materials), and water for construction.</p></div>
-                <div><h3>Separate budget offer</h3><p>The document also lists a budget package from ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Ask our team to confirm its current availability and detailed scope.</p></div>
-              </div>
+              {view !== "residential" && <p className="hp-package-minimum"><strong>Note*:</strong> Minimum overall built-up area should be 1,200 sq ft.</p>}
+              {view !== "residential" ? (
+                <div className="hp-package-terms">
+                  <div><h3>Additional work</h3><p>Compound wall: ₹2,300 per running ft · Cooling tiles: ₹140 per sq ft · Sump: ₹28 per litre · Septic tank: ₹18 per litre · Head room: ₹2,100 per sq ft.</p></div>
+                  <div><h3>Client scope</h3><p>Building plan approval, borewell and motor fittings, electricity connection and main board (labour and materials), and water for construction.</p></div>
+                  <div><h3>Separate budget offer</h3><p>The document also lists a budget package from ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Ask our team to confirm its current availability and detailed scope.</p></div>
+                </div>
+              ) : (
+                <div className="hp-package-terms">
+                  <div><h3>Measured extra works</h3><p>Septic tank ₹29/litre · RCC sump ₹32/litre · tie beam ₹450/running ft · compound wall ₹2,300/running ft · external paving ₹130/sq ft · cooling tiles ₹140/sq ft.</p></div>
+                  <div><h3>Quoted to design</h3><p>Lift construction, safety grills, main gate, elevation, borewell and motor, approvals and EB charges, soak pit drainage and other site-specific works.</p></div>
+                  <div><h3>Optional interiors</h3><p>Add ₹650/sq ft for the interior package covering designer false ceiling, TV and pooja units, bedroom wardrobes and an acrylic modular kitchen.</p></div>
+                </div>
+              )}
             </div>
           </m.section>
         )}
@@ -1927,7 +1904,7 @@ export default function ArkaSite({
           </m.section>
         )}
 
-        {(view === "home" || view === "services") && (
+        {view === "home" && (
           <m.section {...sectionMotion} className="hp-section hp-section-white hp-what" id="what-we-do">
             <div className="container">
               <div className="hp-what-heading">
@@ -2386,7 +2363,8 @@ export default function ArkaSite({
                           "Residential construction",
                           "Commercial or industrial work",
                           ...services.map((service) => service.title),
-                          ...packages.map((pkg) => pkg.name),
+                          ...catalogPackages.map((pkg) => pkg.name),
+                          ...residentialPackages.map((pkg) => pkg.name),
                           "Request project portfolio",
                           "Not sure — let’s discuss",
                         ].filter(Boolean),
@@ -2426,19 +2404,19 @@ export default function ArkaSite({
               )}
             </>
           )}
-          {modal?.type === "package" && (
+          {modal?.type === "package" && modalPackage && (
             <>
               <Eyebrow>A starting point for your home</Eyebrow>
               <h2 id="modal-title">
-                The {packages[modal.index].name}
+                The {modalPackage.name}
                 <br />
                 <span>conversation.</span>
               </h2>
-              <p>{packages[modal.index].description}</p>
+              <p>{modalPackage.description}</p>
               <div className="modal-callout">
                 <strong>
-                  {packages[modal.index].price}{" "}
-                  {packages[modal.index].unit}
+                  {modalPackage.price}{" "}
+                  {modalPackage.unit}
                 </strong>
                 <br />
                 This is a proposed planning option, not a fixed-price offer.
@@ -2446,7 +2424,7 @@ export default function ArkaSite({
                 area basis, taxes, exclusions and the project schedule.
               </div>
               <ul className="modal-list">
-                {packages[modal.index].details.map((detail) => (
+                {modalPackage.details.map((detail) => (
                   <li key={detail.title}>
                     <Check size={17} />
                     <span>
@@ -2462,7 +2440,7 @@ export default function ArkaSite({
                   setPrepared(false);
                   setModal({
                     type: "quote",
-                    interest: `${packages[modal.index].name}`,
+                    interest: `${modalPackage.name}`,
                   });
                 }}
               >
