@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, LazyMotion, MotionConfig, domAnimation, m } from "framer-motion";
 import { RecaptchaWidget, type RecaptchaWidgetHandle } from "./components/RecaptchaWidget";
 import { submitEnquiry } from "./lib/supabase";
+import { imageManifest } from "./generated/imageManifest";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -756,6 +757,27 @@ function validateEnquiryForm(data: FormData) {
   return errors;
 }
 
+function ResponsiveImage({
+  src,
+  sizes = "100vw",
+  ...props
+}: Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src"> & { src: string }) {
+  const asset = imageManifest[src as keyof typeof imageManifest];
+  if (!asset) return <img {...props} src={src} sizes={sizes} />;
+  const fallback = asset.variants.at(-1)!;
+
+  return (
+    <img
+      {...props}
+      src={fallback.src}
+      srcSet={asset.variants.map((variant) => `${variant.src} ${variant.width}w`).join(", ")}
+      sizes={sizes}
+      width={props.width ?? asset.width}
+      height={props.height ?? asset.height}
+    />
+  );
+}
+
 function Brand({ light = false }: { light?: boolean }) {
   return (
     <a
@@ -764,7 +786,7 @@ function Brand({ light = false }: { light?: boolean }) {
       aria-label="ARKA Constructions home"
     >
       <span className="brand-symbol" aria-hidden="true">
-        <img src="/images/arka-logo.png" alt="" width={256} height={256} />
+        <ResponsiveImage src="/images/arka-logo.png" alt="" sizes="64px" />
       </span>
       <span className="brand-type">
         ARKA<small>CONSTRUCTIONS</small>
@@ -909,9 +931,9 @@ function BeforeAfter({
       className="hp-compare"
       style={{ "--pos": `${pos}%` } as React.CSSProperties}
     >
-      <img src={after} alt={`${label} — completed work`} loading="lazy" />
+      <ResponsiveImage src={after} alt={`${label} — completed work`} loading="lazy" sizes="(max-width: 720px) 100vw, 430px" />
       <div className="hp-compare-before">
-        <img src={before} alt={`${label} — design reference`} loading="lazy" />
+        <ResponsiveImage src={before} alt={`${label} — design reference`} loading="lazy" sizes="(max-width: 720px) 100vw, 430px" />
       </div>
       <span className="hp-compare-tag hp-compare-tag-before">Design</span>
       <span className="hp-compare-tag hp-compare-tag-after">Completed</span>
@@ -1175,17 +1197,15 @@ export default function ArkaSite({
         {view === "home" && (
           <m.section {...sectionMotion} className="hp-hero" aria-labelledby="hero-title">
             <div className="hp-hero-media" aria-hidden="true">
-              {heroSlides.map((src, index) => (
-                <img
-                  key={src}
-                  src={src}
-                  alt=""
-                  className={index === heroSlide ? "is-active" : ""}
-                  fetchPriority={index === 0 ? "high" : undefined}
-                  width="1400"
-                  height="933"
-                />
-              ))}
+              <ResponsiveImage
+                key={heroSlides[heroSlide]}
+                src={heroSlides[heroSlide]}
+                alt=""
+                className="is-active"
+                loading={heroSlide === 0 ? "eager" : "lazy"}
+                fetchPriority={heroSlide === 0 ? "high" : undefined}
+                sizes="100vw"
+              />
             </div>
             <div className="container hp-hero-inner">
               <div className="hp-hero-copy">
@@ -1229,7 +1249,7 @@ export default function ArkaSite({
           <>
             <m.section {...sectionMotion} className={`hp-hero res-hero sector-hero sector-${view}`} aria-labelledby={`${view}-title`}>
               <div className="hp-hero-media" aria-hidden="true">
-                <img src={sector.heroImage} alt="" className="is-active" fetchPriority="high" width="1400" height="933" />
+                <ResponsiveImage src={sector.heroImage} alt="" className="is-active" loading="eager" fetchPriority="high" sizes="100vw" />
               </div>
               <nav className="container page-breadcrumb res-hero-breadcrumb" aria-label="Breadcrumb">
                 <a href="/">Home</a><span>/</span><a href="/services">Construction Services</a><span>/</span><span aria-current="page">{sector.crumb}</span>
@@ -1260,7 +1280,7 @@ export default function ArkaSite({
                   <div className="res-intro-proof"><ShieldCheck size={24} /><span><strong>{sector.proofTitle}.</strong> {sector.proofText}</span></div>
                 </div>
                 <div className="res-intro-visual">
-                  <img src={sector.heroImage} alt={`${sector.crumb} project by ARKA Constructions`} loading="lazy" width="1400" height="933" />
+                  <ResponsiveImage src={sector.heroImage} alt={`${sector.crumb} project by ARKA Constructions`} loading="lazy" sizes="(max-width: 980px) 100vw, 50vw" />
                   <div className="res-intro-stat"><strong>One team</strong><span>Plan to handover</span></div>
                 </div>
               </div>
@@ -1289,7 +1309,7 @@ export default function ArkaSite({
                 <div className="sector-types-grid">
                   {sector.types.map(([title, text, Icon, image], index) => (
                     <m.article {...cardMotion} key={title}>
-                      <img className="type-card-image" src={image} alt="" aria-hidden="true" loading="lazy" />
+                      <ResponsiveImage className="type-card-image" src={image} alt="" aria-hidden="true" loading="lazy" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 33vw" />
                       <div className="sector-type-top"><span>0{index + 1}</span><Icon size={26} /></div><h3>{title}</h3><p>{text}</p>
                     </m.article>
                   ))}
@@ -1331,7 +1351,7 @@ export default function ArkaSite({
                 <div className="sector-scope-grid">
                   {sector.scopeGroups.map((group, index) => (
                     <m.article {...cardMotion} key={group.title}>
-                      <img className="scope-card-image" src={group.image} alt="" aria-hidden="true" loading="lazy" />
+                      <ResponsiveImage className="scope-card-image" src={group.image} alt="" aria-hidden="true" loading="lazy" sizes="(max-width: 980px) 100vw, 33vw" />
                       <span className="sector-scope-number">0{index + 1}</span><h3>{group.title}</h3>{group.items.map(([title, text]) => <div className="sector-scope-item" key={title}><CheckCircle2 size={18} /><div><h4>{title}</h4><p>{text}</p></div></div>)}
                     </m.article>
                   ))}
@@ -1344,7 +1364,7 @@ export default function ArkaSite({
                 <div className="container">
                   <div className="hp-section-head"><div><Eyebrow>Our Industrial Project</Eyebrow><h2>Industrial Construction Project <span>in Progress</span></h2></div><p>Current industrial work, with detailed photographs, scope and references available when you speak with our team.</p></div>
                   <article className="sector-project-card">
-                    <img src="/images/project-ongoing-1.jpg" alt="Industrial construction project in progress in Maraimalai Nagar" loading="lazy" />
+                    <ResponsiveImage src="/images/project-ongoing-1.jpg" alt="Industrial construction project in progress in Maraimalai Nagar" loading="lazy" sizes="(max-width: 980px) 100vw, 60vw" />
                     <div><span>Industrial · In progress</span><h3>Pioneer NF Forgings India Pvt Ltd</h3><p><MapPin size={16} /> Maraimalai Nagar, Chengalpattu</p><dl><div><dt>Build up</dt><dd>8,000 sq ft</dd></div><div><dt>Plot</dt><dd>1.2 acres</dd></div></dl><button className="hp-btn hp-btn-dark" onClick={() => openModal({ type: "quote", interest: "Industrial construction" })}>Discuss an Industrial Project <ArrowUpRight size={16} /></button></div>
                   </article>
                 </div>
@@ -1375,7 +1395,7 @@ export default function ArkaSite({
           <>
             <m.section {...sectionMotion} className="hp-hero res-hero" aria-labelledby="residential-title">
               <div className="hp-hero-media" aria-hidden="true">
-                <img src="/images/hero-house.jpg" alt="" className="is-active" fetchPriority="high" width="1400" height="933" />
+                <ResponsiveImage src="/images/hero-house.jpg" alt="" className="is-active" loading="eager" fetchPriority="high" sizes="100vw" />
               </div>
               <nav className="container page-breadcrumb res-hero-breadcrumb" aria-label="Breadcrumb">
                 <a href="/">Home</a>
@@ -1417,7 +1437,7 @@ export default function ArkaSite({
                   </div>
                 </div>
                 <div className="res-intro-visual">
-                  <img src="/images/service-residential.jpg" alt="Modern independent house construction in Chennai" loading="lazy" width="1400" height="933" />
+                  <ResponsiveImage src="/images/service-residential.jpg" alt="Modern independent house construction in Chennai" loading="lazy" sizes="(max-width: 980px) 100vw, 50vw" />
                   <div className="res-intro-stat"><strong>One team</strong><span>Plan to handover</span></div>
                 </div>
               </div>
@@ -1451,7 +1471,7 @@ export default function ArkaSite({
                 <div className="res-types-grid">
                   {houseTypes.map(([title, text, Icon, image], index) => (
                     <m.article {...cardMotion} key={title}>
-                      <img className="type-card-image" src={image} alt="" aria-hidden="true" loading="lazy" />
+                      <ResponsiveImage className="type-card-image" src={image} alt="" aria-hidden="true" loading="lazy" sizes="(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 25vw" />
                       <div className="res-type-top"><span>0{index + 1}</span><Icon size={27} /></div>
                       <h3>{title}</h3>
                       <p>{text}</p>
@@ -1491,12 +1511,11 @@ export default function ArkaSite({
               </div>
               <div className="hp-about-visual">
                 <div className="hp-about-image">
-                  <img
+                  <ResponsiveImage
                     src="/images/about-engineer-india.png"
                     alt="Indian engineers reviewing construction drawings on site"
                     loading="lazy"
-                    width="1400"
-                    height="933"
+                    sizes="(max-width: 720px) 100vw, 50vw"
                   />
                 </div>
               </div>
@@ -1638,10 +1657,11 @@ export default function ArkaSite({
                       key={`${project.client}-${project.location}`}
                     >
                       <div className="hp-compare">
-                        <img
+                        <ResponsiveImage
                           src={project.image}
                           alt={`${project.client} construction in progress`}
                           loading="lazy"
+                          sizes="(max-width: 720px) 100vw, 420px"
                         />
                         <span className="hp-compare-tag hp-compare-tag-after">
                           In progress
@@ -1882,10 +1902,11 @@ export default function ArkaSite({
                     key={category.title}
                     id={category.title.split(" ")[0].toLowerCase()}
                   >
-                    <img
+                    <ResponsiveImage
                       src={category.image}
                       alt={category.title}
                       loading="lazy"
+                      sizes="(max-width: 720px) 100vw, 33vw"
                     />
                     <div className="hp-service-category-body">
                       <span className="hp-service-category-icon">
@@ -1917,7 +1938,7 @@ export default function ArkaSite({
               <div className="hp-what-grid">
                 {services.map((service, index) => (
                   <m.article {...cardMotion} className="hp-what-card" key={service.title}>
-                    <img className="hp-what-image" src={`/images/${serviceImages[index]}`} alt="" loading="lazy" />
+                    <ResponsiveImage className="hp-what-image" src={`/images/${serviceImages[index]}`} alt="" loading="lazy" sizes="(max-width: 720px) 100vw, 33vw" />
                     <div className="hp-what-body">
                       <h3>{service.title}</h3>
                       <p>{service.detail}</p>
