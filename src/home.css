@@ -200,7 +200,7 @@ html{scroll-padding-top:84px}
   display:flex;flex-direction:column;overflow:hidden;
 }
 .hp-project-carousel{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:11px;background:var(--navy);isolation:isolate}
-.hp-project-slide{position:absolute;inset:0}
+.hp-project-slide{position:absolute;inset:0;will-change:transform,opacity}
 .hp-project-slide img{width:100%;height:100%;object-fit:cover}
 .hp-carousel-arrow{position:absolute;top:50%;z-index:4;display:grid;place-items:center;width:38px;height:38px;border:1px solid rgba(255,255,255,.62);border-radius:50%;background:rgba(7,27,44,.76);color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.24);transform:translateY(-50%);backdrop-filter:blur(6px);transition:background .2s,transform .2s}
 .hp-carousel-arrow:hover{background:var(--gold);color:var(--navy);transform:translateY(-50%) scale(1.06)}
@@ -680,20 +680,6 @@ html{scroll-padding-top:84px}
 .res-types-grid p{font-size:14px;line-height:1.7;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.82)}
 
 .res-house-projects{background:var(--cream)}
-.res-project-list{display:grid;gap:28px}
-.res-project-showcase{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(440px,.9fr);overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:var(--hp-radius);box-shadow:var(--hp-shadow-soft)}
-.res-project-gallery{min-width:0;min-height:560px;height:auto;aspect-ratio:auto;border-radius:0}
-.res-project-gallery .hp-project-slide{background:#dfe5e6}
-.res-project-gallery img{object-fit:contain;object-position:center}
-.res-project-copy{display:flex;flex-direction:column;justify-content:center;padding:clamp(32px,4vw,58px)}
-.res-project-kicker{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:16px}
-.res-project-copy h3{font-size:clamp(29px,3vw,40px);margin-bottom:18px}
-.res-project-copy>p{font-size:15px;line-height:1.75;margin-bottom:28px}
-.res-project-copy dl{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:0 0 32px;background:var(--line);border:1px solid var(--line)}
-.res-project-copy dl div{padding:15px;background:#fff}
-.res-project-copy dt{font-size:9px;text-transform:uppercase;letter-spacing:.11em;color:var(--muted)}
-.res-project-copy dd{margin:5px 0 0;font-size:13px;font-weight:700;color:var(--navy)}
-.res-project-actions{display:flex;flex-wrap:wrap;gap:10px}
 
 .res-why .hp-why-copy{align-self:start;position:sticky;top:120px}
 .res-why .hp-why-copy .hp-btn{margin-top:28px}
@@ -769,8 +755,6 @@ html{scroll-padding-top:84px}
   .res-hero .hp-hero-inner{min-height:570px}
   .res-turnkey-grid{grid-template-columns:repeat(2,1fr)}
   .res-types-grid{grid-template-columns:repeat(2,1fr)}
-  .res-project-showcase{grid-template-columns:1fr}
-  .res-project-gallery{min-height:500px}
   .res-why .hp-why-copy{position:static}
   .sector-types-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .sector-service-pricing-panel{grid-template-columns:1fr}
@@ -804,11 +788,6 @@ html{scroll-padding-top:84px}
   .res-step-icon{margin-bottom:35px}
   .res-types-grid article{min-height:220px}
   .res-type-top{margin-bottom:38px}
-  .res-project-gallery{min-height:360px}
-  .res-project-copy{padding:28px 22px}
-  .res-project-copy dl{grid-template-columns:1fr}
-  .res-project-actions{display:grid}
-  .res-project-actions .hp-btn{width:100%}
   .res-why-list{grid-template-columns:1fr}
   .res-why-list .hp-why-item:last-child{grid-column:auto}
   .sector-types-grid{grid-template-columns:1fr}

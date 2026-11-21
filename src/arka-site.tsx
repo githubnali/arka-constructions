@@ -205,10 +205,10 @@ const ongoingProjects = [
 const residentialProjects = [
   ...ongoingProjects
     .filter((project) => project.type === "Residential")
-    .map((project) => ({ ...project, status: "Under construction", description: `${project.buildUp} residence on a ${project.plot} plot in ${project.location}.` })),
+    .map((project) => ({ ...project, status: "Ongoing" })),
   ...completedProjects
     .filter((project) => project.type === "Residential")
-    .map((project) => ({ ...project, status: "Residential project", description: `${project.buildUp} residence on a ${project.plot} plot in ${project.location}.` })),
+    .map((project) => ({ ...project, status: "Completed" })),
 ];
 
 const industrialProject = ongoingProjects.find((project) => project.type === "Industrial")!;
@@ -805,17 +805,22 @@ function ProjectCarousel({
   sizes?: string;
 }) {
   const [active, setActive] = useState(0);
+  const [direction, setDirection] = useState(1);
   const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     if (images.length < 2 || paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setInterval(() => {
+      setDirection(1);
       setActive((current) => (current + 1) % images.length);
     }, 4200);
     return () => window.clearInterval(timer);
   }, [images.length, paused]);
 
-  const show = (index: number) => setActive((index + images.length) % images.length);
+  const show = (index: number, nextDirection: number) => {
+    setDirection(nextDirection);
+    setActive((index + images.length) % images.length);
+  };
 
   return (
     <div
@@ -825,24 +830,30 @@ function ProjectCarousel({
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <AnimatePresence initial={false} mode="sync">
+      <AnimatePresence initial={false} custom={direction} mode="sync">
         <m.div
           className="hp-project-slide"
           key={images[active]}
-          initial={{ opacity: 0, scale: 1.025 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}
+          custom={direction}
+          variants={{
+            enter: (travel: number) => ({ x: travel > 0 ? "100%" : "-100%", opacity: 0.55, scale: 1.015 }),
+            center: { x: "0%", opacity: 1, scale: 1 },
+            exit: (travel: number) => ({ x: travel > 0 ? "-100%" : "100%", opacity: 0.55, scale: 1.015 }),
+          }}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
         >
           <ResponsiveImage src={images[active]} alt={`${label} — project photograph ${active + 1}`} loading="lazy" sizes={sizes} />
         </m.div>
       </AnimatePresence>
       {images.length > 1 && (
         <>
-          <button className="hp-carousel-arrow is-previous" type="button" onClick={() => show(active - 1)} aria-label={`Previous photograph of ${label}`}><ChevronLeft size={18} /></button>
-          <button className="hp-carousel-arrow is-next" type="button" onClick={() => show(active + 1)} aria-label={`Next photograph of ${label}`}><ChevronRight size={18} /></button>
+          <button className="hp-carousel-arrow is-previous" type="button" onClick={() => show(active - 1, -1)} aria-label={`Previous photograph of ${label}`}><ChevronLeft size={18} /></button>
+          <button className="hp-carousel-arrow is-next" type="button" onClick={() => show(active + 1, 1)} aria-label={`Next photograph of ${label}`}><ChevronRight size={18} /></button>
           <div className="hp-carousel-dots" aria-label={`${label} photograph selection`}>
-            {images.map((image, index) => <button key={image} type="button" className={index === active ? "is-active" : ""} onClick={() => show(index)} aria-label={`Show photograph ${index + 1} of ${label}`} aria-current={index === active ? "true" : undefined} />)}
+            {images.map((image, index) => <button key={image} type="button" className={index === active ? "is-active" : ""} onClick={() => show(index, index >= active ? 1 : -1)} aria-label={`Show photograph ${index + 1} of ${label}`} aria-current={index === active ? "true" : undefined} />)}
           </div>
         </>
       )}
@@ -916,6 +927,73 @@ export default function ArkaSite({
     document.body.style.overflow = modal || menu ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [menu, modal]);
+
+  useEffect(() => {
+    const offsetAttribute = "data-arka-mobile-chat-offset";
+    const excludedPattern = /recaptcha|grecaptcha|netlify|nl-badge/i;
+
+    function externalHost(element: HTMLElement) {
+      let host = element;
+      while (host.parentElement && host.parentElement !== document.body) {
+        host = host.parentElement;
+      }
+      return host;
+    }
+
+    function moveChatWidget() {
+      const candidates = new Set<HTMLElement>();
+      const selectors = [
+        "iframe",
+        '[id*="chat" i]',
+        '[class*="chat" i]',
+        '[id*="bot" i]',
+        '[class*="bot" i]',
+        '[title*="chat" i]',
+        '[aria-label*="chat" i]',
+        '[data-testid*="chat" i]',
+      ].join(",");
+
+      document.querySelectorAll<HTMLElement>(selectors).forEach((element) => {
+        if (!element.closest("#root")) candidates.add(element);
+      });
+
+      for (const child of Array.from(document.body.children)) {
+        if (!(child instanceof HTMLElement) || child.id === "root") continue;
+        const style = window.getComputedStyle(child);
+        const rect = child.getBoundingClientRect();
+        const zIndex = Number.parseInt(style.zIndex, 10);
+        const touchesLowerRight = rect.right >= window.innerWidth - 32 && rect.bottom >= window.innerHeight - 32;
+        if (style.position === "fixed" && touchesLowerRight && (Number.isNaN(zIndex) || zIndex >= 50)) {
+          candidates.add(child);
+        }
+      }
+
+      candidates.forEach((candidate) => {
+        const host = externalHost(candidate);
+        const descriptor = [
+          host.id,
+          host.className,
+          host.getAttribute("title"),
+          host.getAttribute("aria-label"),
+          host instanceof HTMLIFrameElement ? host.src : "",
+        ].join(" ");
+        if (excludedPattern.test(descriptor) || host.closest(".grecaptcha-badge")) return;
+        host.setAttribute(offsetAttribute, "true");
+      });
+    }
+
+    moveChatWidget();
+    const observer = new MutationObserver(moveChatWidget);
+    observer.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener("resize", moveChatWidget, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", moveChatWidget);
+      document.querySelectorAll<HTMLElement>(`[${offsetAttribute}]`).forEach((element) => {
+        element.removeAttribute(offsetAttribute);
+      });
+    };
+  }, []);
 
   useEffect(() => {
     if (view !== "home") return;
@@ -1705,25 +1783,53 @@ export default function ArkaSite({
                 <div><Eyebrow>Our House Construction Projects</Eyebrow><h2>House Construction Projects in <span>Chennai &amp; Chengalpattu</span></h2></div>
                 <p>Follow our residential projects through construction and finishing. More photographs, drawings and client references are available when you meet our team.</p>
               </div>
-              <div className="res-project-list">
-                {residentialProjects.map((project) => (
-                  <article className="res-project-showcase" key={`${project.client}-${project.location}`}>
-                    <ProjectCarousel images={project.images} label={`${project.client} residence in ${project.location}`} className="res-project-gallery" sizes="(max-width: 1100px) 100vw, 58vw" />
-                    <div className="res-project-copy">
-                      <span className="res-project-kicker">{project.status}</span>
-                      <h3>{project.client} Residence, {project.location}</h3>
-                      <p>{project.description}</p>
-                      <dl>
+              <div className="hp-projects-toolbar">
+                <p>Choose completed or ongoing house construction projects.</p>
+                <div className="hp-tabs" role="tablist" aria-label="Filter house projects by status">
+                  {(["completed", "ongoing"] as const).map((name) => (
+                    <button
+                      key={name}
+                      id={`res-project-tab-${name}`}
+                      className={`hp-tab ${tab === name ? "is-active" : ""}`}
+                      role="tab"
+                      aria-selected={tab === name}
+                      aria-controls={`res-project-panel-${name}`}
+                      tabIndex={tab === name ? 0 : -1}
+                      onClick={() => setTab(name)}
+                      onKeyDown={(event) => {
+                        if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+                          event.preventDefault();
+                          const next = name === "completed" ? "ongoing" : "completed";
+                          setTab(next);
+                          document.getElementById(`res-project-tab-${next}`)?.focus();
+                        }
+                      }}
+                    >
+                      {tab === name && <m.span className="hp-tab-indicator" layoutId="residential-project-status-indicator" transition={{ type: "spring", stiffness: 420, damping: 34 }} />}
+                      <span className="hp-tab-label">{name === "completed" ? "Completed" : "Ongoing"}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div id={`res-project-panel-${tab}`} role="tabpanel" aria-labelledby={`res-project-tab-${tab}`} className="hp-project-grid">
+                {residentialProjects.filter((project) => project.status.toLowerCase() === tab).map((project) => (
+                  <m.article {...cardMotion} className="hp-project-card" key={`${project.client}-${project.location}`}>
+                    <ProjectCarousel images={project.images} label={`${project.client} residence in ${project.location}`} />
+                    <div className="hp-project-body">
+                      <div className="hp-project-top">
+                        <span className="hp-project-type">Residential · {project.status}</span>
+                        <button className="hp-project-arrow" aria-label={`Enquire about ${project.client}`} onClick={() => openModal({ type: "quote", interest: `Residential project — ${project.client}` })}>
+                          <ArrowUpRight size={16} />
+                        </button>
+                      </div>
+                      <h3>{project.client}</h3>
+                      <p className="hp-project-location"><MapPin size={13} /> {project.location}</p>
+                      <dl className="hp-project-meta">
                         <div><dt>Build up</dt><dd>{project.buildUp}</dd></div>
                         <div><dt>Plot</dt><dd>{project.plot}</dd></div>
-                        <div><dt>Type</dt><dd>Residential</dd></div>
                       </dl>
-                      <div className="res-project-actions">
-                        <a className="hp-btn hp-btn-dark" href="/projects/">View All Projects <ArrowUpRight size={16} /></a>
-                        <button className="hp-btn hp-btn-outline" onClick={() => openModal({ type: "quote", interest: `Residential project — ${project.client}` })}>Discuss Your House</button>
-                      </div>
                     </div>
-                  </article>
+                  </m.article>
                 ))}
               </div>
             </div>

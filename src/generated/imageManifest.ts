@@ -318,6 +318,20 @@ export const imageManifest = {
       }
     ]
   },
+  "/images/service-demolition-v2.jpg": {
+    "width": 960,
+    "height": 540,
+    "variants": [
+      {
+        "src": "/images/service-demolition-v2-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/service-demolition-v2-960.webp",
+        "width": 960
+      }
+    ]
+  },
   "/images/service-fabrication.jpg": {
     "width": 1400,
     "height": 933,
@@ -385,6 +399,20 @@ export const imageManifest = {
       {
         "src": "/images/service-industrial-1400.webp",
         "width": 1400
+      }
+    ]
+  },
+  "/images/service-infrastructure-india.jpg": {
+    "width": 1200,
+    "height": 900,
+    "variants": [
+      {
+        "src": "/images/service-infrastructure-india-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/service-infrastructure-india-960.webp",
+        "width": 960
       }
     ]
   },
@@ -692,6 +720,20 @@ export const imageManifest = {
       },
       {
         "src": "/images/service-roadworks-v2-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/service-waterproofing-v2.jpg": {
+    "width": 960,
+    "height": 540,
+    "variants": [
+      {
+        "src": "/images/service-waterproofing-v2-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/service-waterproofing-v2-960.webp",
         "width": 960
       }
     ]
