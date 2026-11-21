@@ -25,6 +25,8 @@ import {
   Mail,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   ChevronsLeftRight,
   Home,
   Route,
@@ -132,209 +134,84 @@ const serviceCategories = [
 
 const completedProjects = [
   {
-    client: "Private Residence",
-    location: "Maraimalai Nagar, Chengalpattu",
-    buildUp: "3,200 sq ft",
+    client: "Adhi Kesavan",
+    location: "Kattangalathur",
+    buildUp: "1,500 sq ft (G+1)",
+    plot: "2,100 sq ft",
+    type: "Residential",
+    images: ["/images/projects/adhi-kesavan-1.jpg"],
+  },
+  {
+    client: "Chandru",
+    location: "Maraimalai Nagar",
+    buildUp: "4,800 sq ft (G+1)",
+    plot: "3,000 sq ft",
+    type: "Residential",
+    images: ["/images/projects/chandru-1.jpg", "/images/projects/chandru-2.jpg", "/images/projects/chandru-3.jpg"],
+  },
+  {
+    client: "Durai",
+    location: "Gudalur, Maraimalai Nagar",
+    buildUp: "2,385 sq ft",
     plot: "2,400 sq ft",
     type: "Residential",
-    design: "/images/project-design-1.jpg",
-    completed: "/images/project-completed-1.jpg",
+    images: ["/images/projects/durai-1.jpg", "/images/projects/durai-2.jpg", "/images/projects/durai-3.jpg"],
   },
   {
-    client: "Electromags",
-    location: "Chengalpattu, Tamil Nadu",
-    buildUp: "18,500 sq ft",
-    plot: "1 acre",
-    type: "Commercial",
-    design: "/images/project-design-2.jpg",
-    completed: "/images/project-completed-2.jpg",
-  },
-  {
-    client: "Mecho Light Components",
-    location: "Chengalpattu, Tamil Nadu",
-    buildUp: "12,000 sq ft",
-    plot: "24,000 sq ft",
-    type: "Industrial",
-    design: "/images/project-design-3.jpg",
-    completed: "/images/project-completed-3.jpg",
+    client: "Navaneedha Krishnan",
+    location: "Gudalur",
+    buildUp: "1,250 sq ft (G)",
+    plot: "1,800 sq ft",
+    type: "Residential",
+    images: ["/images/projects/navaneedha-krishnan-1.jpg", "/images/projects/navaneedha-krishnan-2.jpg"],
   },
 ];
 
 const ongoingProjects = [
   {
-    client: "Pioneer NF Forgings India Pvt Ltd",
-    location: "Maraimalai Nagar, Chengalpattu",
-    buildUp: "8,000 sq ft",
-    plot: "1.2 acres",
-    type: "Industrial",
-    image: "/images/project-ongoing-1.jpg",
+    client: "Raja",
+    location: "Maraimalai Nagar",
+    buildUp: "1,450 sq ft (G+1)",
+    plot: "2,400 sq ft",
+    type: "Residential",
+    images: ["/images/projects/raja-1.jpg", "/images/projects/raja-2.jpg", "/images/projects/raja-3.jpg"],
   },
   {
-    client: "Caplin One Labs",
-    location: "Chengalpattu, Tamil Nadu",
-    buildUp: "6,500 sq ft",
-    plot: "18,000 sq ft",
-    type: "Commercial",
-    image: "/images/project-ongoing-2.jpg",
+    client: "Santhana Krishnan",
+    location: "Chengalpattu",
+    buildUp: "5,200 sq ft (G+2)",
+    plot: "2,400 sq ft",
+    type: "Residential",
+    images: ["/images/projects/santhana-krishnan-house-1.jpg", "/images/projects/santhana-krishnan-house-2.jpg"],
   },
   {
-    client: "Private Residence",
-    location: "Maraimalai Nagar, Chengalpattu",
-    buildUp: "2,800 sq ft",
+    client: "Thirunavukkarasu",
+    location: "Mamandur",
+    buildUp: "1,600 sq ft (GF)",
     plot: "2,000 sq ft",
     type: "Residential",
-    image: "/images/project-ongoing-3.jpg",
+    images: ["/images/projects/thirunavukkarasu-1.jpg"],
+  },
+  {
+    client: "Industrial Fabrication Project",
+    location: "Project details available on request",
+    buildUp: "On request",
+    plot: "On request",
+    type: "Industrial",
+    images: ["/images/projects/industrial-fabrication-1.jpg", "/images/projects/industrial-fabrication-2.jpg"],
   },
 ];
-const catalogPackages = [
-  {
-    name: "Standard Package",
-    price: "₹2,449",
-    unit: "per sq ft",
-    description: "A complete home construction specification with daily supervision and dependable branded finishes.",
-    featured: false,
-    details: [
-      {
-        title: "Design",
-        items: ["2D scheme drawings for every floor", "3D elevation design", "3D half-layouts for every floor", "2D electrical, plumbing and working drawings for every floor"],
-      },
-      {
-        title: "Project Management",
-        items: ["Site supervision and quality monitoring by a site engineer", "Project manager visits twice each week", "Daily progress photos and project-status access", "Architect support through design completion"],
-      },
-      {
-        title: "Structure",
-        items: ["Basement height up to 3 ft", "Arun steel or equivalent; Ramco or Dalmia cement", "Wire-cut brick walls: 9 in exterior and 4.5 in interior", "M-sand for masonry and P-sand for plastering", "M20 concrete with RMC for the roof", "10 ft ceiling height with reinforcement to standard design", "3 ft-high, 6 in-thick parapet for the floor with headroom", "Basement anti-termite treatment"],
-      },
-      {
-        title: "Bathroom & Plumbing",
-        items: ["Full-height 2×2 ft vitrified wall tiles up to ₹50/sq ft; one colour across two bathrooms", "Parryware bath and CP fittings up to ₹20,000 per bathroom", "Wall-mounted EWC and basin, pillar tap, health faucet, shower and 2-in-1 wall mixer", "Ashirvad CPVC internal and PVC external plumbing", "2,000 L, 3-layer UV-protected overhead tank"],
-      },
-      {
-        title: "Flooring",
-        items: ["4×2 ft vitrified tiles up to ₹65/sq ft for living, dining, bedrooms and kitchen; KAG, Sunheart or equivalent", "2×2 ft anti-skid tiles up to ₹50/sq ft for balcony and utility", "Full-body staircase tiles up to ₹110/sq ft", "1×1 ft heavy-duty parking tiles up to ₹50/sq ft", "Terrace screed concrete with waterproofing"],
-      },
-      {
-        title: "Kitchen & Dining",
-        items: ["2×2 ft vitrified kitchen wall tiles up to ₹55/sq ft", "Sink faucet up to ₹3,000 and stainless-steel sink with drain up to ₹5,000", "Wall-mounted dining wash basin", "Kitchen granite counter up to ₹140/sq ft"],
-      },
-      {
-        title: "Doors, Windows & Railing",
-        items: ["Ready-made Malaysian teak main door and frame up to ₹30,000; 32 mm door, 5×3 in frame, 7×3.5 ft, one unit", "Flush room doors with mahogany frames", "WPC bathroom doors and frames", "White uPVC sliding windows up to 5×5 ft; one per room with 5 mm clear glass", "SS 304 staircase railing and SS 304 balcony railing with 8 mm toughened glass and posts"],
-      },
-      {
-        title: "Painting",
-        items: ["Two coats Nippon wall putty internally", "Nippon primer plus two coats Breeze emulsion on walls and ceilings", "Nippon primer plus two coats Sumo Xtra externally", "Two coats Nippon exterior putty on the front elevation"],
-      },
-      {
-        title: "Electrical",
-        items: ["Orbit FR wires and Legrand switches", "Three 8-module switch boxes per bedroom; heater and exhaust points in bathrooms", "Up to four 8-module boxes in the living room", "Dedicated points for dining, pooja, kitchen, utility, entrance and balconies", "One AC point in every bedroom and one in the living room"],
-      },
-      {
-        title: "Not Included",
-        items: ["Compound wall and gate", "Sump and septic tank", "Lift, lift pit and shaft", "Electricity connection", "Building-plan approval", "Special elevation materials"],
-      },
-    ],
-  },
-  {
-    name: "Premium Package",
-    price: "₹2,699",
-    unit: "per sq ft",
-    description: "An upgraded specification with detailed structural design, premium surfaces and closer project support.",
-    featured: true,
-    details: [
-      {
-        title: "Design",
-        items: ["2D scheme, electrical, plumbing and working drawings for every floor", "3D elevation and half-layouts for every floor", "Soil-test report and structural drawings", "2D furniture layouts for every floor", "2D elevation detail drawings"],
-      },
-      {
-        title: "Project Management",
-        items: ["Site supervision and quality monitoring by a site engineer", "Daily project-manager visits", "Daily progress photos and project-status access", "Dedicated architect throughout the project, with stage visits and material-selection support"],
-      },
-      {
-        title: "Structure",
-        items: ["Basement height up to 3.5 ft", "Pulkit TMT steel or equivalent; Ramco, Dalmia or UltraTech cement", "Wire-cut brick walls: 9 in exterior and 4.5 in interior", "M-sand for masonry and P-sand for plastering", "M20 concrete with RMC for the roof", "10 ft floor-to-floor height and reinforcement to structural detailing", "3.5 ft-high, 6 in-thick parapet", "RCC lift pit and lift shaft included when required", "Basement anti-termite treatment"],
-      },
-      {
-        title: "Bathroom & Plumbing",
-        items: ["Full-height 4×2 ft digital vitrified wall tiles up to ₹85/sq ft", "Jaquar bath and CP fittings up to ₹30,000 per bathroom", "Wall-mounted EWC and basin, pillar tap, health faucet, shower and concealed wall mixer", "Ashirvad or Finolex CPVC internal and PVC external plumbing", "3,000 L Sintex UV-protected overhead tank with sensor", "Solar-heater plumbing lines when required"],
-      },
-      {
-        title: "Flooring",
-        items: ["4×2 ft tiles up to ₹90/sq ft for living, dining, bedrooms and kitchen; Somany, Kajaria, KAG or Sunheart", "2×2 ft balcony and utility tiles up to ₹60/sq ft", "Granite staircase up to ₹160/sq ft", "2×2 ft heavy stone for parking up to ₹80/sq ft", "1×1 ft Anuj white cooling terrace tiles with waterproofing"],
-      },
-      {
-        title: "Kitchen & Dining",
-        items: ["4×2 ft vitrified kitchen wall tiles up to ₹65/sq ft", "Designer sink faucet up to ₹4,500 and quartz sink with drain up to ₹7,000", "Dining wash basin with granite counter", "Kitchen granite counter up to ₹160/sq ft"],
-      },
-      {
-        title: "Doors, Windows & Railing",
-        items: ["Ghana teak main door and frame up to ₹52,500; 35 mm door, 5×3 in frame, 8×4 ft, one unit", "Laminate-finished flush room doors with Ghana wood frames", "WPC bathroom doors and frames", "White uPVC sliding windows with no size or quantity restriction and 5 mm clear glass", "SS 304 staircase railing and 10 mm full toughened-glass balcony railing"],
-      },
-      {
-        title: "Painting",
-        items: ["Two coats Birla wall putty internally", "Asian primer plus two coats Premium Emulsion on walls and ceilings", "Asian primer plus two coats Apex externally", "Two coats Birla WallSeal waterproof exterior putty on the front elevation"],
-      },
-      {
-        title: "Electrical",
-        items: ["Finolex or Havells FR wires and GM switches", "Four 8-module switch boxes per bedroom; heater and exhaust points in bathrooms", "Up to five 8-module boxes in the living room", "Dedicated points for dining, pooja, kitchen, utility, entrance and balconies", "One AC point in every bedroom and one in the living room", "Exterior-grade single-service panel board with RCCB"],
-      },
-      {
-        title: "Not Included",
-        items: ["Compound wall and gate", "Sump and septic tank", "Lift", "Electricity connection", "Building-plan approval", "Special elevation materials"],
-      },
-    ],
-  },
-  {
-    name: "Royal Package",
-    price: "₹3,499",
-    unit: "per sq ft",
-    description: "A luxury specification with interior design, elevated structural performance and premium finishes throughout.",
-    featured: false,
-    details: [
-      {
-        title: "Design",
-        items: ["2D scheme, electrical, plumbing and working drawings for every floor", "3D elevation and half-layouts for every floor", "Soil-test report and structural drawings", "Furniture layouts and elevation detail drawings", "Site assessment and site plan", "3D interior views for every floor, 2D detailing for every room and an interior walkthrough", "Approval drawing and landscape architectural design"],
-      },
-      {
-        title: "Project Management",
-        items: ["Site supervision and quality monitoring by a site engineer", "Daily project-manager visits", "Daily progress photos and project-status access", "Dedicated architect with frequent site visits and material, brand, interior and home-decor selection support"],
-      },
-      {
-        title: "Structure",
-        items: ["Basement height up to 5 ft", "Tata steel; Ramco, Dalmia or UltraTech cement", "Wire-cut brick walls: 9 in exterior and 4.5 in interior", "M-sand for masonry and P-sand for plastering", "M25 concrete with RMC for the roof", "11 ft floor-to-floor height", "Enhanced reinforcement to structural-engineer detailing", "3.5 ft-high, 6 in-thick parapet or toughened-glass railing where required", "RCC lift pit, base slab and lift shaft included when required", "Basement anti-termite treatment"],
-      },
-      {
-        title: "Bathroom & Plumbing",
-        items: ["Full-height 4×2 ft vitrified wall tiles up to ₹120/sq ft", "Kohler bath and CP fittings up to ₹60,000 per bathroom", "Concealed EWC, countertop basin, marble counter, pillar tap, health faucet, shower and concealed wall mixer", "Ashirvad, Finolex or Jindal CPVC/PVC plumbing with flexible HDPE pipe", "Waterproofed RCC overhead tank up to 6,000 L", "Solar-heater plumbing lines when required"],
-      },
-      {
-        title: "Flooring",
-        items: ["6×6 ft quartz tiles up to ₹200/sq ft for living, dining, bedrooms and kitchen", "2×2 ft balcony and utility tiles up to ₹60/sq ft", "Marble staircase up to ₹350/sq ft", "Granite parking floor up to ₹120/sq ft", "2×2 ft exterior-grade vitrified terrace tiles with waterproofing"],
-      },
-      {
-        title: "Kitchen & Dining",
-        items: ["4×2 ft designer vitrified kitchen wall tiles up to ₹125/sq ft", "Floor-mounted pull-out sink faucet up to ₹8,000 and multifunction sink up to ₹15,000", "Premium designer dining basin with marble counter and designer tap", "Quartz kitchen counter up to ₹350/sq ft"],
-      },
-      {
-        title: "Doors, Windows & Railing",
-        items: ["Designer timber door up to 8×5 ft or pure stainless-steel security door up to 8×4.5 ft with digital lock; up to ₹67,500, one unit", "Laminate-finished flush room doors with Ghana wood frames, 8×3.5 ft", "Waterproof laminate-finished bathroom flush doors, 8×3 ft", "Coloured openable uPVC windows with unrestricted size and quantity and toughened glass", "Toughened-glass staircase railing with SS, timber or aluminium handrail", "10 mm full toughened-glass balcony railing with aluminium handrail"],
-      },
-      {
-        title: "Painting",
-        items: ["Two coats Birla wall putty internally", "Asian primer plus two coats Royale Shyne on walls and ceilings", "Asian primer plus two coats Apex Ultima Protek externally", "Two coats Birla WallSeal waterproof putty on two elevation sides"],
-      },
-      {
-        title: "Electrical",
-        items: ["Finolex or Havells FR wires and glass-plate touch switches", "Power points for lift, generator, curtain motors, pool, RO plant, pressure pump, intercom, CCTV, exterior lighting, gate automation, lightning arrester, hybrid solar heater, water feature and HVAC as required", "Exterior-grade panel board for up to two service connections with RCCB"],
-      },
-      {
-        title: "Not Included",
-        items: ["Compound wall and gate", "Sump and septic tank", "Lift", "Electricity connection", "Building-plan approval", "Special elevation materials"],
-      },
-    ],
-  },
+
+const residentialProjects = [
+  ...ongoingProjects
+    .filter((project) => project.type === "Residential")
+    .map((project) => ({ ...project, status: "Under construction", description: `${project.buildUp} residence on a ${project.plot} plot in ${project.location}.` })),
+  ...completedProjects
+    .filter((project) => project.type === "Residential")
+    .map((project) => ({ ...project, status: "Residential project", description: `${project.buildUp} residence on a ${project.plot} plot in ${project.location}.` })),
 ];
+
+const industrialProject = ongoingProjects.find((project) => project.type === "Industrial")!;
 
 const residentialPackages = [
   {
@@ -574,9 +451,9 @@ const sectorPages = {
     scopeTitle: "Everything Your Commercial Building Needs,",
     scopeAccent: "from One Team",
     scopeGroups: [
-      { title: "Structure", image: "/images/service-pages/commercial-scope-structure.jpg", items: [["Civil and RCC Works", "Foundation, PCC, RCC, concrete, masonry and plastering."], ["Steel and Fabrication", "MS structural work, roofing, cladding, mezzanines, staircases, handrails, gates and grills."]] },
-      { title: "Finishing", image: "/images/service-pages/commercial-scope-finishing.jpg", items: [["Flooring", "Tiles, granite and concrete flooring."], ["Glass and Aluminium", "Aluminium doors and windows, glass doors, partitions and glazing for shopfronts."], ["Painting and Waterproofing", "Interior and exterior painting, plus waterproofing for terraces, toilets and roofs."]] },
-      { title: "Outside Work and Utilities", image: "/images/service-pages/commercial-scope-utilities.jpg", items: [["Paver Blocks and External Flooring", "Parking areas, walkways, kerb stones and interlocking pavers."], ["Roads, Drains and Compound Wall", "Internal roads, driveways, storm water drains and boundary walls."], ["Plumbing and Drainage", "Water lines, sewage lines, chambers and sanitary work."]] },
+      { title: "Structure", items: [["Civil and RCC Works", "Foundation, PCC, RCC, concrete, masonry and plastering.", "/images/service-civil-india.jpg"], ["Steel and Fabrication", "MS structural work, roofing, cladding, mezzanines, staircases, handrails, gates and grills.", "/images/service-fabrication.jpg"]] },
+      { title: "Finishing", items: [["Flooring", "Tiles, granite and concrete flooring.", "/images/service-flooring-india.jpg"], ["Glass and Aluminium", "Aluminium doors and windows, glass doors, partitions and glazing for shopfronts.", "/images/service-glazing-v2.jpg"], ["Painting and Waterproofing", "Interior and exterior painting, plus waterproofing for terraces, toilets and roofs.", "/images/service-painting-v2.jpg"]] },
+      { title: "Outside Work and Utilities", items: [["Paver Blocks and External Flooring", "Parking areas, walkways, kerb stones and interlocking pavers.", "/images/service-pavers-v2.jpg"], ["Roads, Drains and Compound Wall", "Internal roads, driveways, storm water drains and boundary walls.", "/images/service-roadworks-v2.jpg"], ["Plumbing and Drainage", "Water lines, sewage lines, chambers and sanitary work.", "/images/service-plumbing-india.jpg"]] },
     ],
     whyTitle: "Why Businesses Choose ARKA for",
     whyAccent: "Commercial Construction",
@@ -647,9 +524,9 @@ const sectorPages = {
     scopeTitle: "Industrial Work Planned for",
     scopeAccent: "Production, Loads and Long-Term Use",
     scopeGroups: [
-      { title: "Civil Foundations", image: "/images/service-pages/industrial-scope-foundations.jpg", items: [["Heavy-Duty Civil Work", "Machine foundations, PCC, RCC, masonry and structural concrete."], ["Industrial Flooring", "Concrete and epoxy floors planned for production and storage areas."]] },
-      { title: "Steel and Building Envelope", image: "/images/service-pages/industrial-scope-envelope.jpg", items: [["PEB and Structural Steel", "Industrial sheds, steel frames, mezzanines and fabrication."], ["Roofing and Cladding", "Coordinated roofing, wall cladding and weather protection."]] },
-      { title: "Campus Infrastructure", image: "/images/service-pages/industrial-scope-infrastructure.jpg", items: [["Utilities and Drainage", "Utility civil work, water lines, drains and chambers."], ["Roads and External Works", "Internal roads, pavers, storm water drains and compound walls."], ["Repairs and Modifications", "Factory extensions, layout changes, waterproofing and maintenance."]] },
+      { title: "Civil Foundations", items: [["Heavy-Duty Civil Work", "Machine foundations, PCC, RCC, masonry and structural concrete.", "/images/service-civil-india.jpg"], ["Industrial Flooring", "Concrete and epoxy floors planned for production and storage areas.", "/images/service-flooring-india.jpg"]] },
+      { title: "Steel and Building Envelope", items: [["PEB and Structural Steel", "Industrial sheds, steel frames, mezzanines and fabrication.", "/images/service-fabrication.jpg"], ["Roofing and Cladding", "Coordinated roofing, wall cladding and weather protection.", "/images/service-industrial-works.jpg"]] },
+      { title: "Campus Infrastructure", items: [["Utilities and Drainage", "Utility civil work, water lines, drains and chambers.", "/images/service-plumbing-india.jpg"], ["Roads and External Works", "Internal roads, pavers, storm water drains and compound walls.", "/images/service-roadworks-v2.jpg"], ["Repairs and Modifications", "Factory extensions, layout changes, waterproofing and maintenance.", "/images/service-repairs-v2.jpg"]] },
     ],
     whyTitle: "Why Companies Choose ARKA for",
     whyAccent: "Industrial Construction",
@@ -734,7 +611,7 @@ const cardMotion = {
 
 type Modal =
   | { type: "quote"; interest?: string }
-  | { type: "package"; index: number; source: "catalog" | "residential" }
+  | { type: "package"; index: number }
   | { type: "privacy" }
   | null;
 
@@ -909,47 +786,66 @@ function HeroQuoteForm({
       <RecaptchaWidget ref={recaptcha} resetKey={recaptchaResetKey} />
       {error && <p className="form-error" role="alert">{error}</p>}
       <button className="hp-btn hp-btn-gold" type="submit" disabled={submitting}>
-        {submitting ? "Submitting…" : "Request a Callback"} {!submitting && <ArrowUpRight size={16} />}
+        {submitting ? "Submitting…" : "Request Free Estimate"} {!submitting && <ArrowUpRight size={16} />}
       </button>
       <p className="hp-form-note">By submitting, you agree that ARKA may contact you about your project. This site is protected by reCAPTCHA.</p>
     </form>
   );
 }
 
-function BeforeAfter({
-  before,
-  after,
+function ProjectCarousel({
+  images,
   label,
+  className = "",
+  sizes = "(max-width: 720px) 100vw, 430px",
 }: {
-  before: string;
-  after: string;
+  images: readonly string[];
   label: string;
+  className?: string;
+  sizes?: string;
 }) {
-  const [pos, setPos] = useState(50);
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (images.length < 2 || paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => {
+      setActive((current) => (current + 1) % images.length);
+    }, 4200);
+    return () => window.clearInterval(timer);
+  }, [images.length, paused]);
+
+  const show = (index: number) => setActive((index + images.length) % images.length);
+
   return (
     <div
-      className="hp-compare"
-      style={{ "--pos": `${pos}%` } as React.CSSProperties}
+      className={`hp-project-carousel ${className}`.trim()}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
     >
-      <ResponsiveImage src={after} alt={`${label} — completed work`} loading="lazy" sizes="(max-width: 720px) 100vw, 430px" />
-      <div className="hp-compare-before">
-        <ResponsiveImage src={before} alt={`${label} — design reference`} loading="lazy" sizes="(max-width: 720px) 100vw, 430px" />
-      </div>
-      <span className="hp-compare-tag hp-compare-tag-before">Design</span>
-      <span className="hp-compare-tag hp-compare-tag-after">Completed</span>
-      <div className="hp-compare-divider">
-        <span className="hp-compare-handle">
-          <ChevronsLeftRight size={18} />
-        </span>
-      </div>
-      <input
-        type="range"
-        min={0}
-        max={100}
-        value={pos}
-        onChange={(event) => setPos(Number(event.target.value))}
-        aria-label={`Compare design and completed images for ${label}`}
-      />
+      <AnimatePresence initial={false} mode="sync">
+        <m.div
+          className="hp-project-slide"
+          key={images[active]}
+          initial={{ opacity: 0, scale: 1.025 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: .55, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <ResponsiveImage src={images[active]} alt={`${label} — project photograph ${active + 1}`} loading="lazy" sizes={sizes} />
+        </m.div>
+      </AnimatePresence>
+      {images.length > 1 && (
+        <>
+          <button className="hp-carousel-arrow is-previous" type="button" onClick={() => show(active - 1)} aria-label={`Previous photograph of ${label}`}><ChevronLeft size={18} /></button>
+          <button className="hp-carousel-arrow is-next" type="button" onClick={() => show(active + 1)} aria-label={`Next photograph of ${label}`}><ChevronRight size={18} /></button>
+          <div className="hp-carousel-dots" aria-label={`${label} photograph selection`}>
+            {images.map((image, index) => <button key={image} type="button" className={index === active ? "is-active" : ""} onClick={() => show(index)} aria-label={`Show photograph ${index + 1} of ${label}`} aria-current={index === active ? "true" : undefined} />)}
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -966,9 +862,7 @@ export default function ArkaSite({
   const [tab, setTab] = useState<"completed" | "ongoing">("completed");
   const [openFaq, setOpenFaq] = useState(0);
   const [modal, setModal] = useState<Modal>(null);
-  const modalPackage = modal?.type === "package"
-    ? (modal.source === "catalog" ? catalogPackages : residentialPackages)[modal.index]
-    : null;
+  const modalPackage = modal?.type === "package" ? residentialPackages[modal.index] : null;
   const [prepared, setPrepared] = useState(false);
   const [modalSubmitting, setModalSubmitting] = useState(false);
   const [modalError, setModalError] = useState("");
@@ -1351,8 +1245,14 @@ export default function ArkaSite({
                 <div className="sector-scope-grid">
                   {sector.scopeGroups.map((group, index) => (
                     <m.article {...cardMotion} key={group.title}>
-                      <ResponsiveImage className="scope-card-image" src={group.image} alt="" aria-hidden="true" loading="lazy" sizes="(max-width: 980px) 100vw, 33vw" />
-                      <span className="sector-scope-number">0{index + 1}</span><h3>{group.title}</h3>{group.items.map(([title, text]) => <div className="sector-scope-item" key={title}><CheckCircle2 size={18} /><div><h4>{title}</h4><p>{text}</p></div></div>)}
+                      <span className="sector-scope-number">0{index + 1}</span>
+                      <h3>{group.title}</h3>
+                      {group.items.map(([title, text, image]) => (
+                        <div className="sector-scope-item" key={title}>
+                          <ResponsiveImage className="sector-scope-item-image" src={image} alt="" aria-hidden="true" loading="lazy" sizes="112px" />
+                          <div className="sector-scope-item-copy"><h4><CheckCircle2 size={17} />{title}</h4><p>{text}</p></div>
+                        </div>
+                      ))}
                     </m.article>
                   ))}
                 </div>
@@ -1364,8 +1264,8 @@ export default function ArkaSite({
                 <div className="container">
                   <div className="hp-section-head"><div><Eyebrow>Our Industrial Project</Eyebrow><h2>Industrial Construction Project <span>in Progress</span></h2></div><p>Current industrial work, with detailed photographs, scope and references available when you speak with our team.</p></div>
                   <article className="sector-project-card">
-                    <ResponsiveImage src="/images/project-ongoing-1.jpg" alt="Industrial construction project in progress in Maraimalai Nagar" loading="lazy" sizes="(max-width: 980px) 100vw, 60vw" />
-                    <div><span>Industrial · In progress</span><h3>Pioneer NF Forgings India Pvt Ltd</h3><p><MapPin size={16} /> Maraimalai Nagar, Chengalpattu</p><dl><div><dt>Build up</dt><dd>8,000 sq ft</dd></div><div><dt>Plot</dt><dd>1.2 acres</dd></div></dl><button className="hp-btn hp-btn-dark" onClick={() => openModal({ type: "quote", interest: "Industrial construction" })}>Discuss an Industrial Project <ArrowUpRight size={16} /></button></div>
+                    <ProjectCarousel images={industrialProject.images} label="Industrial fabrication project" className="sector-project-gallery" sizes="(max-width: 980px) 100vw, 60vw" />
+                    <div><span>Industrial · In progress</span><h3>{industrialProject.client}</h3><p><MapPin size={16} /> {industrialProject.location}</p><dl><div><dt>Build up</dt><dd>{industrialProject.buildUp}</dd></div><div><dt>Plot</dt><dd>{industrialProject.plot}</dd></div></dl><button className="hp-btn hp-btn-dark" onClick={() => openModal({ type: "quote", interest: "Industrial construction" })}>Discuss an Industrial Project <ArrowUpRight size={16} /></button></div>
                   </article>
                 </div>
               </m.section>
@@ -1540,9 +1440,8 @@ export default function ArkaSite({
                   )}
                 </div>
                 <p>
-                  Slide the handle to compare the design with the finished
-                  building. Every project starts as a drawing and ends as a
-                  place people use every day.
+                  Browse photographs from each project. The galleries advance
+                  automatically, or you can use the arrows to move at your own pace.
                 </p>
               </div>
               <div className="hp-projects-toolbar">
@@ -1602,11 +1501,7 @@ export default function ArkaSite({
                       className="hp-project-card"
                       key={`${project.client}-${project.location}`}
                     >
-                      <BeforeAfter
-                        before={project.design}
-                        after={project.completed}
-                        label={project.client}
-                      />
+                      <ProjectCarousel images={project.images} label={project.client} />
                       <div className="hp-project-body">
                         <div className="hp-project-top">
                           <span className="hp-project-type">
@@ -1656,17 +1551,7 @@ export default function ArkaSite({
                       className="hp-project-card"
                       key={`${project.client}-${project.location}`}
                     >
-                      <div className="hp-compare">
-                        <ResponsiveImage
-                          src={project.image}
-                          alt={`${project.client} construction in progress`}
-                          loading="lazy"
-                          sizes="(max-width: 720px) 100vw, 420px"
-                        />
-                        <span className="hp-compare-tag hp-compare-tag-after">
-                          In progress
-                        </span>
-                      </div>
+                      <ProjectCarousel images={project.images} label={`${project.client} construction in progress`} />
                       <div className="hp-project-body">
                         <div className="hp-project-top">
                           <span className="hp-project-type">
@@ -1728,42 +1613,42 @@ export default function ArkaSite({
                   ) : view === "residential" ? (
                     <h2>Complete House Construction Package: <span>Starting from ₹2,499 per sq ft</span></h2>
                   ) : (
-                    <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Home Packages from ₹2,449/sq ft</span></h2>
+                    <h2>Residential Construction Company in Chennai &amp; Chengalpattu: <span>Complete Home Package from ₹2,499/sq ft</span></h2>
                   )}
                 </div>
-                <p>{view === "home" ? "Compare the material specifications for our Standard, Premium and Royal packages, and ask our team for a project-specific quotation." : view === "packages" ? "Compare our Standard, Premium and Royal residential packages. Commercial and industrial work is priced after we understand the building, site, finishes, loads and utilities." : "Review the residential specification below. Your final consolidated quotation is prepared after the plan, structural details, elevation and BOQ are finalized."}</p>
+                <p>{view === "home" ? "Review our complete residential package and ask our team for a project-specific quotation based on your plan and site." : view === "packages" ? "Review our complete residential package. Commercial and industrial work is priced separately after we understand the building, site, finishes, loads and utilities." : "Review the residential specification below. Your final consolidated quotation is prepared after the plan, structural details, elevation and BOQ are finalized."}</p>
               </div>
               <div className="hp-package-highlights" aria-label="Package highlights">
                 {view === "home" ? (
                   <>
-                    <div><Home size={19} /><span><strong>Three packages</strong> to compare</span></div>
-                    <div><IndianRupee size={19} /><span><strong>Material specifications</strong> for each package</span></div>
-                    <div><Wrench size={19} /><span><strong>Extra work</strong> quoted separately</span></div>
+                    <div><Home size={19} /><span><strong>One complete package</strong> for your home</span></div>
+                    <div><IndianRupee size={19} /><span><strong>₹2,499 per sq ft</strong> starting price</span></div>
+                    <div><Wrench size={19} /><span><strong>Design to handover</strong> with one team</span></div>
                   </>
                 ) : (
                   <>
-                    <div><Home size={19} /><span><strong>Residential</strong> from {view === "packages" ? "₹2,449" : "₹2,499"} per sq ft</span></div>
+                    <div><Home size={19} /><span><strong>Residential</strong> from ₹2,499 per sq ft</span></div>
                     <div><Building2 size={19} /><span><strong>Commercial</strong> priced to your project</span></div>
                     <div><Factory size={19} /><span><strong>Industrial</strong> priced to scope and loads</span></div>
                   </>
                 )}
               </div>
-              <div className={view === "home" ? undefined : `hp-pricing-layout ${view === "packages" ? "hp-pricing-layout-catalog" : "is-residential-only"}`}>
-                <div className={`hp-package-grid ${view === "residential" ? "hp-package-grid-single" : ""}`}>
-                  {(view === "residential" ? residentialPackages : catalogPackages).map((pkg, index) => (
+              <div className={view === "packages" ? "hp-pricing-layout hp-pricing-layout-catalog" : "hp-pricing-layout is-residential-only"}>
+                <div className="hp-package-grid hp-package-grid-single">
+                  {residentialPackages.map((pkg, index) => (
                     <m.article
                       {...cardMotion}
                       className={`hp-package ${pkg.featured ? "is-featured" : ""}`}
                       key={pkg.name}
                     >
                       <div className="hp-package-head">
-                        <span>{view === "residential" ? "Residential Construction" : pkg.name}</span>
+                        <span>Residential Construction</span>
                         <div className="hp-package-price">
                           {pkg.price} <small>{pkg.unit}</small>
                         </div>
                       </div>
                       <div className="hp-package-body">
-                        {view === "residential" && <h3>{pkg.name}</h3>}
+                        <h3>{pkg.name}</h3>
                         <p className="hp-package-desc">{pkg.description}</p>
                         {pkg.details.map((detail) => (
                           <details key={detail.title}>
@@ -1775,8 +1660,8 @@ export default function ArkaSite({
                             </ul>
                           </details>
                         ))}
-                        <button className={`hp-btn ${view !== "residential" && !pkg.featured ? "hp-btn-outline" : "hp-btn-gold"}`} onClick={() => openModal({ type: "package", index, source: view === "residential" ? "residential" : "catalog" })}>
-                          {view === "residential" ? "Get a Residential Quote" : "Get a Quote"} <ArrowUpRight size={16} />
+                        <button className="hp-btn hp-btn-gold" onClick={() => openModal({ type: "package", index })}>
+                          Get a Residential Quote <ArrowUpRight size={16} />
                         </button>
                       </div>
                     </m.article>
@@ -1803,23 +1688,12 @@ export default function ArkaSite({
                   </aside>
                 )}
               </div>
-              <p className="hp-package-note">
-                {view !== "residential" ? "Rates are per sq ft as listed in the package document. Confirm current rates, area basis, taxes, material availability and inclusions with our team." : "The residential rate and inclusions follow the supplied package specification. The final consolidated quotation is issued after the plan, structural details, elevation and BOQ are finalized."}
-              </p>
-              {view !== "residential" && <p className="hp-package-minimum"><strong>Note*:</strong> Minimum overall built-up area should be 1,200 sq ft.</p>}
-              {view !== "residential" ? (
-                <div className="hp-package-terms">
-                  <div><h3>Additional work</h3><p>Compound wall: ₹2,300 per running ft · Cooling tiles: ₹140 per sq ft · Sump: ₹28 per litre · Septic tank: ₹18 per litre · Head room: ₹2,100 per sq ft.</p></div>
-                  <div><h3>Client scope</h3><p>Building plan approval, borewell and motor fittings, electricity connection and main board (labour and materials), and water for construction.</p></div>
-                  <div><h3>Separate budget offer</h3><p>The document also lists a budget package from ₹2,300 per sq ft for a minimum plot size of 1,250 sq ft. Ask our team to confirm its current availability and detailed scope.</p></div>
-                </div>
-              ) : (
-                <div className="hp-package-terms">
-                  <div><h3>Measured extra works</h3><p>Septic tank ₹29/litre · RCC sump ₹32/litre · tie beam ₹450/running ft · compound wall ₹2,300/running ft · external paving ₹130/sq ft · cooling tiles ₹140/sq ft.</p></div>
-                  <div><h3>Quoted to design</h3><p>Lift construction, safety grills, main gate, elevation, borewell and motor, approvals and EB charges, soak pit drainage and other site-specific works.</p></div>
-                  <div><h3>Optional interiors</h3><p>Add ₹650/sq ft for the interior package covering designer false ceiling, TV and pooja units, bedroom wardrobes and an acrylic modular kitchen.</p></div>
-                </div>
-              )}
+              <p className="hp-package-note">The residential rate and inclusions follow the supplied package specification. The final consolidated quotation is issued after the plan, structural details, elevation and BOQ are finalized.</p>
+              <div className="hp-package-terms">
+                <div><h3>Measured extra works</h3><p>Septic tank ₹20/litre · RCC sump ₹32/litre · tie beam ₹450/running ft · compound wall ₹2,300/running ft · external paving ₹130/sq ft · cooling tiles ₹140/sq ft.</p></div>
+                <div><h3>Quoted to design</h3><p>Lift construction, safety grills, main gate, elevation, borewell and motor, approvals and EB charges, soak pit drainage and other site-specific works.</p></div>
+                <div><h3>Optional interiors</h3><p>Add ₹650/sq ft for the interior package covering designer false ceiling, TV and pooja units, bedroom wardrobes and an acrylic modular kitchen.</p></div>
+              </div>
             </div>
           </m.section>
         )}
@@ -1829,24 +1703,28 @@ export default function ArkaSite({
             <div className="container">
               <div className="hp-section-head res-section-head">
                 <div><Eyebrow>Our House Construction Projects</Eyebrow><h2>House Construction Projects in <span>Chennai &amp; Chengalpattu</span></h2></div>
-                <p>See how a residential design develops into a finished family home. More project photographs, drawings and client references are available when you meet our team.</p>
+                <p>Follow our residential projects through construction and finishing. More photographs, drawings and client references are available when you meet our team.</p>
               </div>
-              <div className="res-project-showcase">
-                <BeforeAfter before="/images/project-design-1.jpg" after="/images/project-completed-1.jpg" label="Private residence in Maraimalai Nagar" />
-                <div className="res-project-copy">
-                  <span className="res-project-kicker">Completed residence</span>
-                  <h3>Private Residence, Maraimalai Nagar</h3>
-                  <p>A 3,200 sq ft family home on a 2,400 sq ft plot, developed from design through construction and finishing.</p>
-                  <dl>
-                    <div><dt>Build up</dt><dd>3,200 sq ft</dd></div>
-                    <div><dt>Plot</dt><dd>2,400 sq ft</dd></div>
-                    <div><dt>Type</dt><dd>Residential</dd></div>
-                  </dl>
-                  <div className="res-project-actions">
-                    <a className="hp-btn hp-btn-dark" href="/projects/">View All Projects <ArrowUpRight size={16} /></a>
-                    <button className="hp-btn hp-btn-outline" onClick={() => openModal({ type: "quote", interest: "Residential house construction" })}>Discuss Your House</button>
-                  </div>
-                </div>
+              <div className="res-project-list">
+                {residentialProjects.map((project) => (
+                  <article className="res-project-showcase" key={`${project.client}-${project.location}`}>
+                    <ProjectCarousel images={project.images} label={`${project.client} residence in ${project.location}`} className="res-project-gallery" sizes="(max-width: 1100px) 100vw, 58vw" />
+                    <div className="res-project-copy">
+                      <span className="res-project-kicker">{project.status}</span>
+                      <h3>{project.client} Residence, {project.location}</h3>
+                      <p>{project.description}</p>
+                      <dl>
+                        <div><dt>Build up</dt><dd>{project.buildUp}</dd></div>
+                        <div><dt>Plot</dt><dd>{project.plot}</dd></div>
+                        <div><dt>Type</dt><dd>Residential</dd></div>
+                      </dl>
+                      <div className="res-project-actions">
+                        <a className="hp-btn hp-btn-dark" href="/projects/">View All Projects <ArrowUpRight size={16} /></a>
+                        <button className="hp-btn hp-btn-outline" onClick={() => openModal({ type: "quote", interest: `Residential project — ${project.client}` })}>Discuss Your House</button>
+                      </div>
+                    </div>
+                  </article>
+                ))}
               </div>
             </div>
           </m.section>
@@ -2272,7 +2150,6 @@ export default function ArkaSite({
         </button>
       </div>
 
-      <a className="whatsapp-float" href={whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="Message ARKA on WhatsApp"><WhatsAppIcon size={28} /></a>
 
       {modal?.type === "quote" && <div className="quote-backdrop" aria-hidden="true" onClick={closeModal} />}
       <dialog
@@ -2384,7 +2261,6 @@ export default function ArkaSite({
                           "Residential construction",
                           "Commercial or industrial work",
                           ...services.map((service) => service.title),
-                          ...catalogPackages.map((pkg) => pkg.name),
                           ...residentialPackages.map((pkg) => pkg.name),
                           "Request project portfolio",
                           "Not sure — let’s discuss",

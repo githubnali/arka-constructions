@@ -52,128 +52,240 @@ export const imageManifest = {
       }
     ]
   },
-  "/images/project-completed-1.jpg": {
-    "width": 1800,
-    "height": 1200,
+  "/images/projects/adhi-kesavan-1.jpg": {
+    "width": 899,
+    "height": 1599,
     "variants": [
       {
-        "src": "/images/project-completed-1-480.webp",
+        "src": "/images/projects/adhi-kesavan-1-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-completed-1-960.webp",
+        "src": "/images/projects/adhi-kesavan-1-899.webp",
+        "width": 899
+      }
+    ]
+  },
+  "/images/projects/chandru-1.jpg": {
+    "width": 2480,
+    "height": 1830,
+    "variants": [
+      {
+        "src": "/images/projects/chandru-1-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/chandru-1-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-completed-2.jpg": {
-    "width": 1400,
-    "height": 933,
+  "/images/projects/chandru-2.jpg": {
+    "width": 4608,
+    "height": 2592,
     "variants": [
       {
-        "src": "/images/project-completed-2-480.webp",
+        "src": "/images/projects/chandru-2-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-completed-2-960.webp",
+        "src": "/images/projects/chandru-2-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-completed-3.jpg": {
-    "width": 1400,
-    "height": 933,
+  "/images/projects/chandru-3.jpg": {
+    "width": 4608,
+    "height": 2592,
     "variants": [
       {
-        "src": "/images/project-completed-3-480.webp",
+        "src": "/images/projects/chandru-3-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-completed-3-960.webp",
+        "src": "/images/projects/chandru-3-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-design-1.jpg": {
-    "width": 1400,
-    "height": 933,
+  "/images/projects/durai-1.jpg": {
+    "width": 2883,
+    "height": 1727,
     "variants": [
       {
-        "src": "/images/project-design-1-480.webp",
+        "src": "/images/projects/durai-1-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-design-1-960.webp",
+        "src": "/images/projects/durai-1-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-design-2.jpg": {
-    "width": 1000,
-    "height": 563,
+  "/images/projects/durai-2.jpg": {
+    "width": 4608,
+    "height": 2592,
     "variants": [
       {
-        "src": "/images/project-design-2-480.webp",
+        "src": "/images/projects/durai-2-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-design-2-960.webp",
+        "src": "/images/projects/durai-2-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-design-3.jpg": {
-    "width": 1400,
-    "height": 953,
+  "/images/projects/durai-3.jpg": {
+    "width": 4608,
+    "height": 2592,
     "variants": [
       {
-        "src": "/images/project-design-3-480.webp",
+        "src": "/images/projects/durai-3-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-design-3-960.webp",
+        "src": "/images/projects/durai-3-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-ongoing-1.jpg": {
-    "width": 1400,
-    "height": 927,
+  "/images/projects/industrial-fabrication-1.jpg": {
+    "width": 1599,
+    "height": 899,
     "variants": [
       {
-        "src": "/images/project-ongoing-1-480.webp",
+        "src": "/images/projects/industrial-fabrication-1-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-ongoing-1-960.webp",
+        "src": "/images/projects/industrial-fabrication-1-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-ongoing-2.jpg": {
-    "width": 1400,
-    "height": 933,
+  "/images/projects/industrial-fabrication-2.jpg": {
+    "width": 1599,
+    "height": 899,
     "variants": [
       {
-        "src": "/images/project-ongoing-2-480.webp",
+        "src": "/images/projects/industrial-fabrication-2-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-ongoing-2-960.webp",
+        "src": "/images/projects/industrial-fabrication-2-960.webp",
         "width": 960
       }
     ]
   },
-  "/images/project-ongoing-3.jpg": {
-    "width": 1400,
-    "height": 933,
+  "/images/projects/navaneedha-krishnan-1.jpg": {
+    "width": 1600,
+    "height": 1010,
     "variants": [
       {
-        "src": "/images/project-ongoing-3-480.webp",
+        "src": "/images/projects/navaneedha-krishnan-1-480.webp",
         "width": 480
       },
       {
-        "src": "/images/project-ongoing-3-960.webp",
+        "src": "/images/projects/navaneedha-krishnan-1-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/projects/navaneedha-krishnan-2.jpg": {
+    "width": 1599,
+    "height": 899,
+    "variants": [
+      {
+        "src": "/images/projects/navaneedha-krishnan-2-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/navaneedha-krishnan-2-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/projects/raja-1.jpg": {
+    "width": 2852,
+    "height": 2275,
+    "variants": [
+      {
+        "src": "/images/projects/raja-1-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/raja-1-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/projects/raja-2.jpg": {
+    "width": 2997,
+    "height": 2471,
+    "variants": [
+      {
+        "src": "/images/projects/raja-2-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/raja-2-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/projects/raja-3.jpg": {
+    "width": 2440,
+    "height": 3144,
+    "variants": [
+      {
+        "src": "/images/projects/raja-3-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/raja-3-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/projects/santhana-krishnan-house-1.jpg": {
+    "width": 2592,
+    "height": 4608,
+    "variants": [
+      {
+        "src": "/images/projects/santhana-krishnan-house-1-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/santhana-krishnan-house-1-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/projects/santhana-krishnan-house-2.jpg": {
+    "width": 2592,
+    "height": 4608,
+    "variants": [
+      {
+        "src": "/images/projects/santhana-krishnan-house-2-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/santhana-krishnan-house-2-960.webp",
+        "width": 960
+      }
+    ]
+  },
+  "/images/projects/thirunavukkarasu-1.jpg": {
+    "width": 1599,
+    "height": 899,
+    "variants": [
+      {
+        "src": "/images/projects/thirunavukkarasu-1-480.webp",
+        "width": 480
+      },
+      {
+        "src": "/images/projects/thirunavukkarasu-1-960.webp",
         "width": 960
       }
     ]
@@ -203,20 +315,6 @@ export const imageManifest = {
       {
         "src": "/images/service-commercial-1400.webp",
         "width": 1400
-      }
-    ]
-  },
-  "/images/service-demolition-v2.jpg": {
-    "width": 960,
-    "height": 540,
-    "variants": [
-      {
-        "src": "/images/service-demolition-v2-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-demolition-v2-960.webp",
-        "width": 960
       }
     ]
   },
@@ -290,20 +388,6 @@ export const imageManifest = {
       }
     ]
   },
-  "/images/service-infrastructure-india.jpg": {
-    "width": 1200,
-    "height": 900,
-    "variants": [
-      {
-        "src": "/images/service-infrastructure-india-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-infrastructure-india-960.webp",
-        "width": 960
-      }
-    ]
-  },
   "/images/service-pages/commercial-building.jpg": {
     "width": 1200,
     "height": 800,
@@ -356,48 +440,6 @@ export const imageManifest = {
       },
       {
         "src": "/images/service-pages/commercial-retail-960.webp",
-        "width": 960
-      }
-    ]
-  },
-  "/images/service-pages/commercial-scope-finishing.jpg": {
-    "width": 1200,
-    "height": 800,
-    "variants": [
-      {
-        "src": "/images/service-pages/commercial-scope-finishing-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-pages/commercial-scope-finishing-960.webp",
-        "width": 960
-      }
-    ]
-  },
-  "/images/service-pages/commercial-scope-structure.jpg": {
-    "width": 1200,
-    "height": 800,
-    "variants": [
-      {
-        "src": "/images/service-pages/commercial-scope-structure-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-pages/commercial-scope-structure-960.webp",
-        "width": 960
-      }
-    ]
-  },
-  "/images/service-pages/commercial-scope-utilities.jpg": {
-    "width": 1200,
-    "height": 800,
-    "variants": [
-      {
-        "src": "/images/service-pages/commercial-scope-utilities-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-pages/commercial-scope-utilities-960.webp",
         "width": 960
       }
     ]
@@ -496,48 +538,6 @@ export const imageManifest = {
       },
       {
         "src": "/images/service-pages/industrial-roads-960.webp",
-        "width": 960
-      }
-    ]
-  },
-  "/images/service-pages/industrial-scope-envelope.jpg": {
-    "width": 1200,
-    "height": 800,
-    "variants": [
-      {
-        "src": "/images/service-pages/industrial-scope-envelope-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-pages/industrial-scope-envelope-960.webp",
-        "width": 960
-      }
-    ]
-  },
-  "/images/service-pages/industrial-scope-foundations.jpg": {
-    "width": 1200,
-    "height": 800,
-    "variants": [
-      {
-        "src": "/images/service-pages/industrial-scope-foundations-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-pages/industrial-scope-foundations-960.webp",
-        "width": 960
-      }
-    ]
-  },
-  "/images/service-pages/industrial-scope-infrastructure.jpg": {
-    "width": 1200,
-    "height": 800,
-    "variants": [
-      {
-        "src": "/images/service-pages/industrial-scope-infrastructure-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-pages/industrial-scope-infrastructure-960.webp",
         "width": 960
       }
     ]
@@ -692,20 +692,6 @@ export const imageManifest = {
       },
       {
         "src": "/images/service-roadworks-v2-960.webp",
-        "width": 960
-      }
-    ]
-  },
-  "/images/service-waterproofing-v2.jpg": {
-    "width": 960,
-    "height": 540,
-    "variants": [
-      {
-        "src": "/images/service-waterproofing-v2-480.webp",
-        "width": 480
-      },
-      {
-        "src": "/images/service-waterproofing-v2-960.webp",
         "width": 960
       }
     ]

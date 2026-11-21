@@ -6,6 +6,15 @@ const publicRoot = resolve("public");
 const imageRoot = resolve(publicRoot, "images");
 const manifestPath = resolve("src/generated/imageManifest.ts");
 const supportedExtensions = new Set([".jpg", ".jpeg", ".png"]);
+const manualRotations = new Map([
+  ["/images/projects/chandru-2.jpg", 0],
+  ["/images/projects/chandru-3.jpg", 0],
+  ["/images/projects/durai-2.jpg", 0],
+  ["/images/projects/durai-3.jpg", 0],
+  ["/images/projects/navaneedha-krishnan-1.jpg", 270],
+  ["/images/projects/navaneedha-krishnan-2.jpg", 270],
+  ["/images/projects/thirunavukkarasu-1.jpg", 270],
+]);
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -44,11 +53,16 @@ for (const path of sources) {
   const source = webPath(path);
   const metadata = await sharp(path).metadata();
   if (!metadata.width || !metadata.height) continue;
+  const hasManualRotation = manualRotations.has(source);
+  const manualRotation = manualRotations.get(source) ?? 0;
+  const swapsDimensions = hasManualRotation ? manualRotation % 180 !== 0 : metadata.orientation != null && metadata.orientation >= 5;
+  const displayWidth = swapsDimensions ? metadata.height : metadata.width;
+  const displayHeight = swapsDimensions ? metadata.width : metadata.height;
 
-  const requested = requestedWidths(source, metadata.width);
-  const widths = requested.filter((width) => width <= metadata.width);
-  if (!widths.length || widths.at(-1) < Math.min(metadata.width, requested.at(-1))) {
-    widths.push(Math.min(metadata.width, requested.at(-1)));
+  const requested = requestedWidths(source, displayWidth);
+  const widths = requested.filter((width) => width <= displayWidth);
+  if (!widths.length || widths.at(-1) < Math.min(displayWidth, requested.at(-1))) {
+    widths.push(Math.min(displayWidth, requested.at(-1)));
   }
   const extension = extname(path);
   const stem = path.slice(0, -extension.length);
@@ -57,6 +71,7 @@ for (const path of sources) {
   for (const width of widths) {
     const output = `${stem}-${width}.webp`;
     await sharp(path)
+      .rotate(hasManualRotation ? manualRotation : undefined)
       .resize({ width, withoutEnlargement: true })
       .webp({ quality: source.endsWith("/arka-logo.png") ? 86 : 78, effort: 5 })
       .toFile(output);
@@ -64,8 +79,8 @@ for (const path of sources) {
   }
 
   manifest[source] = {
-    width: metadata.width,
-    height: metadata.height,
+    width: displayWidth,
+    height: displayHeight,
     variants,
   };
 }
