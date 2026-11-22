@@ -235,19 +235,19 @@ const residentialPackages = [
       },
       {
         title: "Bathroom & Plumbing",
-        items: ["Full-height 1×2 ft vitrified wall tiles up to ₹45/sq ft; one colour across two bathrooms", "Parryware bath and CP fittings up to ₹20,000 per bathroom", "Wall-mounted EWC and basin, pillar tap, health faucet, shower and 2-in-1 wall mixer", "Ashirvad CPVC internal and Ashirvad or Finolex PVC external plumbing", "1,000 L, 3-layer UV-protected overhead tank"],
+        items: ["Full-height 1×2 ft vitrified wall tiles up to ₹40/sq ft; one colour across two bathrooms", "Parryware bath and CP fittings up to ₹20,000 per bathroom", "Wall-mounted EWC and basin, pillar tap, health faucet, shower and 2-in-1 wall mixer", "Ashirvad CPVC internal and Ashirvad or Finolex PVC external plumbing", "1,000 L, 3-layer UV-protected overhead tank"],
       },
       {
         title: "Flooring",
-        items: ["4×2 ft vitrified tiles up to ₹60/sq ft for living, dining, bedrooms and kitchen; KAG, Anuj or Kajaria", "2×2 ft anti-skid tiles up to ₹45/sq ft for balcony and utility", "Full-body staircase tiles up to ₹110/sq ft", "1×1 ft heavy-duty parking tiles up to ₹50/sq ft"],
+        items: ["4×2 ft vitrified tiles up to ₹55/sq ft for living, dining, bedrooms and kitchen; KAG, Anuj or Kajaria", "2×2 ft anti-skid tiles up to ₹45/sq ft for balcony and utility", "Full-body staircase tiles up to ₹110/sq ft", "1×1 ft heavy-duty parking tiles up to ₹50/sq ft"],
       },
       {
         title: "Kitchen & Dining",
-        items: ["1×2 ft vitrified kitchen wall tiles up to ₹45/sq ft", "Sink faucet up to ₹3,000 and stainless-steel sink with drain up to ₹5,000", "Wall-mounted dining wash basin", "Kitchen granite counter up to ₹140/sq ft"],
+        items: ["1×2 ft vitrified kitchen wall tiles up to ₹40/sq ft", "Sink faucet up to ₹3,000 and stainless-steel sink with drain up to ₹5,000", "Wall-mounted dining wash basin", "Kitchen granite counter up to ₹140/sq ft"],
       },
       {
         title: "Doors, Windows & Railing",
-        items: ["Ready-made Malaysian teak main door and frame up to ₹30,000; one unit", "Flush room doors with mahogany frames", "WPC bathroom doors and frames", "White uPVC sliding windows up to 5×5 ft; one per room with 5 mm clear glass", "SS 304 staircase and balcony railings"],
+        items: ["Ready-made Malaysian teak main door and frame up to ₹30,000; one unit", "Flush room doors with mahogany frames", "WPC bathroom doors and frames", "White uPVC sliding windows up to 5×5 ft; one per room with 5 mm clear glass", "4×3 ft window with mosquito mesh", "SS 304 staircase and balcony railings"],
       },
       {
         title: "Painting & White Washing",
@@ -929,7 +929,7 @@ export default function ArkaSite({
   }, [menu, modal]);
 
   useEffect(() => {
-    const offsetAttribute = "data-arka-mobile-chat-offset";
+    const layoutAttribute = "data-arka-mobile-chat-layout";
     const excludedPattern = /recaptcha|grecaptcha|netlify|nl-badge/i;
 
     function externalHost(element: HTMLElement) {
@@ -954,19 +954,9 @@ export default function ArkaSite({
       ].join(",");
 
       document.querySelectorAll<HTMLElement>(selectors).forEach((element) => {
-        if (!element.closest("#root")) candidates.add(element);
+        const identity = [element.id, element.className, element.getAttribute("title"), element.getAttribute("aria-label"), element.getAttribute("src")].join(" ");
+        if (!element.closest("#root") && !excludedPattern.test(identity) && /chat|bot|tidio|crisp|tawk|intercom/i.test(identity)) candidates.add(element);
       });
-
-      for (const child of Array.from(document.body.children)) {
-        if (!(child instanceof HTMLElement) || child.id === "root") continue;
-        const style = window.getComputedStyle(child);
-        const rect = child.getBoundingClientRect();
-        const zIndex = Number.parseInt(style.zIndex, 10);
-        const touchesLowerRight = rect.right >= window.innerWidth - 32 && rect.bottom >= window.innerHeight - 32;
-        if (style.position === "fixed" && touchesLowerRight && (Number.isNaN(zIndex) || zIndex >= 50)) {
-          candidates.add(child);
-        }
-      }
 
       candidates.forEach((candidate) => {
         const host = externalHost(candidate);
@@ -978,7 +968,9 @@ export default function ArkaSite({
           host instanceof HTMLIFrameElement ? host.src : "",
         ].join(" ");
         if (excludedPattern.test(descriptor) || host.closest(".grecaptcha-badge")) return;
-        host.setAttribute(offsetAttribute, "true");
+        const rect = host.getBoundingClientRect();
+        const isViewportLayer = rect.width >= window.innerWidth * 0.7 && rect.height >= window.innerHeight * 0.7;
+        host.setAttribute(layoutAttribute, isViewportLayer ? "viewport" : "launcher");
       });
     }
 
@@ -986,11 +978,13 @@ export default function ArkaSite({
     const observer = new MutationObserver(moveChatWidget);
     observer.observe(document.body, { childList: true, subtree: true });
     window.addEventListener("resize", moveChatWidget, { passive: true });
+    const delayedChecks = [250, 1000, 3000, 8000].map((delay) => window.setTimeout(moveChatWidget, delay));
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", moveChatWidget);
-      document.querySelectorAll<HTMLElement>(`[${offsetAttribute}]`).forEach((element) => {
-        element.removeAttribute(offsetAttribute);
+      delayedChecks.forEach((timer) => window.clearTimeout(timer));
+      document.querySelectorAll<HTMLElement>(`[${layoutAttribute}]`).forEach((element) => {
+        element.removeAttribute(layoutAttribute);
       });
     };
   }, []);
