@@ -928,66 +928,6 @@ export default function ArkaSite({
     return () => { document.body.style.overflow = ""; };
   }, [menu, modal]);
 
-  useEffect(() => {
-    const layoutAttribute = "data-arka-mobile-chat-layout";
-    const excludedPattern = /recaptcha|grecaptcha|netlify|nl-badge/i;
-
-    function externalHost(element: HTMLElement) {
-      let host = element;
-      while (host.parentElement && host.parentElement !== document.body) {
-        host = host.parentElement;
-      }
-      return host;
-    }
-
-    function moveChatWidget() {
-      const candidates = new Set<HTMLElement>();
-      const selectors = [
-        "iframe",
-        '[id*="chat" i]',
-        '[class*="chat" i]',
-        '[id*="bot" i]',
-        '[class*="bot" i]',
-        '[title*="chat" i]',
-        '[aria-label*="chat" i]',
-        '[data-testid*="chat" i]',
-      ].join(",");
-
-      document.querySelectorAll<HTMLElement>(selectors).forEach((element) => {
-        const identity = [element.id, element.className, element.getAttribute("title"), element.getAttribute("aria-label"), element.getAttribute("src")].join(" ");
-        if (!element.closest("#root") && !excludedPattern.test(identity) && /chat|bot|tidio|crisp|tawk|intercom/i.test(identity)) candidates.add(element);
-      });
-
-      candidates.forEach((candidate) => {
-        const host = externalHost(candidate);
-        const descriptor = [
-          host.id,
-          host.className,
-          host.getAttribute("title"),
-          host.getAttribute("aria-label"),
-          host instanceof HTMLIFrameElement ? host.src : "",
-        ].join(" ");
-        if (excludedPattern.test(descriptor) || host.closest(".grecaptcha-badge")) return;
-        const rect = host.getBoundingClientRect();
-        const isViewportLayer = rect.width >= window.innerWidth * 0.7 && rect.height >= window.innerHeight * 0.7;
-        host.setAttribute(layoutAttribute, isViewportLayer ? "viewport" : "launcher");
-      });
-    }
-
-    moveChatWidget();
-    const observer = new MutationObserver(moveChatWidget);
-    observer.observe(document.body, { childList: true, subtree: true });
-    window.addEventListener("resize", moveChatWidget, { passive: true });
-    const delayedChecks = [250, 1000, 3000, 8000].map((delay) => window.setTimeout(moveChatWidget, delay));
-    return () => {
-      observer.disconnect();
-      window.removeEventListener("resize", moveChatWidget);
-      delayedChecks.forEach((timer) => window.clearTimeout(timer));
-      document.querySelectorAll<HTMLElement>(`[${layoutAttribute}]`).forEach((element) => {
-        element.removeAttribute(layoutAttribute);
-      });
-    };
-  }, []);
 
   useEffect(() => {
     if (view !== "home") return;
