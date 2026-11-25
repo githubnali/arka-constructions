@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 
 declare global {
   interface Window {
@@ -58,7 +58,6 @@ export const RecaptchaWidget = forwardRef<RecaptchaWidgetHandle, { resetKey?: nu
   const widgetId = useRef<number | undefined>(undefined);
   const widgetPromise = useRef<Promise<number> | null>(null);
   const pending = useRef<PendingChallenge | null>(null);
-  const [widgetError, setWidgetError] = useState("");
   const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   function rejectPending(message: string) {
@@ -81,18 +80,15 @@ export const RecaptchaWidget = forwardRef<RecaptchaWidgetHandle, { resetKey?: nu
         size: "invisible",
         badge: "bottomright",
         callback: (token: string) => {
-          setWidgetError("");
           pending.current?.resolve(token);
           pending.current = null;
         },
         "expired-callback": () => {
           const message = "The security check expired. Please submit the form again.";
-          setWidgetError(message);
           rejectPending(message);
         },
         "error-callback": () => {
           const message = "The security check could not complete. Check your connection and retry.";
-          setWidgetError(message);
           rejectPending(message);
         },
       });
@@ -101,7 +97,6 @@ export const RecaptchaWidget = forwardRef<RecaptchaWidgetHandle, { resetKey?: nu
     }).catch((error) => {
       widgetPromise.current = null;
       const message = error instanceof Error ? error.message : "The security check could not load. Check your connection and retry.";
-      setWidgetError(message);
       throw new Error(message);
     });
 
@@ -113,7 +108,6 @@ export const RecaptchaWidget = forwardRef<RecaptchaWidgetHandle, { resetKey?: nu
       if (!siteKey) return Promise.reject(new Error("Security check is not configured."));
       if (pending.current) return pending.current.promise;
 
-      setWidgetError("");
       const id = await ensureWidget();
       if (!window.grecaptcha) throw new Error("The security check could not start. Please try again.");
 
@@ -148,9 +142,8 @@ export const RecaptchaWidget = forwardRef<RecaptchaWidgetHandle, { resetKey?: nu
     widgetPromise.current = null;
   }, []);
 
-  if (!siteKey) return <p className="form-error" role="alert">Security check is not configured.</p>;
+  // The parent form displays errors rejected by execute(), once per submission.
   return <div className="recaptcha-check">
     <div className="recaptcha-widget" ref={container} aria-label="Invisible Google reCAPTCHA security check" />
-    {widgetError && <p className="form-error" role="alert">{widgetError}</p>}
   </div>;
 });

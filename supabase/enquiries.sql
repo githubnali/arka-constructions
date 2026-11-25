@@ -25,4 +25,4 @@ revoke all on table public.enquiries from anon, authenticated;
 
 drop policy if exists "Public can submit enquiries" on public.enquiries;
 
-comment on table public.enquiries is 'Website quote and callback requests submitted from arkaconstruction.in';
+comment on table public.enquiries is 'Website quote and callback requests submitted from arkaconstructions.in';
